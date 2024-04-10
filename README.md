@@ -1,5 +1,15 @@
 # Welcome To HellHub
 This is the group project for the IKT103 exam
+
+# Table of Contents
+- [Dependencies](#dependencies)
+- [Group Contract](#group-contract)
+- 
+
+# Dependencies
+
+# Task
+
 # Group contract
 ### Group Members:
 - Albert Salvesen-Orø
