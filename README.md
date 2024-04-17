@@ -1,15 +1,28 @@
 # Welcome To HellHub
-This is the group project for the IKT103 exam
+This is the group project for the IKT103 exam. We chose the car rental GUI exam project.
 
 # Table of Contents
 - [Dependencies](#dependencies)
 - [Group Contract](#group-contract)
-- 
+- [Task](#task)
 
 # Dependencies
 
 # Task
-
+- 10% Add cars
+- 5% Edit cars
+- 5% Remove cars
+- 10% Add customer
+- 5% Edit customer
+- 5% Remove customer
+- 10% Assign car to customer
+- 5% Unassign car to customer
+- 5% Search for customer when assigning a car to a customer
+- 5% Search car when assigning a car to a customer
+- 7.5% Export all information to a file (JSON, XML, or CSV)
+- 7.5% Import all information from a file (JSON, XML or CSV)
+- 10% Document the database with UML (deliver with the code)
+- 10% Application / code design. How easy is the application to use? How well designed is the UI? How organized is the code?
 # Group contract
 ### Group Members:
 - Albert Salvesen-Orø
