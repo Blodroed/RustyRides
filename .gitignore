@@ -17,7 +17,7 @@
 *.dll
 
 # jetbrains IDE files
-.idea/
+*.idea/
 
 # Fortran module files
 *.mod
