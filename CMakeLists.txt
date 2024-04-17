@@ -4,4 +4,6 @@ project(HellHub)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(HellHub
-        main.cpp)
+        main.cpp
+        classes/Car.h
+        src/Car.cpp)
