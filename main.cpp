@@ -7,12 +7,5 @@
 #include "include/CarManager.h"
 
 int main() {
-    CarManager carManager;
-    std::vector<Car> cars;
-
-    Car car = carManager.createCar();
-    carManager.addCarToVector(cars, car);
-
-    carManager.displayCar(car);
     return 0;
 }

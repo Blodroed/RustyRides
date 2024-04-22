@@ -7,7 +7,7 @@
 #include <iostream>
 #include <vector>
 
-Car CarManager::createCar() {
+Car CarManager::createCar(std::vector<Car> &cars) {
     std::string color;
     std::string model;
     std::string carType;
@@ -32,10 +32,13 @@ Car CarManager::createCar() {
     std::cin >> kmDriven;
     Car car(color, model, carType, year, price, kmDriven);
 
+    // taking the reference of the vector cars and adding the car to it
+    addCarToVector(cars, car);
+
     return car;
 }
 
-void CarManager::displayCar(const Car& car) {
+void CarManager::displayCar(const Car &car) {
     std::cout << "========================" << std::endl;
     std::cout << "Car added!" << std::endl;
     std::cout << "-------------------" << std::endl;

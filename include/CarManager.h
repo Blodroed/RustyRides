@@ -11,9 +11,9 @@
 
 class CarManager {
 public:
-    Car createCar();
+    Car createCar(std::vector<Car> &cars);
     void displayCar(const Car& car);
-    void addCarToVector(std::vector<Car> &cars, const Car &car);
+    static void addCarToVector(std::vector<Car> &cars, const Car &car);
 
     void availabilitySwitch(Car& car);
 };
