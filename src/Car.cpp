@@ -36,3 +36,9 @@ int Car::getYear() const {return year;}
 int Car::getPrice() const {return price;}
 int Car::getKmDriven() const {return kmDriven;}
 bool Car::getAvailable() const {return available;}
+
+// Setters
+void Car::setColor(std::string color) {this->color = color;}
+void Car::setPrice(int price) {this->price = price;}
+void Car::setKmDriven(int kmDriven) {this->kmDriven = kmDriven;}
+void Car::setAvailable(bool available) {this->available = available;}

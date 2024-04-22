@@ -7,11 +7,15 @@
 
 #include "Car.h"
 #include <iostream>
+#include <vector>
 
 class CarManager {
 public:
     Car createCar();
     void displayCar(const Car& car);
+    void addCarToVector(std::vector<Car> &cars, const Car &car);
+
+    void availabilitySwitch(Car& car);
 };
 
 

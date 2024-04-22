@@ -5,6 +5,7 @@
 #include "../include/CarManager.h"
 #include "../include/Car.h"
 #include <iostream>
+#include <vector>
 
 Car CarManager::createCar() {
     std::string color;
@@ -50,3 +51,16 @@ void CarManager::displayCar(const Car& car) {
         std::cout << "Available: No" << std::endl;
     }
 }
+
+void CarManager::addCarToVector(std::vector<Car> &cars, const Car &car) {
+    cars.push_back(car);
+}
+
+void CarManager::availabilitySwitch(Car& car) {
+    if (car.getAvailable()) {
+        car.setAvailable(false);
+    } else {
+        car.setAvailable(true);
+    }
+}
+
