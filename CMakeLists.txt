@@ -8,4 +8,5 @@ add_executable(HellHub
         include/Car.h
         src/Car.cpp
         include/CarManager.h
-        src/CarManager.cpp)
+        src/CarManager.cpp
+        test/carAdderTest.cpp)
