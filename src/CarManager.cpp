@@ -53,7 +53,7 @@ void CarManager::displayCar(const Car& car) {
 }
 
 void CarManager::addCarToVector(std::vector<Car> &cars, const Car &car) {
-    cars.push_back(car);
+    cars.push_back(car); // damn program is so strong it can push cars
 }
 
 void CarManager::availabilitySwitch(Car& car) {
