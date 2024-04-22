@@ -5,5 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(HellHub
         main.cpp
-        classes/Car.h
-        src/Car.cpp)
+        include/Car.h
+        src/Car.cpp
+        include/CarManager.h
+        src/CarManager.cpp)

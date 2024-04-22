@@ -2,7 +2,7 @@
 // Created by Albert on 17.04.2024.
 //
 
-#include "../classes/Car.h"
+#include "../include/Car.h"
 
 // Constructor
 Car::Car() {
