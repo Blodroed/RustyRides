@@ -6,23 +6,29 @@ This is the group project for the IKT103 exam. We chose the Car rental GUI exam 
 - [Group Contract](#group-contract)
 - [Task](#task)
 
+# Docs and Help
+- [Structure ideas](https://medium.com/swlh/c-project-structure-for-cmake-67d60135f6f5)
+
 # Dependencies
+- Qt Library
+- RapidJson
 
 # Task
-- 10% Add cars
-- 5% Edit cars
-- 5% Remove cars
-- 10% Add customer
-- 5% Edit customer
-- 5% Remove customer
-- 10% Assign Car to customer
-- 5% Unassign Car to customer
-- 5% Search for customer when assigning a Car to a customer
-- 5% Search Car when assigning a Car to a customer
-- 7.5% Export all information to a file (JSON, XML, or CSV)
-- 7.5% Import all information from a file (JSON, XML or CSV)
-- 10% Document the database with UML (deliver with the code)
-- 10% Application / code design. How easy is the application to use? How well designed is the UI? How organized is the code?
+- [x] 10% Add cars
+- [] 5% Edit cars
+- [] 5% Remove cars
+- [] 10% Add customer
+- [] 5% Edit customer
+- [] 5% Remove customer
+- [] 10% Assign car to customer
+- [] 5% Unassign car to customer
+- [] 5% Search for customer when assigning a car to a customer
+- [] 5% Search car when assigning a car to a customer
+- [] 7.5% Export all information to a file (JSON, XML, or CSV)
+- [] 7.5% Import all information from a file (JSON, XML or CSV)
+- [] 10% Document the database with UML (deliver with the code)
+- [] 10% Application / code design. How easy is the application to use? How well designed is the UI? How organized is the code?
+
 # Group contract
 ### Group Members:
 - Albert Salvesen-Orø
