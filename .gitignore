@@ -16,6 +16,8 @@
 *.dylib
 *.dll
 
+
+
 # Fortran module files
 *.mod
 *.smod
@@ -30,3 +32,8 @@
 *.exe
 *.out
 *.app
+
+# Directories
+/cmake-build-debug/
+# jetbrains IDE files
+/.idea/
