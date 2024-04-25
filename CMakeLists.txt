@@ -3,6 +3,10 @@ project(HellHub)
 
 set(CMAKE_CXX_STANDARD 14)
 
+# Add RapidJSON headers directory to the include path
+include_directories(libs/rapidjson)
+
+# source files
 add_executable(HellHub
         main.cpp
         include/Car.h
