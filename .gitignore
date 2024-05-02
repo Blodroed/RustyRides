@@ -37,3 +37,7 @@
 /cmake-build-debug/
 # jetbrains IDE files
 /.idea/
+CMakeLists.txt.user
+/build
+/cmake-build-debug-mingw-qt
+/cmake-build-debug-mingw
