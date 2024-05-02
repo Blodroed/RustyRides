@@ -14,6 +14,7 @@ Car CarManager::createCar(std::vector<Car> &cars) {
     int year;
     int price;
     int kmDriven;
+    int seats;
 
     std::cout << "Add your first car!" << std::endl;
     std::cout << "Color: " << std::endl;
@@ -23,14 +24,15 @@ Car CarManager::createCar(std::vector<Car> &cars) {
     std::cout << "Car type: " << std::endl;
     std::getline(std::cin, carType);
     std::cout << "Year: " << std::endl;
-    std::cin >> year;
-    std::cin.ignore();
+    std::cin >> year; std::cin.ignore();
     std::cout << "Price: " << std::endl;
-    std::cin >> price;
-    std::cin.ignore();
+    std::cin >> price; std::cin.ignore();
     std::cout << "Km driven: " << std::endl;
-    std::cin >> kmDriven;
-    Car car(color, model, carType, year, price, kmDriven);
+    std::cin >> kmDriven; std::cin.ignore();
+    std::cout << "Seats: " << std::endl;
+    std::cin >> seats; std::cin.ignore();
+
+    Car car(color, model, carType, year, price, kmDriven, seats);
 
     // taking the reference of the vector cars and adding the car to it
     addCarToVector(cars, car);
