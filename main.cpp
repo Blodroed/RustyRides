@@ -1,11 +1,14 @@
-//
-// Created by Albert on 17.04.2024.
-//
-
-#include <vector>
+#include "include/mainwindow.h"
 #include "include/Car.h"
 #include "include/CarManager.h"
 
-int main() {
-    return 0;
+#include <QApplication>
+#include <vector>
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }

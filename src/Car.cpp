@@ -15,13 +15,14 @@ Car::Car() {
     available = false;
 }
 
-Car::Car(std::string &color, std::string &model, std::string &carType, int year, int price, int kmDriven) {
+Car::Car(std::string &color, std::string &model, std::string &carType, int year, int price, int kmDriven, int seats) {
     this->color = color;
     this->model = model;
     this->carType = carType;
     this->year = year;
     this->price = price;
     this->kmDriven = kmDriven;
+    this->seats = seats;
     this->available = true;
 }
 
