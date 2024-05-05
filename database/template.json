@@ -1,0 +1,38 @@
+{
+  "cars": [
+    {
+      "regNr": "unknown",
+      "color": "unknown",
+      "model": "unknown",
+      "carType": "unknown",
+      "year": 1234,
+      "kmDriven": 12345,
+      "price": 12345,
+      "seats": 4,
+      "availability": "0 or 1"
+    }
+  ],
+  "customer": [
+    {
+      "personNummer": "unknown",
+      "name": "unknown",
+      "phoneNumber": 123456,
+      "email": "unknown",
+      "age": 23,
+      "cars": [
+        {"regnNr": "unknown"},
+        {"regnNr": "unknown"}
+      ]
+    }
+  ],
+  "lease": [
+    {
+      "leaseId": 1,
+      "carId": 1,
+      "customerId": 1,
+      "startDate": "unknown",
+      "endDate": "unknown",
+      "price": 12345
+    }
+  ]
+}

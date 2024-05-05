@@ -7,7 +7,7 @@
 
 #include <vector>
 
-int main() {
+int carAdderTest() {
     CarManager carManager;
     std::vector<Car> cars;
 
