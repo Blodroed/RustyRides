@@ -7,7 +7,8 @@
 #include <iostream>
 #include <vector>
 
-Car CarManager::createCar(std::vector<Car> &cars) {
+void CarManager::createCar(std::vector<Car> &cars) {
+    std::string regNr;
     std::string color;
     std::string model;
     std::string carType;
@@ -15,8 +16,12 @@ Car CarManager::createCar(std::vector<Car> &cars) {
     int price;
     int kmDriven;
     int seats;
+    bool available;
 
     std::cout << "Add your first car!" << std::endl;
+    std::cout << "========================" << std::endl;
+    std::cout << "Registration number: " << std::endl;
+    std::getline(std::cin, regNr);
     std::cout << "Color: " << std::endl;
     std::getline(std::cin, color);
     std::cout << "Model: " << std::endl;
@@ -31,13 +36,13 @@ Car CarManager::createCar(std::vector<Car> &cars) {
     std::cin >> kmDriven; std::cin.ignore();
     std::cout << "Seats: " << std::endl;
     std::cin >> seats; std::cin.ignore();
+    std::cout << "Available (1 or 0): " << std::endl;
+    std::cin >> available; std::cin.ignore();
 
-    Car car(color, model, carType, year, price, kmDriven, seats);
+    Car car(regNr,color, model, carType, year, price, kmDriven, seats, available);
 
     // taking the reference of the vector cars and adding the car to it
-    addCarToVector(cars, car);
-
-    return car;
+    cars.push_back(car);
 }
 
 void CarManager::displayCar(const Car &car) {
@@ -54,6 +59,24 @@ void CarManager::displayCar(const Car &car) {
         std::cout << "Available: Yes" << std::endl;
     } else {
         std::cout << "Available: No" << std::endl;
+    }
+}
+
+void CarManager::displayAllCars(const std::vector<Car> &cars) {
+    for (const auto &car : cars) {
+        std::cout << "========================" << std::endl;
+        std::cout << "RegNr: " << car.getRegNr() << std::endl;
+        std::cout << "Color: " << car.getColor() << std::endl;
+        std::cout << "Model: " << car.getModel() << std::endl;
+        std::cout << "Car type: " << car.getCarType() << std::endl;
+        std::cout << "Year: " << car.getYear() << std::endl;
+        std::cout << "Price: " << car.getPrice() << std::endl;
+        std::cout << "Km driven: " << car.getKmDriven() << std::endl;
+        if (car.getAvailable()) {
+            std::cout << "Available: Yes" << std::endl;
+        } else {
+            std::cout << "Available: No" << std::endl;
+        }
     }
 }
 
