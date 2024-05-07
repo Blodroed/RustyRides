@@ -11,7 +11,8 @@ class Car {
 public:
     // Constructor
     Car();
-    explicit Car(std::string &regNr, std::string &color, std::string &model, std::string &carType, int year, int price, int kmDriven, int seats, bool available);
+    explicit Car(const std::string &regNr, const std::string &color, const std::string &model, const std::string &carType,
+                 int year, int price, int kmDriven, int seats, bool available);
 
     // Destructor
     virtual ~Car();
