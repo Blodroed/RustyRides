@@ -13,7 +13,7 @@ int carAddToJsonTest() {
     JsonParser jsonParser("../database/database-test.json");
     std::vector<Car> cars;
 
-    
+
 
     return 0;
 }
