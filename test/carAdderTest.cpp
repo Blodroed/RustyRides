@@ -11,8 +11,6 @@ int carAdderTest() {
     CarManager carManager;
     std::vector<Car> cars;
 
-    Car car = carManager.createCar(cars);
-
-    carManager.displayCar(car);
+    carManager.createCar(cars);
     return 0;
 }

@@ -16,4 +16,5 @@ add_executable(HellHub
         test/carAdderTest.cpp
         include/JsonParser.h
         src/JsonParser.cpp
-        test/carAddToJsonTest.cpp)
+        test/carAddToJsonTest.cpp
+        test/carAddToJsonTest.h)
