@@ -27,7 +27,7 @@ public:
     void setFilepath(const std::string &filepath);
 
     // functions for importing and exporting to json
-    void importCarJson(const std::vector<Car> &cars);
+    void importCarJson(std::vector<Car> &cars);
     void exportCarJson(const std::vector<Car> &cars);
 
 private:
