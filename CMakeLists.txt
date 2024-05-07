@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.28)
 project(HellHub)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 14) # has to be 14 for qt cmake to work
 
 # Add RapidJSON headers directory to the include path
 include_directories(libs/rapidjson)
