@@ -15,7 +15,8 @@ Car::Car() {
     available = false;
 }
 
-Car::Car(std::string &color, std::string &model, std::string &carType, int year, int price, int kmDriven, int seats, bool available) {
+Car::Car(std::string &regNr,std::string &color, std::string &model, std::string &carType, int year, int price, int kmDriven, int seats, bool available) {
+    this->RegNr = regNr;
     this->color = color;
     this->model = model;
     this->carType = carType;
@@ -30,6 +31,7 @@ Car::Car(std::string &color, std::string &model, std::string &carType, int year,
 Car::~Car() = default;
 
 // Getters
+std::string Car::getRegNr() const {return RegNr;}
 std::string Car::getColor() const {return color;}
 std::string Car::getModel() const {return model;}
 std::string Car::getCarType() const {return carType;}

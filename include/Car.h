@@ -11,7 +11,7 @@ class Car {
 public:
     // Constructor
     Car();
-    explicit Car(std::string &color, std::string &model, std::string &carType, int year, int price, int kmDriven, int seats, bool available);
+    explicit Car(std::string &regNr, std::string &color, std::string &model, std::string &carType, int year, int price, int kmDriven, int seats, bool available);
 
     // Destructor
     virtual ~Car();
@@ -27,6 +27,7 @@ public:
 
 
     // Getters for each private member
+    std::string getRegNr() const;
     std::string getColor() const;
     std::string getModel() const;
     std::string getCarType() const;
@@ -36,6 +37,7 @@ public:
     int getSeats() const;
     bool getAvailable() const;
 private:
+    std::string RegNr;
     std::string color;
     std::string model;
     std::string carType;
