@@ -9,6 +9,11 @@
 #include <vector>
 
 int carAddToJsonTest() {
+    std::string filepath;
+    JsonParser jsonParser("../database/database-test.json");
+    std::vector<Car> cars;
+
+    
 
     return 0;
 }

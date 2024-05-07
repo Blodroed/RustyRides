@@ -14,7 +14,7 @@
 class JsonParser {
 public:
     // default constructor with filepath to database.json
-    JsonParser(){
+    JsonParser(std::string &filepath){
         filepath = "../database/database.json";
     };
     ~JsonParser();
@@ -32,6 +32,7 @@ public:
 
 private:
     std::string filepath;
+
 };
 
 
