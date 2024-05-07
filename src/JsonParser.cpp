@@ -28,7 +28,7 @@ void JsonParser::setFilepath(const std::string &newFilepath) {
     this->filepath = newFilepath;
 };
 
-void JsonParser::importCarJson(std::vector<Car> &cars) {
+void JsonParser::importCarFromJson(std::vector<Car> &cars) {
     /* Importing cars from json file
      * this import method adds the cars to the vector given to the function
      * WARNING: the vector is cleared before adding new cars
@@ -62,3 +62,5 @@ void JsonParser::importCarJson(std::vector<Car> &cars) {
     // closing the file
     file.close();
 }
+
+void exportCarToJson()
