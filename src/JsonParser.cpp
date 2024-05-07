@@ -4,7 +4,9 @@
 
 #include "../include/JsonParser.h"
 #include "../libs/rapidjson/document.h"
+#include "../libs/rapidjson/prettywriter.h"
 #include "../libs/rapidjson/istreamwrapper.h"
+#include "../libs/rapidjson/ostreamwrapper.h"
 
 #include <iostream>
 #include <vector>
@@ -44,6 +46,7 @@ void JsonParser::importCarFromJson(std::vector<Car> &cars) {
     rapidjson::IStreamWrapper isw(file);
     rapidjson::Document doc;
     doc.ParseStream(isw);
+    file.close();
 
     // accessing the cars array directly
     const auto &carsJson = doc["cars"];
@@ -58,9 +61,52 @@ void JsonParser::importCarFromJson(std::vector<Car> &cars) {
                 carJson["seats"].GetInt(), carJson["availability"].GetBool());
         cars.push_back(car);
     }
-
-    // closing the file
-    file.close();
 }
 
-void exportCarToJson()
+void JsonParser::exportCarToJson(const std::vector<Car> &cars) {
+    // TODO
+}
+
+void JsonParser::exportSingleCarToJson(const Car &car) {
+    /* Exporting a single car to json file
+     * this function exports a single car to the json file
+     * the car is added to the end of the cars array in the json file
+     */
+    std::ifstream file(filepath); // filepath should be set on construction of class
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+
+    // converting the ifstream to IStreamWrapper
+    // then reads it into memory for JSON document object
+    rapidjson::IStreamWrapper isw(file);
+    rapidjson::Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // accessing the cars array directly
+    auto &carsJson = doc["cars"];
+
+    // creating a new JSON object for the car
+    rapidjson::Value carJson(rapidjson::kObjectType);
+    auto &allocator = doc.GetAllocator();
+
+    carJson.AddMember("regNr", rapidjson::Value(car.getRegNr().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("color", rapidjson::Value(car.getColor().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("model", rapidjson::Value(car.getModel().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("carType", rapidjson::Value(car.getCarType().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("year", car.getYear(), allocator);
+    carJson.AddMember("price", car.getPrice(), allocator);
+    carJson.AddMember("kmDriven", car.getKmDriven(), allocator);
+    carJson.AddMember("seats", car.getSeats(), allocator);
+    carJson.AddMember("availability", car.getAvailable(), allocator);
+
+    doc["cars"].PushBack(carJson, allocator);
+
+    // writing the JSON object to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+}

@@ -29,7 +29,11 @@ public:
     // functions for importing and exporting to json cars
     void importCarFromJson(std::vector<Car> &cars);
     void exportCarToJson(const std::vector<Car> &cars);
-    void addSingleCarToJson(const Car &car);
+    void exportSingleCarToJson(const Car &car);
+
+    // full backup and import
+    void fullBackup(const std::vector<Car> &cars); // TODO add other vectors
+    void fullImport(std::vector<Car> &cars); // TODO add other vectors
 
 private:
     std::string filepath;
