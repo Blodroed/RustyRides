@@ -15,6 +15,7 @@ int carAddToJsonTest() {
 
     jsonParser.importCarFromJson(cars);
     CarManager::displayAllCars(cars);
-
+    CarManager::createCar(cars, jsonParser);
+    CarManager::displayAllCars(cars);
     return 0;
 }

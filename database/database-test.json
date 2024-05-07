@@ -1,61 +1,72 @@
 {
-  "cars": [
-    {
-      "regNr": "car1",
-      "color": "red",
-      "model": "sedan",
-      "carType": "electric",
-      "year": 2020,
-      "kmDriven": 10000,
-      "price": 20000,
-      "seats": 4,
-      "availability": true
-    },
-    {
-      "regNr": "car2",
-      "color": "blue",
-      "model": "SUV",
-      "carType": "gas",
-      "year": 2019,
-      "kmDriven": 15000,
-      "price": 25000,
-      "seats": 5,
-      "availability": true
-    },
-    {
-      "regNr": "car3",
-      "color": "green",
-      "model": "hatchback",
-      "carType": "hybrid",
-      "year": 2021,
-      "kmDriven": 5000,
-      "price": 30000,
-      "seats": 4,
-      "availability": true
-    },
-    {
-      "regNr": "car4",
-      "color": "black",
-      "model": "coupe",
-      "carType": "diesel",
-      "year": 2018,
-      "kmDriven": 20000,
-      "price": 35000,
-      "seats": 2,
-      "availability": true
-    },
-    {
-      "regNr": "car5",
-      "color": "white",
-      "model": "convertible",
-      "carType": "gas",
-      "year": 2022,
-      "kmDriven": 1000,
-      "price": 40000,
-      "seats": 2,
-      "availability": false
-    }
-  ],
-  "customer": [],
-  "lease": []
+    "cars": [
+        {
+            "regNr": "car1",
+            "color": "red",
+            "model": "sedan",
+            "carType": "electric",
+            "year": 2020,
+            "kmDriven": 10000,
+            "price": 20000,
+            "seats": 4,
+            "availability": true
+        },
+        {
+            "regNr": "car2",
+            "color": "blue",
+            "model": "SUV",
+            "carType": "gas",
+            "year": 2019,
+            "kmDriven": 15000,
+            "price": 25000,
+            "seats": 5,
+            "availability": true
+        },
+        {
+            "regNr": "car3",
+            "color": "green",
+            "model": "hatchback",
+            "carType": "hybrid",
+            "year": 2021,
+            "kmDriven": 5000,
+            "price": 30000,
+            "seats": 4,
+            "availability": true
+        },
+        {
+            "regNr": "car4",
+            "color": "black",
+            "model": "coupe",
+            "carType": "diesel",
+            "year": 2018,
+            "kmDriven": 20000,
+            "price": 35000,
+            "seats": 2,
+            "availability": true
+        },
+        {
+            "regNr": "car5",
+            "color": "white",
+            "model": "convertible",
+            "carType": "gas",
+            "year": 2022,
+            "kmDriven": 1000,
+            "price": 40000,
+            "seats": 2,
+            "availability": false
+        },
+        {
+            "regNr": "AB12345",
+            "color": "Blue",
+            "model": "Volvo",
+            "carType": "Sedan",
+            "year": 2004,
+            "price": 200,
+            "kmDriven": 260000,
+            "seats": 5,
+            "availability": true
+        }
+    ],
+    "customer": [],
+    "lease": []
 }
