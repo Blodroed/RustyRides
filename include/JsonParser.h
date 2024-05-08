@@ -69,6 +69,11 @@ public:
      * @param car A reference to a Car object to be edited in the JSON file.
      */
     void editSingleCarToJson(const Car &car);
+    /**
+     * @brief Deletes a single car from the JSON file.
+     * @param car A reference to a Car object to be deleted from the JSON file.
+     */
+     void deleteSingleCarFromJson(const Car &car);
 
     // full backup and import
     void fullBackup(const std::vector<Car> &cars); // TODO add other vectors before fullBackup
