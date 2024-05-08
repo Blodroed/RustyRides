@@ -10,31 +10,69 @@
 #include <vector>
 #include <fstream>
 
+/**
+ * @class JsonParser
+ * @brief A class for parsing JSON data to the database.
+ *
+ * This class provides functions for importing and exporting data to and from a JSON file.
+ * It also provides functions for editing entries in the JSON file.
+ */
 
 class JsonParser {
 public:
-    // default constructor with filepath to database.json
+    /**
+     * @brief Default constructor with filepath to database.json
+     */
     JsonParser(){
         this->filepath = "../database/database.json";
     };
     ~JsonParser();
 
-    // constructor with custom filepath
-    // remember to close the file after using it
+    /**
+     * @brief Constructor with custom filepath
+     * @param filepath The path to the JSON file
+     */
     explicit JsonParser(const std::string &filepath);
 
-    // set filepath
+    /**
+     * @brief Sets the filepath
+     * @param filepath The path to the JSON file
+     */
     void setFilepath(const std::string &filepath);
 
-    // functions for importing and exporting to json cars
-    void importCarFromJson(std::vector<Car> &cars);
+    // ===== Cars Functions ================================================
+    /**
+     * @defgroup CarFunctions
+     * @brief Car-related JSON parsing functions
+     *
+     * This group contains all the functions related to parsing JSON data for cars.
+     * @{
+     */
+
+    /**
+     * @brief Imports cars from a JSON file and adds them to the provided vector.
+     * @param cars A reference to a vector of Car objects. The vector is cleared before new cars are added.
+     */
+    void importCarsFromJson(std::vector<Car> &cars);
+    /**
+     * @brief Exports the entire vector of cars to a JSON file.
+     * @param cars A reference to a vector of Car objects to be exported to the JSON file.
+     */
     void exportCarsToJson(const std::vector<Car> &cars);
+    /**
+     * @brief Exports a single car to the JSON file.
+     * @param car A reference to a Car object to be exported to the JSON file.
+     */
     void exportSingleCarToJson(const Car &car);
+    /**
+     * @brief Edits a single car in the JSON file.
+     * @param car A reference to a Car object to be edited in the JSON file.
+     */
     void editSingleCarToJson(const Car &car);
 
     // full backup and import
-    void fullBackup(const std::vector<Car> &cars); // TODO add other vectors
-    void fullImport(std::vector<Car> &cars); // TODO add other vectors
+    void fullBackup(const std::vector<Car> &cars); // TODO add other vectors before fullBackup
+    void fullImport(std::vector<Car> &cars); // TODO add other vectors before fullImport
 
 private:
     std::string filepath;

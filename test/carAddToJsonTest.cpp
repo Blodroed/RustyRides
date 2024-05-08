@@ -13,7 +13,7 @@ int carAddToJsonTest() {
     JsonParser jsonParser("../database/database-test.json");
     std::vector<Car> cars;
 
-    jsonParser.importCarFromJson(cars);
+    jsonParser.importCarsFromJson(cars);
     CarManager::displayAllCars(cars);
     CarManager::createCar(cars, jsonParser);
     CarManager::displayAllCars(cars);

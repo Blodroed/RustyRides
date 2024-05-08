@@ -47,7 +47,7 @@ void JsonParser::setFilepath(const std::string &newFilepath) {
  *
  * @param cars A reference to a vector of Car objects. The vector is cleared before new cars are added.
  */
-void JsonParser::importCarFromJson(std::vector<Car> &cars) {
+void JsonParser::importCarsFromJson(std::vector<Car> &cars) {
     std::ifstream file(filepath); // filepath should be set on construction of class
     if (!file.is_open()) {
         std::cerr << "Error: File not found or failed to open" << std::endl;
