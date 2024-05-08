@@ -30,11 +30,24 @@ void JsonParser::setFilepath(const std::string &newFilepath) {
     this->filepath = newFilepath;
 };
 
+/**
+ * @defgroup CarFunctions
+ * @brief Car-related JSON parsing functions
+ *
+ * This group contains all the functions related to parsing JSON data for cars.
+ * @{
+ */
+
+/**
+ * @brief Imports cars from a JSON file and adds them to the provided vector.
+ *
+ * This import method adds the cars to the vector given to the function.
+ * The vector is cleared before adding new cars to avoid duplicates.
+ * The database is considered to be the truth.
+ *
+ * @param cars A reference to a vector of Car objects. The vector is cleared before new cars are added.
+ */
 void JsonParser::importCarFromJson(std::vector<Car> &cars) {
-    /* Importing cars from json file
-     * this import method adds the cars to the vector given to the function
-     * WARNING: the vector is cleared before adding new cars
-    */
     std::ifstream file(filepath); // filepath should be set on construction of class
     if (!file.is_open()) {
         std::cerr << "Error: File not found or failed to open" << std::endl;
@@ -51,7 +64,9 @@ void JsonParser::importCarFromJson(std::vector<Car> &cars) {
     // accessing the cars array directly
     const auto &carsJson = doc["cars"];
 
-    cars.clear(); // clear the vector before adding new cars
+    // clear the vector before adding new cars
+    // this is to avoid duplicates. Database is considered to be the truth
+    cars.clear();
 
     // iterating through the cars array and adding it to the vector
     for (const auto &carJson : carsJson.GetArray()) {
@@ -62,16 +77,26 @@ void JsonParser::importCarFromJson(std::vector<Car> &cars) {
         cars.push_back(car);
     }
 }
-
-void JsonParser::exportCarToJson(const std::vector<Car> &cars) {
-    // TODO
+/**
+ * @brief Exports the entire vector of cars to a JSON file.
+ *
+ * This function takes a reference to the vector of Car objects and exports them to the JSON file.
+ * Note that cars already present in the JSON file will be skipped to avoid duplicates.
+ *
+ * @param cars A reference to a vector of Car objects to be exported to the JSON file.
+ */
+void JsonParser::exportCarsToJson(const std::vector<Car> &cars) {
+    //TODO: er denne nødvendig? Med tanke på at vi har exportSingleCarToJson allerede legger til en bil i json fila
 }
-
+/**
+ * @brief Exports a single car to a JSON file.
+ *
+ * This function exports a single car to the JSON file.
+ * The car is added to the end of the cars array in the JSON file.
+ *
+ * @param car A reference to a Car object to be exported to the JSON file.
+ */
 void JsonParser::exportSingleCarToJson(const Car &car) {
-    /* Exporting a single car to json file
-     * this function exports a single car to the json file
-     * the car is added to the end of the cars array in the json file
-     */
     std::ifstream file(filepath); // filepath should be set on construction of class
     if (!file.is_open()) {
         std::cerr << "Error: File not found or failed to open" << std::endl;
@@ -110,3 +135,5 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
     doc.Accept(writer);
 }
+
+/** @} */ // end of CarFunctions group
