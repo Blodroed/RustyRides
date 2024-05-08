@@ -40,7 +40,9 @@ void CarManager::createCar(std::vector<Car> &cars, JsonParser &jsonParser) {
     std::getline(std::cin, carType);
     std::cout << "Year: " << std::endl;
     std::cin >> year; std::cin.ignore();
+    std::cin >> year; std::cin.ignore();
     std::cout << "Price: " << std::endl;
+    std::cin >> price; std::cin.ignore();
     std::cin >> price; std::cin.ignore();
     std::cout << "Km driven: " << std::endl;
     std::cin >> kmDriven; std::cin.ignore();

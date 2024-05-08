@@ -1,7 +1,4 @@
-//
-// Created by Albert on 17.04.2024.
-//
-
+#include "include/mainwindow.h"
 #include "include/Car.h"
 #include "include/CarManager.h"
 #include "include/JsonParser.h"
@@ -12,8 +9,17 @@
 #include <vector>
 #include <iostream>
 
-int main() {
+#include <QApplication>
+#include <vector>
+#include <iostream>
+
+int main(int argc, char *argv[])
+{
     std::cout << "C++ version: " << __cplusplus << std::endl;
     carAddToJsonTest(); // TODO remove when done testing
-    return 0;
+    
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }

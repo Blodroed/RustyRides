@@ -26,7 +26,6 @@ public:
     void setSeats(int seats);
     void setAvailable(bool available);
 
-
     // Getters for each private member
     std::string getRegNr() const;
     std::string getColor() const;
