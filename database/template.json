@@ -9,7 +9,7 @@
       "kmDriven": 12345,
       "price": 12345,
       "seats": 4,
-      "availability": "0 or 1"
+      "availability": "true or false"
     }
   ],
   "customer": [

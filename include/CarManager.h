@@ -6,13 +6,15 @@
 #define HELLHUB_CARMANAGER_H
 
 #include "Car.h"
+#include "JsonParser.h"
 #include <iostream>
 #include <vector>
 
 class CarManager {
 public:
-    Car createCar(std::vector<Car> &cars);
+    static void createCar(std::vector<Car> &cars, JsonParser &jsonParser);
     void displayCar(const Car& car);
+    static void displayAllCars(const std::vector<Car> &cars);
     static void addCarToVector(std::vector<Car> &cars, const Car &car);
 
     void availabilitySwitch(Car& car);

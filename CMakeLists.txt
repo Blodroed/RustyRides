@@ -17,6 +17,14 @@ set(PROJECT_SOURCES
         src/mainwindow.cpp
         include/mainwindow.h
         mainwindow.ui
+        include/Car.h
+        src/Car.cpp
+        include/CarManager.h
+        src/CarManager.cpp
+        include/JsonParser.h
+        src/JsonParser.cpp
+        test/carAddToJsonTest.cpp
+        test/carAddToJsonTest.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -41,6 +49,9 @@ else()
         )
     endif()
 endif()
+
+# Add RapidJSON headers directory to the include path
+include_directories(libs/rapidjson)
 
 target_link_libraries(HellHub PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
