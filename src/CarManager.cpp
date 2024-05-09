@@ -78,21 +78,23 @@ void CarManager::displayCar(const Car &car) {
 }
 
 void CarManager::displayAllCars(const std::vector<Car> &cars) {
+    std::cout << "=== All cars =====================" << std::endl;
     for (const auto &car : cars) {
-        std::cout << "========================" << std::endl;
-        std::cout << "RegNr: " << car.getRegNr() << std::endl;
-        std::cout << "Color: " << car.getColor() << std::endl;
-        std::cout << "Model: " << car.getModel() << std::endl;
-        std::cout << "Car type: " << car.getCarType() << std::endl;
-        std::cout << "Year: " << car.getYear() << std::endl;
-        std::cout << "Price: " << car.getPrice() << std::endl;
-        std::cout << "Km driven: " << car.getKmDriven() << std::endl;
+        std::cout << "----------------------------" << std::endl;
+        std::cout << "RegNr: " << car.getRegNr()
+                  << ", Color: " << car.getColor()
+                  << ", Model: " << car.getModel()
+                  << ", Car type: " << car.getCarType()
+                  << ", Year: " << car.getYear()
+                  << ", Price: " << car.getPrice()
+                  << ", Km driven: " << car.getKmDriven() << std::endl;
         if (car.getAvailable()) {
             std::cout << "Available: Yes" << std::endl;
         } else {
             std::cout << "Available: No" << std::endl;
         }
     }
+    std::cout << "=================================" << std::endl;
 }
 
 void CarManager::addCarToVector(std::vector<Car> &cars, const Car &car) {
