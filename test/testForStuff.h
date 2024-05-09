@@ -8,7 +8,9 @@
 
 class testForStuff {
 public:
-    
+    static void carAddToJsonTest();
+    static void carAdderTest();
+
 };
 
 
