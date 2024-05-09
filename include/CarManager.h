@@ -13,7 +13,7 @@
 class CarManager {
 public:
     static void createCar(std::vector<Car> &cars, JsonParser &jsonParser);
-    void displayCar(const Car &car);
+    static void displayCar(const Car &car);
     static void displayAllCars(const std::vector<Car> &cars);
     static void addCarToVector(std::vector<Car> &cars, const Car &car);
     static void editCarAllInstances(std::vector<Car> &cars, Car& car, JsonParser &jsonParser);

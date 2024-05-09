@@ -13,7 +13,12 @@
 int main(int argc, char *argv[])
 {
     std::cout << "C++ version: " << __cplusplus << std::endl;
+    // tests
+    JsonParser jsonParser("../database/database-test.json");
+
     
+
+
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
