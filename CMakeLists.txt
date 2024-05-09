@@ -16,7 +16,7 @@ set(PROJECT_SOURCES
         main.cpp
         src/mainwindow.cpp
         include/mainwindow.h
-        mainwindow.ui
+        src/mainwindow.ui
         include/Car.h
         src/Car.cpp
         include/CarManager.h
