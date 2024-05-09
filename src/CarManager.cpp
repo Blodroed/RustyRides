@@ -1,5 +1,5 @@
 //
-// Created by Alber on 22.04.2024.
+// Created by Albert on 22.04.2024.
 //
 
 #include "../include/CarManager.h"
@@ -97,6 +97,40 @@ void CarManager::displayAllCars(const std::vector<Car> &cars) {
 
 void CarManager::addCarToVector(std::vector<Car> &cars, const Car &car) {
     cars.push_back(car); // damn program is so strong it can push cars
+}
+
+const Car* CarManager::searchForCarWithRegNR(const std::vector<Car> &cars, const std::string &regNr) {
+    /*
+     * This function is used to search for a car in the vector cars
+     * The function takes a reference to the vector cars and a string regNr
+     * The function iterates through the vector cars and compares the regNr
+     * of each car with the provided regNr, if the regNr is found the function
+     * returns a pointer to the car object, if the regNr is not found the function
+     * returns a nullptr
+     */
+    for (auto &car : cars) {
+        if (car.getRegNr() == regNr) {
+            return &car;
+        }
+    }
+
+    std::cout << "Car not found!" << std::endl;
+    return nullptr;
+}
+
+void CarManager::editCarAllInstances(std::vector<Car> &cars, Car &car, JsonParser &jsonParser) {
+    /*
+     * In the function we take a reference to the vector cars and a reference to the car object
+     * We then iterate through the vector cars and compare the regNr of each car with the regNr of the provided car
+     * If the regNr is found we edit the car object in the vector cars
+     * We then export the edited car to the json document
+     */
+    for (auto &carInVector : cars) {
+        if (carInVector.getRegNr() == car.getRegNr()) {
+            carInVector = car;
+            jsonParser.editSingleCarToJson(car);
+        }
+    }
 }
 
 void CarManager::availabilitySwitch(Car& car) {
