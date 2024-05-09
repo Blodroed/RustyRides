@@ -62,8 +62,9 @@ void CarManager::createCar(std::vector<Car> &cars, JsonParser &jsonParser) {
 
 void CarManager::displayCar(const Car &car) {
     std::cout << "========================" << std::endl;
-    std::cout << "Car added!" << std::endl;
+    std::cout << "Car info" << std::endl;
     std::cout << "-------------------" << std::endl;
+    std::cout << "RegNr: " << car.getRegNr() << std::endl;
     std::cout << "Color: " << car.getColor() << std::endl;
     std::cout << "Model: " << car.getModel() << std::endl;
     std::cout << "Car type: " << car.getCarType() << std::endl;

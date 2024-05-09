@@ -2,6 +2,7 @@
 #include "include/Car.h"
 #include "include/CarManager.h"
 #include "include/JsonParser.h"
+#include "test/testForStuff.h"
 
 // tests remove when done
 
@@ -16,7 +17,7 @@ int main(int argc, char *argv[])
     // tests
     JsonParser jsonParser("../database/database-test.json");
 
-    
+    testForStuff::editCarTest(jsonParser);
 
 
     QApplication a(argc, argv);
