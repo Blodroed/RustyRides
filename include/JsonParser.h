@@ -75,6 +75,8 @@ public:
      */
      void deleteSingleCarFromJson(const Car &car);
 
+    /**@}*/
+
     // full backup and import
     void fullBackup(const std::vector<Car> &cars); // TODO add other vectors before fullBackup
     void fullImport(std::vector<Car> &cars); // TODO add other vectors before fullImport
