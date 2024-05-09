@@ -136,4 +136,52 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     doc.Accept(writer);
 }
 
+/**
+ * @brief Edits a single car in the JSON file.
+ *
+ * This function edits a single car in the JSON file.
+ * The car is identified by the registration number.
+ *
+ * @param car A reference to a Car object to be edited in the JSON file.
+ */
+ void JsonParser::editSingleCarToJson(const Car &car) {
+    std::ifstream file(filepath); // filepath should be set on construction of class
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+
+    // converting the ifstream to IStreamWrapper
+    // then reads it into memory for JSON document object
+    rapidjson::IStreamWrapper isw(file);
+    rapidjson::Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // accessing the cars array directly
+    auto &carsJson = doc["cars"];
+
+    // iterating through the cars array finding correct car and editing it
+    for (auto &carJson : carsJson.GetArray()) {
+        if (carJson["regNr"].GetString() == car.getRegNr()) {
+            // editing the car object
+            carJson["color"].SetString(car.getColor().c_str(), doc.GetAllocator());
+            carJson["model"].SetString(car.getModel().c_str(), doc.GetAllocator());
+            carJson["carType"].SetString(car.getCarType().c_str(), doc.GetAllocator());
+            carJson["year"].SetInt(car.getYear());
+            carJson["price"].SetInt(car.getPrice());
+            carJson["kmDriven"].SetInt(car.getKmDriven());
+            carJson["seats"].SetInt(car.getSeats());
+            carJson["availability"].SetBool(car.getAvailable());
+            break;
+        }
+    }
+
+    // writing the JSON object to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+ }
+
 /** @} */ // end of CarFunctions group

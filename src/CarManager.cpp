@@ -129,6 +129,7 @@ void CarManager::editCarAllInstances(std::vector<Car> &cars, Car &car, JsonParse
         if (carInVector.getRegNr() == car.getRegNr()) {
             carInVector = car;
             jsonParser.editSingleCarToJson(car);
+            break;
         }
     }
 }
