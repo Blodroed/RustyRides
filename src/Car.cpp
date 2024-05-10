@@ -45,7 +45,10 @@ bool Car::getAvailable() const {return available;}
 void Car::setColor(std::string color) {this->color = color;}
 void Car::setModel(std::string model) {this->model = model;}
 void Car::setCarType(std::string carType) {this->carType = carType;}
+void Car::setYear(int year) {this->year = year;}
 void Car::setPrice(int price) {this->price = price;}
 void Car::setKmDriven(int newKmDriven) {this->kmDriven = newKmDriven;}
 void Car::setSeats(int newSeats) {this->seats = newSeats;}
 void Car::setAvailable(bool available) {this->available = available;}
+
+

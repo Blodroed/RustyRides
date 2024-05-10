@@ -21,6 +21,7 @@ public:
     void setColor(std::string color);
     void setModel(std::string model);
     void setCarType(std::string carType);
+    void setYear(int year);
     void setPrice(int price);
     void setKmDriven(int kmDriven);
     void setSeats(int seats);
