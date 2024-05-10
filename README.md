@@ -17,7 +17,7 @@ This is the group project for the IKT103 exam. We chose the Car rental GUI exam 
 - [x] 10% Add cars
 - [ ] 5% Edit cars
 - [ ] 5% Remove cars
-- [ ] 10% Add customer
+- [x] 10% Add customer
 - [ ] 5% Edit customer
 - [ ] 5% Remove customer
 - [ ] 10% Assign car to customer
