@@ -28,6 +28,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    customerManager custManager; // A line that was sorely missing from the previous commit
+    CustomerManager custManager; // A line that was sorely missing from the previous commit
 };
 #endif // HELLHUB_MAINWINDOW_H

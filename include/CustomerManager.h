@@ -9,21 +9,21 @@
 #include "customer.h"
 
 /**
- * @class customerManager
+ * @class CustomerManager
  * @brief Manages customer records.
  *
  * This class is responsible for managing a collection of customers.
  * It provides functionalities to add and display customers.
  */
-class customerManager {
+class CustomerManager {
 public:
     /**
-     * @brief Default constructor for customerManager.
+     * @brief Default constructor for CustomerManager.
      *
-     * Initializes a new instance of customerManager, setting up an empty list
+     * Initializes a new instance of CustomerManager, setting up an empty list
      * of customers.
      */
-    customerManager();
+    CustomerManager();
 
     /**
      * @brief Adds a customer to the manager.
@@ -43,7 +43,7 @@ public:
      * customer to the standard output.
      * @param customer The customer to display.
      */
-    void displayCustomer(const customer& customer) const;
+    static void displayCustomer(const customer& customer) const; // making functions static void means we do not need to create an instance of the class to call them
 
     /**
      * @brief Displays all customers' details.
