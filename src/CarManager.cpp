@@ -173,7 +173,7 @@ void CarManager::editCarAllInstances(Car *car, Car &editedCar, JsonParser &jsonP
     // exporting the edited car to the json document,
     // remember that we are dereferencing the car pointer before passing it to the function
     // TODO: maybe make exportSingleCarToJson take a pointer instead of a reference
-    jsonParser.exportSingleCarToJson(*car);
+    jsonParser.editSingleCarToJson(*car);
 }
 
 void CarManager::availabilitySwitch(Car *car) {

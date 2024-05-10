@@ -92,12 +92,10 @@ void JsonParser::exportCarsToJson(const std::vector<Car> &cars) {
  * @brief Exports a single car to a JSON file.
  *
  * This function exports a single car to the JSON file.
- * The car is identified by its registration number (regNr).
- * If a car with the same regNr is found in the JSON file, its attributes are updated.
- * If no matching car is found, no changes are made to the JSON file.
+ * The car is added to the end of the cars array in the JSON file.
+ * The car's attributes are used to create a new JSON object, which is then added to the cars array.
  *
  * @param car A reference to a Car object to be exported to the JSON file.
- * The car's attributes are used to update the matching car in the JSON file.
  */
 void JsonParser::exportSingleCarToJson(const Car &car) {
     std::ifstream file(filepath); // filepath should be set on construction of class
@@ -139,13 +137,6 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     doc.Accept(writer);
 }
 
-    // writing the JSON object to the file
-    std::ofstream ofstream(filepath);
-    rapidjson::OStreamWrapper osw(ofstream);
-    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
-    doc.Accept(writer);
-}
-
 /**
  * @brief Edits a single car in the JSON file.
  *
@@ -154,8 +145,10 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
  *
  * @param car A reference to a Car object to be edited in the JSON file.
  */
- void JsonParser::editSingleCarToJson(const Car &editCar) {
-    std::ifstream file(filepath); // filepath should be set on construction of class
+ void JsonParser::editSingleCarToJson(const Car &car) {
+    // much needed variables
+    std::string targetRegNr = car.getRegNr();   // need this for some reason to work with comparisons
+    std::ifstream file(filepath);               // filepath should be set on construction of class
     if (!file.is_open()) {
         std::cerr << "Error: File not found or failed to open" << std::endl;
         return;
@@ -163,40 +156,32 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
 
     // converting the ifstream to IStreamWrapper
     // then reads it into memory for JSON document object
-    rapidjson::IStreamWrapper isw(file);
-    rapidjson::Document doc;
+    IStreamWrapper isw(file);
+    Document doc;
     doc.ParseStream(isw);
     file.close();
 
-    // accessing the cars array directly
-    auto &carsJson = doc["cars"];
+    // creating a new JSON object for the car
     auto &allocator = doc.GetAllocator();
 
-    // iterating through the cars object to find and remove the existing car
-    for (rapidjson::Value::MemberIterator itr = carsJson.MemberBegin(); itr != carsJson.MemberEnd(); ++itr) {
-        if (itr->name.GetString() == editCar.getRegNr()) {
-            carsJson.RemoveMember(itr);
-            break;
+    for (Value::ValueIterator itr = doc["cars"].Begin(); itr != doc["cars"].End(); ++itr) {
+        Value& carJson = *itr;      // dereference the iterator to get the car object
+        if (carJson["regNr"].GetString() == targetRegNr) {
+            // Update car's attributes other than the registration number
+            carJson["color"].SetString(car.getColor().c_str(), allocator);
+            carJson["model"].SetString(car.getModel().c_str(), allocator);
+            carJson["carType"].SetString(car.getCarType().c_str(), allocator);
+            carJson["year"].SetInt(car.getYear());
+            carJson["price"].SetInt(car.getPrice());
+            carJson["kmDriven"].SetInt(car.getKmDriven());
+            carJson["seats"].SetInt(car.getSeats());
+            carJson["availability"].SetBool(car.getAvailable());
+            break; // Once found and updated, exit the loop
         }
     }
 
-    // creating a new JSON object for the edited car
-    rapidjson::Value newCarJson(rapidjson::kObjectType);
-    newCarJson.AddMember("regNr", rapidjson::Value(editCar.getRegNr().c_str(), allocator).Move(), allocator);
-    newCarJson.AddMember("color", rapidjson::Value(editCar.getColor().c_str(), allocator).Move(), allocator);
-    newCarJson.AddMember("model", rapidjson::Value(editCar.getModel().c_str(), allocator).Move(), allocator);
-    newCarJson.AddMember("carType", rapidjson::Value(editCar.getCarType().c_str(), allocator).Move(), allocator);
-    newCarJson.AddMember("year", editCar.getYear(), allocator);
-    newCarJson.AddMember("price", editCar.getPrice(), allocator);
-    newCarJson.AddMember("kmDriven", editCar.getKmDriven(), allocator);
-    newCarJson.AddMember("seats", editCar.getSeats(), allocator);
-    newCarJson.AddMember("availability", editCar.getAvailable(), allocator);
-
-    // adding the edited car to the cars object
-    carsJson.AddMember(rapidjson::Value(editCar.getRegNr().c_str(), allocator).Move(), newCarJson, allocator);
-
     // writing the JSON object to the file
-    std::ofstream ofstream(filepath, std::ios::trunc);  // trunc to overwrite the file
+    std::ofstream ofstream(filepath);
     rapidjson::OStreamWrapper osw(ofstream);
     rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
     doc.Accept(writer);
