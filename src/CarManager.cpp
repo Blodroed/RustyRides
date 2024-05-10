@@ -102,7 +102,7 @@ void CarManager::addCarToVector(std::vector<Car> &cars, const Car &car) {
     cars.push_back(car); // damn program is so strong it can push cars
 }
 
-const Car* CarManager::searchForCarWithRegNR(const std::vector<Car> &cars, const std::string &regNr) {
+Car* CarManager::searchForCarWithRegNR(std::vector<Car> &cars, const std::string &regNr) {
     /*
      * This function is used to search for a car in the vector cars
      * The function takes a reference to the vector cars and a string regNr
@@ -120,28 +120,67 @@ const Car* CarManager::searchForCarWithRegNR(const std::vector<Car> &cars, const
     std::cout << "Car not found!" << std::endl;
     return nullptr;
 }
+/**
+ * @brief Edits the attributes of a Car object.
+ *
+ * This function edits the attributes of a Car object based on the attributes of another Car object.
+ * The function checks if the registration numbers of the two cars match before editing.
+ * If the registration numbers do not match, the function does not perform any edits and prints an error message.
+ * If the Car pointer is null, the function does not perform any edits and prints an error message.
+ *
+ * @param car A pointer to the Car object to be edited.
+ * @param editedCar A reference to a Car object containing the new attributes.
+ */
+void CarManager::editCarObject(Car *car, Car &editedCar) {
 
-void CarManager::editCarAllInstances(std::vector<Car> &cars, Car &car, JsonParser &jsonParser) {
+    if (car == nullptr) {
+        std::cout << "Car pointer is not pointing to anything" << std::endl;
+        return;
+    }
+
+    if (car->getRegNr() == editedCar.getRegNr()) {
+        car->setColor(editedCar.getColor());
+        car->setModel(editedCar.getModel());
+        car->setCarType(editedCar.getCarType());
+        car->setYear(editedCar.getYear());
+        car->setPrice(editedCar.getPrice());
+        car->setKmDriven(editedCar.getKmDriven());
+        car->setSeats(editedCar.getSeats());
+        car->setAvailable(editedCar.getAvailable());
+
+        std::cout << "Car object edited" << std::endl;
+        return;
+    } else {
+        std::cout << "The regNr of the car object and the edited car object do not match" << std::endl;
+    }
+}
+
+void CarManager::editCarAllInstances(Car *car, Car &editedCar, JsonParser &jsonParser) {
     /*
-     * In the function we take a reference to the vector cars and a reference to the car object
+     * In the function we take a reference to the car we want to edit
      * We then iterate through the vector cars and compare the regNr of each car with the regNr of the provided car
      * If the regNr is found we edit the car object in the vector cars
      * We then export the edited car to the json document
      */
-    for (auto &carInVector : cars) {
-        if (carInVector.getRegNr() == car.getRegNr()) {
-            carInVector = car;
-            jsonParser.editSingleCarToJson(car);
-            break;
-        }
+    if (car == nullptr) {
+        std::cout << "Car pointer is not pointing to anything" << std::endl;
+        return;
     }
+
+    // editing the car object
+    editCarObject(car, editedCar);
+
+    // exporting the edited car to the json document,
+    // remember that we are dereferencing the car pointer before passing it to the function
+    // TODO: maybe make exportSingleCarToJson take a pointer instead of a reference
+    jsonParser.exportSingleCarToJson(*car);
 }
 
-void CarManager::availabilitySwitch(Car& car) {
-    if (car.getAvailable()) {
-        car.setAvailable(false);
+void CarManager::availabilitySwitch(Car *car) {
+    if (car->getAvailable()) {
+        car->setAvailable(false);
     } else {
-        car.setAvailable(true);
+        car->setAvailable(true);
     }
 }
 
