@@ -20,11 +20,10 @@ void testForStuff::carAddToJsonTest() {
 }
 
 void testForStuff::carAdderTest() {
-    CarManager carManager;
     std::vector<Car> cars;
     JsonParser jsonParser("../database/database-test.json");
 
-    carManager.createCar(cars, jsonParser);
+    CarManager::createCar(cars, jsonParser);
 }
 
 void testForStuff::editCarTest(JsonParser &jsonParser) {
@@ -32,9 +31,17 @@ void testForStuff::editCarTest(JsonParser &jsonParser) {
     std::vector<Car> cars;
     jsonParser.importCarsFromJson(cars);
 
+    Car *car = CarManager::searchForCarWithRegNR(cars, "AB12345");
+    if (car == nullptr) {
+        std::cout << "Car not found" << std::endl;
+        return;
+    }
+    CarManager::displayCar(*car);  // dereferenced before passing to the function
+
+    // make new car Obect for editing
+    Car editedCar("AB12345", "Black", "Volvo", "Diesel", 2020, 1000, 10000, 5, true);
+
+    CarManager::editCarAllInstances(car, editedCar, jsonParser);
+    CarManager::displayCar(*car);  // dereferenced before passing to the function
     CarManager::displayAllCars(cars);
-
-    const Car *car = CarManager::searchForCarWithRegNR(cars, "car1");
-
-    CarManager::displayCar(*car);
 }

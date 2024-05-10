@@ -57,12 +57,12 @@
         },
         {
             "regNr": "AB12345",
-            "color": "Blue",
+            "color": "Black",
             "model": "Volvo",
-            "carType": "Sedan",
-            "year": 2004,
-            "price": 200,
-            "kmDriven": 260000,
+            "carType": "Diesel",
+            "year": 2020,
+            "price": 1000,
+            "kmDriven": 10000,
             "seats": 5,
             "availability": true
         }
