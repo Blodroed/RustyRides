@@ -100,9 +100,7 @@ void JsonParser::exportCarsToJson(const std::vector<Car> &cars) {
  * The car's attributes are used to update the matching car in the JSON file.
  */
 void JsonParser::exportSingleCarToJson(const Car &car) {
-    // much needed variables
-    std::string targetRegNr = car.getRegNr();   // need this for some reason to work with comparisons
-    std::ifstream file(filepath);               // filepath should be set on construction of class
+    std::ifstream file(filepath); // filepath should be set on construction of class
     if (!file.is_open()) {
         std::cerr << "Error: File not found or failed to open" << std::endl;
         return;
@@ -110,29 +108,36 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
 
     // converting the ifstream to IStreamWrapper
     // then reads it into memory for JSON document object
-    IStreamWrapper isw(file);
-    Document doc;
+    rapidjson::IStreamWrapper isw(file);
+    rapidjson::Document doc;
     doc.ParseStream(isw);
     file.close();
 
+    // accessing the cars array directly
+    auto &carsJson = doc["cars"];
+
     // creating a new JSON object for the car
+    rapidjson::Value carJson(rapidjson::kObjectType);
     auto &allocator = doc.GetAllocator();
 
-    for (Value::ValueIterator itr = doc["cars"].Begin(); itr != doc["cars"].End(); ++itr) {
-        Value& carJson = *itr;      // dereference the iterator to get the car object
-        if (carJson["regNr"].GetString() == targetRegNr) {
-            // Update car's attributes other than the registration number
-            carJson["color"].SetString(car.getColor().c_str(), allocator);
-            carJson["model"].SetString(car.getModel().c_str(), allocator);
-            carJson["carType"].SetString(car.getCarType().c_str(), allocator);
-            carJson["year"].SetInt(car.getYear());
-            carJson["price"].SetInt(car.getPrice());
-            carJson["kmDriven"].SetInt(car.getKmDriven());
-            carJson["seats"].SetInt(car.getSeats());
-            carJson["availability"].SetBool(car.getAvailable());
-            break; // Once found and updated, exit the loop
-        }
-    }
+    carJson.AddMember("regNr", rapidjson::Value(car.getRegNr().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("color", rapidjson::Value(car.getColor().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("model", rapidjson::Value(car.getModel().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("carType", rapidjson::Value(car.getCarType().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("year", car.getYear(), allocator);
+    carJson.AddMember("price", car.getPrice(), allocator);
+    carJson.AddMember("kmDriven", car.getKmDriven(), allocator);
+    carJson.AddMember("seats", car.getSeats(), allocator);
+    carJson.AddMember("availability", car.getAvailable(), allocator);
+
+    doc["cars"].PushBack(carJson, allocator);
+
+    // writing the JSON object to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+}
 
     // writing the JSON object to the file
     std::ofstream ofstream(filepath);
