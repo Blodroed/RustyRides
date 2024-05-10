@@ -2,9 +2,8 @@
 #include "include/Car.h"
 #include "include/CarManager.h"
 #include "include/JsonParser.h"
+// tests
 #include "test/testForStuff.h"
-
-// tests remove when done
 
 #include <vector>
 #include <iostream>
