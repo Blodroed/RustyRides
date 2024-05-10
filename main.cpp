@@ -16,7 +16,6 @@
 int main(int argc, char *argv[])
 {
     std::cout << "C++ version: " << __cplusplus << std::endl;
-    carAddToJsonTest(); // TODO remove when done testing
     
     QApplication a(argc, argv);
     MainWindow w;
