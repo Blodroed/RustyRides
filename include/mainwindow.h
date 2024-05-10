@@ -5,6 +5,8 @@
 #ifndef HELLHUB_MAINWINDOW_H
 #define HELLHUB_MAINWINDOW_H
 
+#include "../include/customerManager.h"
+
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
