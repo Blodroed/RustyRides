@@ -165,7 +165,7 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     auto &allocator = doc.GetAllocator();
 
     for (Value::ValueIterator itr = doc["cars"].Begin(); itr != doc["cars"].End(); ++itr) {
-        Value& carJson = *itr;      // dereference the iterator to get the car object
+        Value &carJson = *itr;      // dereference the iterator to get the car object
         if (carJson["regNr"].GetString() == targetRegNr) {
             // Update car's attributes other than the registration number
             carJson["color"].SetString(car.getColor().c_str(), allocator);
@@ -191,23 +191,30 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     // much needed variables
     std::string targetRegNr = car->getRegNr();   // need this for some reason to work with comparisons
 
-    // same procedure as last year james
+    // same procedure as last year ms SOfie?
     std::ifstream file(filepath);
     if (!file.is_open()) {
         std::cerr << "Error: File not found or failed to open" << std::endl;
         return;
     }
-
+    // same procedure as every year, James
     IStreamWrapper isw(file);
     Document doc;
     doc.ParseStream(isw);
     file.close();
 
-    for (Value::ValueIterator itr = doc["cars"].Begin(); itr != doc["cars"].End(); ++itr) {
+    /*
+     * we should also check if the car is available before deleting it
+     */
+
+    auto itr = doc["cars"].Begin();
+    while (itr != doc["cars"].End()) {
         Value& carjson = *itr;
         if (carjson["regnr"].GetString() == targetRegNr) {
-            doc["cars"].Erase(itr);
+            itr = doc["cars"].Erase(itr);
             break;
+        } else {
+             ++itr;
         }
     }
 
