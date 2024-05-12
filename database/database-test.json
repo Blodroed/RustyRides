@@ -54,17 +54,6 @@
             "price": 40000,
             "seats": 2,
             "availability": false
-        },
-        {
-            "regNr": "AB12345",
-            "color": "Black",
-            "model": "Volvo",
-            "carType": "Diesel",
-            "year": 2020,
-            "price": 1000,
-            "kmDriven": 10000,
-            "seats": 5,
-            "availability": true
         }
     ],
     "customer": [],

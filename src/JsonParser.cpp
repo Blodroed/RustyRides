@@ -213,6 +213,8 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
          if (carJson["regNr"].GetString() == targetRegNr) {
              // If the registration number matches, erase this element
              itr = doc["cars"].Erase(itr);
+             // for some dumb reason the program crashed when we breaked out of the loop before
+             // it had gone through all the cars
          } else {
              ++itr;
          }
