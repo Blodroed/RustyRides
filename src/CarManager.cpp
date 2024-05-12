@@ -176,6 +176,29 @@ void CarManager::editCarAllInstances(Car *car, Car &editedCar, JsonParser &jsonP
     jsonParser.editSingleCarToJson(*car);
 }
 
+void CarManager::deleteCar(std::vector<Car> &cars, Car *car, JsonParser &jsonParser) {
+    /*
+     * This function is used to delete a car object from the vector cars
+     * The function takes a reference to the vector cars and a pointer to the car object
+     * The function iterates through the vector cars and compares the regNr of each car with the regNr of the provided car
+     * If the regNr is found the function deletes the car object from the vector cars
+     */
+    if (car == nullptr) {
+        std::cout << "Car pointer is not pointing to anything" << std::endl;
+        return;
+    }
+
+    jsonParser.deleteSingleCarFromJson(car);
+
+    for (auto it = cars.begin(); it != cars.end(); ++it) {
+        if (it->getRegNr() == car->getRegNr()) {
+            cars.erase(it);
+            std::cout << "Car deleted" << std::endl;
+            return;
+        }
+    }
+}
+
 void CarManager::availabilitySwitch(Car *car) {
     if (car->getAvailable()) {
         car->setAvailable(false);

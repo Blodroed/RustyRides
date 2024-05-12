@@ -13,6 +13,7 @@ public:
     static void carAddToJsonTest();
     static void carAdderTest();
     static void editCarTest(JsonParser &jsonParser);
+    static void removeCarTest(JsonParser &jsonParser);
 };
 
 
