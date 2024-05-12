@@ -53,7 +53,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideNone</enum>
@@ -62,16 +62,6 @@
      <attribute name="title">
       <string>Cars</string>
      </attribute>
-     <widget class="QListWidget" name="CarList">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>461</width>
-        <height>511</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QPushButton" name="NewCarBtn">
       <property name="geometry">
        <rect>
@@ -126,21 +116,21 @@
        <string>Remove car</string>
       </property>
      </widget>
+     <widget class="QTableView" name="CarTable">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>551</width>
+        <height>511</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="Customers">
      <attribute name="title">
       <string>Customers</string>
      </attribute>
-     <widget class="QListWidget" name="CustList">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>461</width>
-        <height>511</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QPushButton" name="NewCustBtn">
       <property name="geometry">
        <rect>
@@ -195,21 +185,21 @@
        <string>Remove customer</string>
       </property>
      </widget>
+     <widget class="QTableWidget" name="CustTable">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>551</width>
+        <height>511</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="Leases">
      <attribute name="title">
       <string>Leases</string>
      </attribute>
-     <widget class="QListWidget" name="listWidget_3">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>461</width>
-        <height>511</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QPushButton" name="NewLeaseBtn">
       <property name="geometry">
        <rect>
@@ -262,6 +252,16 @@
       </property>
       <property name="text">
        <string>Remove lease</string>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="LeaseTable">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>551</width>
+        <height>511</height>
+       </rect>
       </property>
      </widget>
     </widget>

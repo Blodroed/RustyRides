@@ -6,7 +6,6 @@
 #define HELLHUB_MAINWINDOW_H
 
 #include "../include/customerManager.h"
-
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -28,6 +27,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    CustomerManager custManager; // A line that was sorely missing from the previous commit
+    customerManager custManager;
+    void updateCustomerTable();
 };
+
 #endif // HELLHUB_MAINWINDOW_H
