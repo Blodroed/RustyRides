@@ -207,16 +207,16 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
      * we should also check if the car is available before deleting it
      */
 
-    auto itr = doc["cars"].Begin();
-    while (itr != doc["cars"].End()) {
-        Value& carjson = *itr;
-        if (carjson["regnr"].GetString() == targetRegNr) {
-            itr = doc["cars"].Erase(itr);
-            break;
-        } else {
+     // Iterate over the cars array
+     for (Value::ValueIterator itr = doc["cars"].Begin(); itr != doc["cars"].End();) {
+         Value &carJson = *itr;
+         if (carJson["regNr"].GetString() == targetRegNr) {
+             // If the registration number matches, erase this element
+             itr = doc["cars"].Erase(itr);
+         } else {
              ++itr;
-        }
-    }
+         }
+     }
 
     // writing to the file
     std::ofstream ofstream(filepath);
