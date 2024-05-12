@@ -24,29 +24,29 @@ customer::customer(const QString &personNr, const QString &email, const QString 
     setName(name);
 }
 
+// Minor change here (less use of std::move)
+
 customer::customer(customer&& other) noexcept
-: QDialog(nullptr), ui(other.ui),
-personNr(std::move(other.personNr)),
-email(std::move(other.email)),
-phone(std::move(other.phone)),
-age(other.age),
-name(std::move(other.name)) {
-    other.ui = nullptr;
+: QDialog(nullptr), ui(new Ui::customer) {
+    ui->setupUi(this);
     setParent(static_cast<QWidget*>(other.parent()));
+
+    setPersonNr(other.getPersonNr());
+    setEmail(other.getEmail());
+    setPhone(other.getPhone());
+    setAge(other.getAge());
+    setName(other.getName());
 }
 
 customer& customer::operator=(customer&& other) noexcept {
 if (this != &other) {
 QDialog::setParent(static_cast<QWidget*>(other.parent()));
-delete ui;
-ui = other.ui;
-other.ui = nullptr;
 
-personNr = std::move(other.personNr);
-email = std::move(other.email);
-phone = std::move(other.phone);
-age = other.age;
-name = std::move(other.name);
+setPersonNr(other.getPersonNr());
+setEmail(other.getEmail());
+setPhone(other.getPhone());
+setAge(other.getAge());
+setName(other.getName());
 }
 return *this;
 }
