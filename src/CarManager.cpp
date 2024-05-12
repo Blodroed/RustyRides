@@ -188,6 +188,12 @@ void CarManager::deleteCar(std::vector<Car> &cars, Car *car, JsonParser &jsonPar
         return;
     }
 
+    if (car->getAvailable() == false) {
+        // this should probably also be checked in the remove button in the relevant menu
+        std::cout << "Car is rented, you cannot remove it" << std::endl;
+        return;
+    }
+
     jsonParser.deleteSingleCarFromJson(car);
 
     for (auto it = cars.begin(); it != cars.end(); ++it) {
