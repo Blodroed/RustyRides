@@ -7,27 +7,28 @@
 
 #include <QDialog>
 #include <QString>
+#include <vector>
 
 namespace Ui {
-    class customer;
+    class Customer;
 }
 
-class customer : public QDialog
+class Customer : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit customer(QWidget *parent = nullptr);
-    customer(const QString &personNr, const QString &email, const QString &phone, int age, const QString &name);
+    explicit Customer(QWidget *parent = nullptr);
+    Customer(const QString &personNr, const QString &email, const QString &phone, int age, const QString &name);
 
     // Move constructor and assignment operator
-    customer(customer&& other) noexcept;
-    customer& operator=(customer&& other) noexcept;
+    Customer(Customer&& other) noexcept;
+    Customer& operator=(Customer&& other) noexcept;
 
-    customer(const customer& other) = delete;
-    customer& operator=(const customer& other) = delete;
+    Customer(const Customer& other) = delete;
+    Customer& operator=(const Customer& other) = delete;
 
-    ~customer();
+    ~Customer();
 
     void setPersonNr(const QString &personNr);
     void setEmail(const QString &email);
@@ -42,7 +43,7 @@ public:
     QString getName() const;
 
 private:
-    Ui::customer *ui;
+    Ui::Customer *ui;
     QString personNr;
     QString email;
     QString phone;

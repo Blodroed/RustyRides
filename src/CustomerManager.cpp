@@ -3,14 +3,14 @@
 
 customerManager::customerManager() {}
 
-void customerManager::addCustomer(customer&& customer) {
+void customerManager::addCustomer(Customer&& customer) {
     customers.push_back(std::move(customer));
 
     // Part of the debug code when the tableview wasn't working properly
-    qDebug() << "Added customer. Total now: " << customers.size();
+    qDebug() << "Added Customer. Total now: " << customers.size();
 }
 
-const std::vector<customer>& customerManager::getAllCustomers() const {
+const std::vector<Customer>& customerManager::getAllCustomers() const {
     return customers;
 }
 

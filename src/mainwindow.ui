@@ -146,7 +146,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Register new customer</string>
+       <string>Register new Customer</string>
       </property>
      </widget>
      <widget class="QPushButton" name="EdtCustBtn">
@@ -164,7 +164,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Edit customer</string>
+       <string>Edit Customer</string>
       </property>
      </widget>
      <widget class="QPushButton" name="RmCustBtn">
@@ -182,7 +182,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Remove customer</string>
+       <string>Remove Customer</string>
       </property>
      </widget>
      <widget class="QTableWidget" name="CustTable">

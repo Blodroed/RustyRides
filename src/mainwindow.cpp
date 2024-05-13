@@ -28,7 +28,7 @@ void MainWindow::updateCustomerTable() {
     ui->CustTable->setRowCount(0);
 
     const auto& customers = custManager.getAllCustomers();
-    qDebug() << "Updating table with customer count: " << customers.size();
+    qDebug() << "Updating table with Customer count: " << customers.size();
     for (const auto& customer : customers) {
         int row = ui->CustTable->rowCount();
         ui->CustTable->insertRow(row);
@@ -49,10 +49,10 @@ void MainWindow::updateCustomerTable() {
     }
 }
 
-// Register new customer (dialogwindow)
+// Register new Customer (dialogwindow)
 
 void MainWindow::on_NewCustBtn_clicked() {
-    customer* customerDialog = new customer(this);
+    Customer* customerDialog = new Customer(this);
     customerDialog->setModal(true);
     if (customerDialog->exec() == QDialog::Accepted) {
 
@@ -72,7 +72,7 @@ void MainWindow::on_NewCustBtn_clicked() {
         qDebug() << "Fetched from dialog - Age:" << age;
         qDebug() << "Fetched from dialog - Name:" << name;
 
-        customer newCustomer(personNr, email, phone, age, name);
+        Customer newCustomer(personNr, email, phone, age, name);
         custManager.addCustomer(std::move(newCustomer));
         updateCustomerTable(); // Refreshes/updates the tableview
     }
@@ -80,7 +80,7 @@ void MainWindow::on_NewCustBtn_clicked() {
     delete customerDialog;
 }
 
-// TODO: Edit customer (dialogwindow and button functionality)
-// TODO: Remove customer (simple "Are you sure?" dialogwindow, and button functionality)
+// TODO: Edit Customer (dialogwindow and button functionality)
+// TODO: Remove Customer (simple "Are you sure?" dialogwindow, and button functionality)
 
 // TODO: similar stuff for cars and leases

@@ -17,13 +17,13 @@ This is the group project for the IKT103 exam. We chose the Car rental GUI exam 
 - [x] 10% Add cars
 - [ ] 5% Edit cars
 - [ ] 5% Remove cars
-- [ ] 10% Add customer
-- [ ] 5% Edit customer
-- [ ] 5% Remove customer
-- [ ] 10% Assign car to customer
-- [ ] 5% Unassign car to customer
-- [ ] 5% Search for customer when assigning a car to a customer
-- [ ] 5% Search car when assigning a car to a customer
+- [ ] 10% Add Customer
+- [ ] 5% Edit Customer
+- [ ] 5% Remove Customer
+- [ ] 10% Assign car to Customer
+- [ ] 5% Unassign car to Customer
+- [ ] 5% Search for Customer when assigning a car to a Customer
+- [ ] 5% Search car when assigning a car to a Customer
 - [ ] 7.5% Export all information to a file (JSON, XML, or CSV)
 - [ ] 7.5% Import all information from a file (JSON, XML or CSV)
 - [ ] 10% Document the database with UML (deliver with the code)
