@@ -20,6 +20,7 @@ public:
     static void editCarAllInstances(Car *car, Car &editedCar, JsonParser &jsonParser);
     static Car* searchForCarWithRegNR(std::vector<Car> &cars, const std::string &regNr);
     static Car* searchForCarWithSeveralParameters(const std::vector<Car> &cars); // TODO
+    static void deleteCar(std::vector<Car> &cars, Car *car, JsonParser &jsonParser);
 
     void availabilitySwitch(Car *car);
 };

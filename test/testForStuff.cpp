@@ -45,3 +45,16 @@ void testForStuff::editCarTest(JsonParser &jsonParser) {
     CarManager::displayCar(*car);  // dereferenced before passing to the function
     CarManager::displayAllCars(cars);
 }
+
+void testForStuff::removeCarTest(JsonParser &jsonParser) {
+    std::vector<Car> cars;
+    jsonParser.importCarsFromJson(cars);
+
+    Car *car = CarManager::searchForCarWithRegNR(cars, "AB12345");
+
+    CarManager::displayAllCars(cars);
+    CarManager::displayCar(*car);  // dereferenced before passing to the function
+
+    CarManager::deleteCar(cars, car, jsonParser);
+    CarManager::displayAllCars(cars);
+}

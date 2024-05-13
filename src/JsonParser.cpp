@@ -161,11 +161,11 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     doc.ParseStream(isw);
     file.close();
 
-    // creating a new JSON object for the car
+    // creating an allocator for the JSON object
     auto &allocator = doc.GetAllocator();
 
     for (Value::ValueIterator itr = doc["cars"].Begin(); itr != doc["cars"].End(); ++itr) {
-        Value& carJson = *itr;      // dereference the iterator to get the car object
+        Value &carJson = *itr;      // dereference the iterator to get the car object
         if (carJson["regNr"].GetString() == targetRegNr) {
             // Update car's attributes other than the registration number
             carJson["color"].SetString(car.getColor().c_str(), allocator);
@@ -181,6 +181,46 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     }
 
     // writing the JSON object to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+ }
+
+ void JsonParser::deleteSingleCarFromJson(const Car *car) {
+    // much needed variables
+    std::string targetRegNr = car->getRegNr();   // need this for some reason to work with comparisons
+
+    // same procedure as last year ms SOfie?
+    std::ifstream file(filepath);
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+    // same procedure as every year, James
+    IStreamWrapper isw(file);
+    Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    /*
+     * we should also check if the car is available before deleting it
+     */
+
+     // Iterate over the cars array
+     for (Value::ValueIterator itr = doc["cars"].Begin(); itr != doc["cars"].End();) {
+         Value &carJson = *itr;
+         if (carJson["regNr"].GetString() == targetRegNr) {
+             // If the registration number matches, erase this element
+             itr = doc["cars"].Erase(itr);
+             // for some dumb reason the program crashed when we breaked out of the loop before
+             // it had gone through all the cars
+         } else {
+             ++itr;
+         }
+     }
+
+    // writing to the file
     std::ofstream ofstream(filepath);
     rapidjson::OStreamWrapper osw(ofstream);
     rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
