@@ -23,8 +23,8 @@ set(PROJECT_SOURCES
         src/CarManager.cpp
         include/JsonParser.h
         src/JsonParser.cpp
-        test/carAddToJsonTest.cpp
-        test/carAddToJsonTest.h
+        test/testForStuff.h
+        test/testForStuff.cpp
         include/Customer.h
         src/Customer.cpp
         src/CustomerManager.cpp

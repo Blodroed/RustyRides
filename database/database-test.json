@@ -54,17 +54,6 @@
             "price": 40000,
             "seats": 2,
             "availability": false
-        },
-        {
-            "regNr": "AB12345",
-            "color": "Blue",
-            "model": "Volvo",
-            "carType": "Sedan",
-            "year": 2004,
-            "price": 200,
-            "kmDriven": 260000,
-            "seats": 5,
-            "availability": true
         }
     ],
     "customer": [],

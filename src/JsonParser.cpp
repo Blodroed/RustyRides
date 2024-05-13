@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include <vector>
-
+using namespace rapidjson;
 JsonParser::JsonParser(const std::string &filepath) {
     this->filepath = filepath;
 }
@@ -93,6 +93,7 @@ void JsonParser::exportCarsToJson(const std::vector<Car> &cars) {
  *
  * This function exports a single car to the JSON file.
  * The car is added to the end of the cars array in the JSON file.
+ * The car's attributes are used to create a new JSON object, which is then added to the cars array.
  *
  * @param car A reference to a Car object to be exported to the JSON file.
  */
@@ -135,5 +136,95 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
     doc.Accept(writer);
 }
+
+/**
+ * @brief Edits a single car in the JSON file.
+ *
+ * This function edits a single car in the JSON file.
+ * The car is identified by the registration number.
+ *
+ * @param car A reference to a Car object to be edited in the JSON file.
+ */
+ void JsonParser::editSingleCarToJson(const Car &car) {
+    // much needed variables
+    std::string targetRegNr = car.getRegNr();   // need this for some reason to work with comparisons
+    std::ifstream file(filepath);               // filepath should be set on construction of class
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+
+    // converting the ifstream to IStreamWrapper
+    // then reads it into memory for JSON document object
+    IStreamWrapper isw(file);
+    Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // creating an allocator for the JSON object
+    auto &allocator = doc.GetAllocator();
+
+    for (Value::ValueIterator itr = doc["cars"].Begin(); itr != doc["cars"].End(); ++itr) {
+        Value &carJson = *itr;      // dereference the iterator to get the car object
+        if (carJson["regNr"].GetString() == targetRegNr) {
+            // Update car's attributes other than the registration number
+            carJson["color"].SetString(car.getColor().c_str(), allocator);
+            carJson["model"].SetString(car.getModel().c_str(), allocator);
+            carJson["carType"].SetString(car.getCarType().c_str(), allocator);
+            carJson["year"].SetInt(car.getYear());
+            carJson["price"].SetInt(car.getPrice());
+            carJson["kmDriven"].SetInt(car.getKmDriven());
+            carJson["seats"].SetInt(car.getSeats());
+            carJson["availability"].SetBool(car.getAvailable());
+            break; // Once found and updated, exit the loop
+        }
+    }
+
+    // writing the JSON object to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+ }
+
+ void JsonParser::deleteSingleCarFromJson(const Car *car) {
+    // much needed variables
+    std::string targetRegNr = car->getRegNr();   // need this for some reason to work with comparisons
+
+    // same procedure as last year ms SOfie?
+    std::ifstream file(filepath);
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+    // same procedure as every year, James
+    IStreamWrapper isw(file);
+    Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    /*
+     * we should also check if the car is available before deleting it
+     */
+
+     // Iterate over the cars array
+     for (Value::ValueIterator itr = doc["cars"].Begin(); itr != doc["cars"].End();) {
+         Value &carJson = *itr;
+         if (carJson["regNr"].GetString() == targetRegNr) {
+             // If the registration number matches, erase this element
+             itr = doc["cars"].Erase(itr);
+             // for some dumb reason the program crashed when we breaked out of the loop before
+             // it had gone through all the cars
+         } else {
+             ++itr;
+         }
+     }
+
+    // writing to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+ }
 
 /** @} */ // end of CarFunctions group
