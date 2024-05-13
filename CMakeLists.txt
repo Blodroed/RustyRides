@@ -25,6 +25,10 @@ set(PROJECT_SOURCES
         src/JsonParser.cpp
         test/testForStuff.h
         test/testForStuff.cpp
+        include/Customer.h
+        src/Customer.cpp
+        src/CustomerManager.cpp
+        include/CustomerManager.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

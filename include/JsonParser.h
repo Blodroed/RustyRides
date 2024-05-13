@@ -77,9 +77,15 @@ public:
 
     /**@}*/
 
+    // ===== Customers Functions ================================================
+
+    // TODO: put relevant functions here
+
     // full backup and import
     void fullBackup(const std::vector<Car> &cars); // TODO add other vectors before fullBackup
     void fullImport(std::vector<Car> &cars); // TODO add other vectors before fullImport
+
+
 
 private:
     std::string filepath;

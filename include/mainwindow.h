@@ -1,11 +1,16 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+//
+// Created by Marcu on 10.05.2024.
+//
 
+#ifndef HELLHUB_MAINWINDOW_H
+#define HELLHUB_MAINWINDOW_H
+
+#include "../include/customerManager.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 QT_END_NAMESPACE
 
@@ -17,7 +22,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+        void on_NewCustBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
+    customerManager custManager;
+    void updateCustomerTable();
 };
-#endif // MAINWINDOW_H
+
+#endif // HELLHUB_MAINWINDOW_H
