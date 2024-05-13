@@ -95,6 +95,10 @@ void Customer::setName(const QString &name) {
     }
 }
 
+void Customer::assignCar(const Car* car) {
+    assignedCars.push_back(car->getRegNr());
+}
+
 
 // Getters
 QString Customer::getPersonNr() const { return ui->personalNumberLineEdit->text(); }

@@ -81,6 +81,7 @@ void MainWindow::on_NewCustBtn_clicked() {
 }
 
 // TODO: Edit Customer (dialogwindow and button functionality)
-// TODO: Remove Customer (simple "Are you sure?" dialogwindow, and button functionality)
+// TODO: Remove Customer (simple "Are you sure?" dialogwindow, and button functionality),
+//       Should also check if customer has any leases or cars
 
 // TODO: similar stuff for cars and leases

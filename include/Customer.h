@@ -1,5 +1,5 @@
 //
-// Created by Marcu on 10.05.2024.
+// Created by Marcus on 10.05.2024.
 //
 
 #ifndef HELLHUB_CUSTOMER_H
@@ -8,6 +8,8 @@
 #include <QDialog>
 #include <QString>
 #include <vector>
+
+#include "../include/Car.h"
 
 namespace Ui {
     class Customer;
@@ -30,11 +32,13 @@ public:
 
     ~Customer();
 
+    // setters
     void setPersonNr(const QString &personNr);
     void setEmail(const QString &email);
     void setPhone(const QString &phone);
     void setAge(int age);
     void setName(const QString &name);
+    void assignCar(const Car* car);
 
     QString getPersonNr() const;
     QString getEmail() const;
@@ -49,6 +53,8 @@ private:
     QString phone;
     int age;
     QString name;
+
+    std::vector<std::string> assignedCars;
 };
 
 #endif //HELLHUB_CUSTOMER_H

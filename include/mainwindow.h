@@ -23,7 +23,7 @@ public:
     ~MainWindow();
 
 private slots:
-            void on_NewCustBtn_clicked();
+        void on_NewCustBtn_clicked();
 
 private:
     Ui::MainWindow *ui;
