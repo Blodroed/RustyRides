@@ -1,18 +1,18 @@
 //
-// Created by Marcu on 10.05.2024.
+// Created by Marcus on 10.05.2024.
 //
 
 #ifndef HELLHUB_CUSTOMERMANAGER_H
 #define HELLHUB_CUSTOMERMANAGER_H
 
 #include <vector>
-#include "customer.h"
+#include "../include/Customer.h"
 
 class customerManager {
 public:
     customerManager();
     void addCustomer(Customer&& customer);
-    const std::vector<Customer>& getAllCustomers() const;
+    std::vector<customer>& getAllCustomers();
     void displayCustomer(const Customer& customer) const;
     void displayAllCustomers() const;
 

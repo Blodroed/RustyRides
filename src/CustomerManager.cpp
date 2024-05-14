@@ -1,3 +1,7 @@
+//
+// Created by Marcus on 10.05.2024.
+//
+
 #include "../include/customermanager.h"
 #include <QDebug>
 
@@ -10,7 +14,7 @@ void customerManager::addCustomer(Customer&& customer) {
     qDebug() << "Added Customer. Total now: " << customers.size();
 }
 
-const std::vector<Customer>& customerManager::getAllCustomers() const {
+std::vector<customer>& customerManager::getAllCustomers() {
     return customers;
 }
 

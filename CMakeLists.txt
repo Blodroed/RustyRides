@@ -29,6 +29,9 @@ set(PROJECT_SOURCES
         src/Customer.cpp
         src/CustomerManager.cpp
         include/CustomerManager.h
+        src/areyousuredialog.cpp
+        include/areyousuredialog.h
+        src/areyousuredialog.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

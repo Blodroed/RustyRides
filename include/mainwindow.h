@@ -1,5 +1,5 @@
 //
-// Created by Marcu on 10.05.2024.
+// Created by Marcus on 10.05.2024.
 //
 
 #ifndef HELLHUB_MAINWINDOW_H
@@ -22,8 +22,15 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
+// Worth noting: These autogenerate upon assigning a button to a slot in the UI designer
 private slots:
+    // Customer related buttons
         void on_NewCustBtn_clicked();
+        void on_EdtCustBtn_clicked();
+        void on_DelCustBtn_clicked();
+
+    // TODO: Buttons for the other two tabs
 
 private:
     Ui::MainWindow *ui;

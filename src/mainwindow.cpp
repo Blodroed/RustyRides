@@ -1,6 +1,7 @@
 #include "../include/mainwindow.h"
 #include "ui_mainwindow.h"
 #include "../include/customer.h"
+#include "../include/areyousuredialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent)
@@ -24,13 +25,16 @@ MainWindow::~MainWindow()
 
 // ==================== Customer window ====================
 
+// Ever so slightly changed the function, as the row behavior was bugged
+
 void MainWindow::updateCustomerTable() {
     ui->CustTable->setRowCount(0);
 
-    const auto& customers = custManager.getAllCustomers();
-    qDebug() << "Updating table with Customer count: " << customers.size();
-    for (const auto& customer : customers) {
-        int row = ui->CustTable->rowCount();
+    auto& customers = custManager.getAllCustomers();
+    qDebug() << "Updating table with customer count: " << customers.size();
+
+    for (size_t row = 0; row < customers.size(); ++row) {
+        const auto& customer = customers[row];
         ui->CustTable->insertRow(row);
 
         qDebug() << "Setting row:" << row
@@ -45,11 +49,10 @@ void MainWindow::updateCustomerTable() {
         ui->CustTable->setItem(row, 2, new QTableWidgetItem(customer.getPhone()));
         ui->CustTable->setItem(row, 3, new QTableWidgetItem(QString::number(customer.getAge())));
         ui->CustTable->setItem(row, 4, new QTableWidgetItem(customer.getName()));
-
     }
 }
 
-// Register new Customer (dialogwindow)
+// Register new Customer (opens a dialog window)
 
 void MainWindow::on_NewCustBtn_clicked() {
     Customer* customerDialog = new Customer(this);
@@ -74,14 +77,67 @@ void MainWindow::on_NewCustBtn_clicked() {
 
         Customer newCustomer(personNr, email, phone, age, name);
         custManager.addCustomer(std::move(newCustomer));
-        updateCustomerTable(); // Refreshes/updates the tableview
+        updateCustomerTable();
     }
 
     delete customerDialog;
 }
 
-// TODO: Edit Customer (dialogwindow and button functionality)
-// TODO: Remove Customer (simple "Are you sure?" dialogwindow, and button functionality),
-//       Should also check if customer has any leases or cars
+// Edit customer (opens a dialog window)
+
+void MainWindow::on_EdtCustBtn_clicked() {
+    int currentRow = ui->CustTable->currentRow();
+    if (currentRow < 0) {
+        qDebug() << "No customer selected for editing";
+        return;
+    }
+
+    auto& customers = custManager.getAllCustomers();
+
+    customer& selectedCustomer = customers[currentRow];
+
+    // This opens the same dialog window as "register new customer"
+    // Values are pre-entered to easily know what you're changing
+
+    customer* customerDialog = new customer(this);
+    customerDialog->setPersonNr(selectedCustomer.getPersonNr());
+    customerDialog->setEmail(selectedCustomer.getEmail());
+    customerDialog->setPhone(selectedCustomer.getPhone());
+    customerDialog->setAge(selectedCustomer.getAge());
+    customerDialog->setName(selectedCustomer.getName());
+    customerDialog->setModal(true);
+
+
+    if (customerDialog->exec() == QDialog::Accepted) {
+        selectedCustomer.setPersonNr(customerDialog->getPersonNr());
+        selectedCustomer.setEmail(customerDialog->getEmail());
+        selectedCustomer.setPhone(customerDialog->getPhone());
+        selectedCustomer.setAge(customerDialog->getAge());
+        selectedCustomer.setName(customerDialog->getName());
+
+        updateCustomerTable();
+    }
+
+    delete customerDialog;
+}
+
+// Delete customer (opens "are you sure" dialog window)
+
+void MainWindow::on_DelCustBtn_clicked() {
+    int currentRow = ui->CustTable->currentRow();
+    if (currentRow < 0) {
+        return;
+    }
+
+    AreYouSureDialog confirmDialog(this);
+    if (confirmDialog.exec() == QDialog::Accepted) {
+
+        auto& customers = custManager.getAllCustomers();
+        customers.erase(customers.begin() + currentRow);
+        updateCustomerTable();
+    }
+}
+
+// Should also check if customer has any leases or cars
 
 // TODO: similar stuff for cars and leases

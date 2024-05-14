@@ -32,19 +32,22 @@ public:
 
     ~Customer();
 
-    // setters
+    // Setters
     void setPersonNr(const QString &personNr);
     void setEmail(const QString &email);
     void setPhone(const QString &phone);
     void setAge(int age);
     void setName(const QString &name);
+    void setRegNr(const QString &regNr);
     void assignCar(const Car* car);
 
+    // Getters
     QString getPersonNr() const;
     QString getEmail() const;
     QString getPhone() const;
     int getAge() const;
     QString getName() const;
+    QString getRegNr() const;
 
 private:
     Ui::Customer *ui;
@@ -53,6 +56,7 @@ private:
     QString phone;
     int age;
     QString name;
+    QString regNr;
 
     std::vector<std::string> assignedCars;
 };
