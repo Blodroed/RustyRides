@@ -12,7 +12,7 @@ class customerManager {
 public:
     customerManager();
     void addCustomer(Customer&& customer);
-    std::vector<customer>& getAllCustomers();
+    std::vector<Customer>& getAllCustomers();
     void displayCustomer(const Customer& customer) const;
     void displayAllCustomers() const;
 

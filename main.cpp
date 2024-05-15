@@ -21,8 +21,7 @@ int main(int argc, char *argv[])
     // tests
     JsonParser jsonParser("../database/database-test.json");
 
-    // testForStuff::removeCarTest(jsonParser);
-    // testForStuff::editCarTest(jsonParser);
+
 
     QApplication a(argc, argv);
     MainWindow w;

@@ -1,6 +1,6 @@
 #include "../include/mainwindow.h"
 #include "ui_mainwindow.h"
-#include "../include/customer.h"
+#include "../include/Customer.h"
 #include "../include/areyousuredialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -94,12 +94,12 @@ void MainWindow::on_EdtCustBtn_clicked() {
 
     auto& customers = custManager.getAllCustomers();
 
-    customer& selectedCustomer = customers[currentRow];
+    Customer& selectedCustomer = customers[currentRow];
 
     // This opens the same dialog window as "register new customer"
     // Values are pre-entered to easily know what you're changing
 
-    customer* customerDialog = new customer(this);
+    Customer* customerDialog = new Customer(this);
     customerDialog->setPersonNr(selectedCustomer.getPersonNr());
     customerDialog->setEmail(selectedCustomer.getEmail());
     customerDialog->setPhone(selectedCustomer.getPhone());

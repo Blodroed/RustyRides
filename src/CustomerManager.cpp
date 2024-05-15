@@ -14,7 +14,7 @@ void customerManager::addCustomer(Customer&& customer) {
     qDebug() << "Added Customer. Total now: " << customers.size();
 }
 
-std::vector<customer>& customerManager::getAllCustomers() {
+std::vector<Customer>& customerManager::getAllCustomers() {
     return customers;
 }
 

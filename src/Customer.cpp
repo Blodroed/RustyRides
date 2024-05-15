@@ -99,7 +99,7 @@ void Customer::setName(const QString &name) {
     }
 }
 
-void customer::setRegNr(const QString &regNr) {
+void Customer::setRegNr(const QString &regNr) {
     this->regNr = regNr;
 }
 
@@ -114,4 +114,4 @@ QString Customer::getEmail() const { return ui->emailLineEdit->text(); }
 QString Customer::getPhone() const { return ui->phoneLineEdit->text(); }
 int Customer::getAge() const { return ui->ageLineEdit->text().isEmpty() ? 0 : ui->ageLineEdit->text().toInt(); }
 QString Customer::getName() const { return ui->nameLineEdit->text(); }
-QString customer::getRegNr() const { return regNr; }
+QString Customer::getRegNr() const { return regNr; }
