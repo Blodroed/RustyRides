@@ -21,7 +21,8 @@ class Customer : public QDialog
 
 public:
     explicit Customer(QWidget *parent = nullptr);
-    Customer(const QString &personNr, const QString &email, const QString &phone, int age, const QString &name);
+    Customer(const QString &personNr, const QString &email, const QString &phone, int age,
+             const QString &name, const std::vector<QString> &assignedCarsRegNr);
 
     // Move constructor and assignment operator
     Customer(Customer&& other) noexcept;
@@ -38,7 +39,6 @@ public:
     void setPhone(const QString &phone);
     void setAge(int age);
     void setName(const QString &name);
-    void setRegNr(const QString &regNr);
     void assignCar(const Car* car);
 
     // Getters
@@ -47,7 +47,6 @@ public:
     QString getPhone() const;
     int getAge() const;
     QString getName() const;
-    QString getRegNr() const;
 
 private:
     Ui::Customer *ui;
@@ -56,9 +55,8 @@ private:
     QString phone;
     int age;
     QString name;
-    QString regNr;
 
-    std::vector<std::string> assignedCars;
+    std::vector<QString> assignedCarsRegNr;
 };
 
 #endif //HELLHUB_CUSTOMER_H

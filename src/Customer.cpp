@@ -17,14 +17,17 @@ Customer::Customer(QWidget *parent)
     setName("");
 }
 
-Customer::Customer(const QString &personNr, const QString &email, const QString &phone, int age, const QString &name)
-    : QDialog(nullptr), ui(new Ui::Customer), regNr("") {
+Customer::Customer(const QString &personNr, const QString &email, const QString &phone, int age, const QString &name, const std::vector<QString> &assignedCarsRegNr)
+    : QDialog(nullptr), ui(new Ui::Customer) {
     ui->setupUi(this);
     setPersonNr(personNr);
     setEmail(email);
     setPhone(phone);
     setAge(age);
     setName(name);
+    for (const auto& regNr : assignedCarsRegNr) {
+        this->assignedCarsRegNr.push_back(regNr);
+    }
 }
 
 // Minor change here (less use of std::move)
@@ -104,7 +107,7 @@ void Customer::setRegNr(const QString &regNr) {
 }
 
 void Customer::assignCar(const Car* car) {
-    assignedCars.push_back(car->getRegNr());
+    assignedCarsRegNr.push_back(QString::fromStdString(car->getRegNr()));
 }
 
 
