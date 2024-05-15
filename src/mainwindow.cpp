@@ -76,7 +76,7 @@ void MainWindow::on_NewCustBtn_clicked() {
         qDebug() << "Fetched from dialog - Age:" << age;
         qDebug() << "Fetched from dialog - Name:" << name;
 
-        Customer newCustomer(personNr, email, phone, age, name);
+        Customer newCustomer(personNr, email, phone, age, name, {});
         custManager.addCustomer(std::move(newCustomer));
         updateCustomerTable();
     }
