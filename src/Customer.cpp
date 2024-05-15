@@ -8,7 +8,7 @@
 // Putting anything in the ("") fields below, makes it pre-entered in the dialogwindow
 
 Customer::Customer(QWidget *parent)
-    : QDialog(parent), ui(new Ui::Customer), regNr("") {
+    : QDialog(parent), ui(new Ui::Customer) {
     ui->setupUi(this);
     setPersonNr("");
     setEmail("");
@@ -33,7 +33,7 @@ Customer::Customer(const QString &personNr, const QString &email, const QString 
 // Minor change here (less use of std::move)
 
 Customer::Customer(Customer&& other) noexcept
-: QDialog(nullptr), ui(new Ui::Customer), regNr(other.regNr) {
+: QDialog(nullptr), ui(new Ui::Customer) {
     ui->setupUi(this);
     setParent(static_cast<QWidget*>(other.parent()));
 
@@ -48,12 +48,11 @@ Customer& Customer::operator=(Customer&& other) noexcept {
 if (this != &other) {
 QDialog::setParent(static_cast<QWidget*>(other.parent()));
 
-setPersonNr(other.getPersonNr());
+    setPersonNr(other.getPersonNr());
     setEmail(other.getEmail());
     setPhone(other.getPhone());
     setAge(other.getAge());
     setName(other.getName());
-    regNr = other.regNr;
 }
 return *this;
 }
@@ -102,10 +101,6 @@ void Customer::setName(const QString &name) {
     }
 }
 
-void Customer::setRegNr(const QString &regNr) {
-    this->regNr = regNr;
-}
-
 void Customer::assignCar(const Car* car) {
     assignedCarsRegNr.push_back(QString::fromStdString(car->getRegNr()));
 }
@@ -117,4 +112,3 @@ QString Customer::getEmail() const { return ui->emailLineEdit->text(); }
 QString Customer::getPhone() const { return ui->phoneLineEdit->text(); }
 int Customer::getAge() const { return ui->ageLineEdit->text().isEmpty() ? 0 : ui->ageLineEdit->text().toInt(); }
 QString Customer::getName() const { return ui->nameLineEdit->text(); }
-QString Customer::getRegNr() const { return regNr; }
