@@ -3,9 +3,10 @@
 #include "../include/Customer.h"
 #include "../include/areyousuredialog.h"
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(JsonParser& jsonParser,QWidget *parent)
         : QMainWindow(parent)
         , ui(new Ui::MainWindow)
+        , jsonParser(jsonParser)
 {
     ui->setupUi(this);
 
@@ -114,6 +115,8 @@ void MainWindow::on_EdtCustBtn_clicked() {
         selectedCustomer.setPhone(customerDialog->getPhone());
         selectedCustomer.setAge(customerDialog->getAge());
         selectedCustomer.setName(customerDialog->getName());
+
+        // jsoParser.
 
         updateCustomerTable();
     }

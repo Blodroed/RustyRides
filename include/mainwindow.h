@@ -6,6 +6,7 @@
 #define HELLHUB_MAINWINDOW_H
 
 #include "../include/customerManager.h"
+#include "../include/JsonParser.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -19,7 +20,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(JsonParser& jsonParser,QWidget *parent = nullptr);
     ~MainWindow();
 
 
@@ -36,6 +37,8 @@ private:
     Ui::MainWindow *ui;
     customerManager custManager;
     void updateCustomerTable();
+
+    JsonParser& jsonParser;
 };
 
 #endif // HELLHUB_MAINWINDOW_H

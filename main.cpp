@@ -18,13 +18,11 @@ int main(int argc, char *argv[])
     std::vector<Customer> customers;
 
     std::cout << "C++ version: " << __cplusplus << std::endl;
-    // tests
+    // init json parser with database path
     JsonParser jsonParser("../database/database-test.json");
 
-
-
     QApplication a(argc, argv);
-    MainWindow w;
+    MainWindow w(jsonParser);
     w.show();
     return a.exec();
 }
