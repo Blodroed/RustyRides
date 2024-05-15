@@ -73,7 +73,7 @@ void JsonParser::importCarsFromJson(std::vector<Car> &cars) {
     // iterating through the cars array and adding it to the vector
     for (const auto &carJson : carsJson.GetArray()) {
         Car car(carJson["regNr"].GetString(), carJson["color"].GetString(), carJson["model"].GetString(),
-                carJson["carType"].GetString(), carsJson["fuelType"].GetString(), carJson["year"].GetInt(),
+                carJson["carType"].GetString(), carJson["fuelType"].GetString(), carJson["year"].GetInt(),
                 carJson["price"].GetInt(), carJson["kmDriven"].GetInt(),
                 carJson["seats"].GetInt(), carJson["availability"].GetBool());
         cars.push_back(car);
