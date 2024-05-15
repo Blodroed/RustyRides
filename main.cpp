@@ -24,7 +24,6 @@ int main(int argc, char *argv[])
     std::cout << "C++ version: " << __cplusplus << std::endl;
     // init json parser with database path
     JsonParser jsonParser("../database/database-test.json");
-    jsonParser.importCarsFromJson(cars);
     jsonParser.importCustomersFromJson(customers);
 
     QApplication a(argc, argv);

@@ -255,7 +255,7 @@ void JsonParser::importCustomersFromJson(std::vector<Customer> &customers) {
     file.close();
 
     // accessing the cars array directly
-    const auto &customersJson = doc["customer"];
+    const auto &customersJson = doc["customers"];
 
     // clear the vector before adding new customers
     // this is to avoid duplicates. Database is considered to be the truth
@@ -263,18 +263,25 @@ void JsonParser::importCustomersFromJson(std::vector<Customer> &customers) {
 
     // iterating through the cars array and adding it to the vector
     for (const auto &customerJson : customersJson.GetArray()) {
-        // create a vector which can be used to store the assigned cars registration numbers
-        std::vector<QString> assignedCarsRegNr;
-        for (const auto &assignedCar : customerJson["cars"].GetArray()) {
-            assignedCarsRegNr.push_back(QString::fromStdString(assignedCar.GetString()));
+        if (!customerJson.IsObject()) {
+            std::cout << "Error: customer is not an object in the JSON document" << std::endl;
+            continue;
         }
 
-        customers.emplace_back(QString::fromStdString(customerJson["personNummer"].GetString()),
-                            QString::fromStdString(customerJson["email"].GetString()),
-                            QString::fromStdString(customerJson["phone"].GetString()),
-                            customerJson["age"].GetInt(),
-                            QString::fromStdString(customerJson["name"].GetString()),
-                            assignedCarsRegNr);
+        QString personNummer = QString::fromStdString(customerJson["personNummer"].GetString());
+        QString name = QString::fromStdString(customerJson["name"].GetString());
+        QString phoneNumber = QString::fromStdString(customerJson["phoneNumber"].GetString());
+        QString email = QString::fromStdString(customerJson["email"].GetString());
+        int age = customerJson["age"].GetInt();
+
+        std::vector<QString> cars;
+        if (customerJson.HasMember("cars") && customerJson["cars"].IsArray()) {
+            for (const auto &carJson: customerJson["cars"].GetArray()) {
+                cars.push_back(QString::fromStdString(carJson.GetString()));
+            }
+        }
+        Customer customer(personNummer, email, phoneNumber, age, name, cars);
+        customers.emplace_back(std::move(customer));
     }
 }
 
