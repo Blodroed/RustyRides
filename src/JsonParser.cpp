@@ -257,7 +257,7 @@ void JsonParser::importCustomersFromJson(std::vector<Customer> &customers) {
     // accessing the cars array directly
     const auto &customersJson = doc["customers"];
 
-    // clear the vector before adding new cars
+    // clear the vector before adding new customers
     // this is to avoid duplicates. Database is considered to be the truth
     customers.clear();
 
@@ -269,7 +269,7 @@ void JsonParser::importCustomersFromJson(std::vector<Customer> &customers) {
             assignedCarsRegNr.push_back(QString::fromStdString(assignedCar.GetString()));
         }
 
-        Customer customer(QString::fromStdString(customerJson["personNummer"].GetString()),
+        customers.emplace_back(QString::fromStdString(customerJson["personNummer"].GetString()),
                             QString::fromStdString(customerJson["email"].GetString()),
                             QString::fromStdString(customerJson["phone"].GetString()),
                             customerJson["age"].GetInt(),
