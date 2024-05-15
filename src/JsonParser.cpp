@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <vector>
+
 using namespace rapidjson;
 JsonParser::JsonParser(const std::string &filepath) {
     this->filepath = filepath;
@@ -71,7 +72,7 @@ void JsonParser::importCarsFromJson(std::vector<Car> &cars) {
     // iterating through the cars array and adding it to the vector
     for (const auto &carJson : carsJson.GetArray()) {
         Car car(carJson["regNr"].GetString(), carJson["color"].GetString(), carJson["model"].GetString(),
-                carJson["carType"].GetString(), carJson["year"].GetInt(),
+                carJson["carType"].GetString(), carsJson["fuelType"].GetString(), carJson["year"].GetInt(),
                 carJson["price"].GetInt(), carJson["kmDriven"].GetInt(),
                 carJson["seats"].GetInt(), carJson["availability"].GetBool());
         cars.push_back(car);
@@ -122,6 +123,7 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     carJson.AddMember("color", rapidjson::Value(car.getColor().c_str(), allocator).Move(), allocator);
     carJson.AddMember("model", rapidjson::Value(car.getModel().c_str(), allocator).Move(), allocator);
     carJson.AddMember("carType", rapidjson::Value(car.getCarType().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("fuelType", rapidjson::Value(car.getFuelType().c_str(), allocator).Move(), allocator);
     carJson.AddMember("year", car.getYear(), allocator);
     carJson.AddMember("price", car.getPrice(), allocator);
     carJson.AddMember("kmDriven", car.getKmDriven(), allocator);
@@ -171,6 +173,7 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
             carJson["color"].SetString(car.getColor().c_str(), allocator);
             carJson["model"].SetString(car.getModel().c_str(), allocator);
             carJson["carType"].SetString(car.getCarType().c_str(), allocator);
+            carJson["fuelType"].SetString(car.getFuelType().c_str(), allocator);
             carJson["year"].SetInt(car.getYear());
             carJson["price"].SetInt(car.getPrice());
             carJson["kmDriven"].SetInt(car.getKmDriven());
