@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 
-void CarManager::createCar(std::vector<Car> &cars, JsonParser &jsonParser) {
+void CarManager::createCar(std::vector<Car> &cars, const Car &newCar,JsonParser &jsonParser) {
     /*
      * This function is used to create a car object and add it to the vector cars
      * The function takes a reference to the vector cars and a reference to the jsonParser
@@ -16,42 +16,7 @@ void CarManager::createCar(std::vector<Car> &cars, JsonParser &jsonParser) {
      * The function uses the jsonParser to export the car to the json document
      * The function then creates a car object and adds it to the vector cars
     */
-    std::string regNr;
-    std::string color;
-    std::string model;
-    std::string carType;
-    int year;
-    int price;
-    int kmDriven;
-    int seats;
-    bool available;
-
-    // this is just a standard cli input for the car
-    // TODO: make the function work with inputs from other functions
-    std::cout << "Add your first car!" << std::endl;
-    std::cout << "========================" << std::endl;
-    std::cout << "Registration number: " << std::endl;
-    std::getline(std::cin, regNr);
-    std::cout << "Color: " << std::endl;
-    std::getline(std::cin, color);
-    std::cout << "Model: " << std::endl;
-    std::getline(std::cin, model);
-    std::cout << "Car type: " << std::endl;
-    std::getline(std::cin, carType);
-    std::cout << "Year: " << std::endl;
-    std::cin >> year; std::cin.ignore();
-    std::cin >> year; std::cin.ignore();
-    std::cout << "Price: " << std::endl;
-    std::cin >> price; std::cin.ignore();
-    std::cin >> price; std::cin.ignore();
-    std::cout << "Km driven: " << std::endl;
-    std::cin >> kmDriven; std::cin.ignore();
-    std::cout << "Seats: " << std::endl;
-    std::cin >> seats; std::cin.ignore();
-    std::cout << "Available (1 or 0): " << std::endl;
-    std::cin >> available; std::cin.ignore();
-
-    Car car(regNr,color, model, carType, year, price, kmDriven, seats, available);
+    Car car = newCar;
 
     // passing the car to the json document
     jsonParser.exportSingleCarToJson(car);
@@ -68,6 +33,7 @@ void CarManager::displayCar(const Car &car) {
     std::cout << "Color: " << car.getColor() << std::endl;
     std::cout << "Model: " << car.getModel() << std::endl;
     std::cout << "Car type: " << car.getCarType() << std::endl;
+    std::cout << "Fuel type: " << car.getFuelType() << std::endl;
     std::cout << "Year: " << car.getYear() << std::endl;
     std::cout << "Price: " << car.getPrice() << std::endl;
     std::cout << "Km driven: " << car.getKmDriven() << std::endl;
@@ -86,6 +52,7 @@ void CarManager::displayAllCars(const std::vector<Car> &cars) {
                   << ", Color: " << car.getColor()
                   << ", Model: " << car.getModel()
                   << ", Car type: " << car.getCarType()
+                  << ", Fuel type: " << car.getFuelType()
                   << ", Year: " << car.getYear()
                   << ", Price: " << car.getPrice()
                   << ", Km driven: " << car.getKmDriven() << std::endl;
@@ -142,6 +109,7 @@ void CarManager::editCarObject(Car *car, Car &editedCar) {
         car->setColor(editedCar.getColor());
         car->setModel(editedCar.getModel());
         car->setCarType(editedCar.getCarType());
+        car->setFuelType(editedCar.getFuelType());
         car->setYear(editedCar.getYear());
         car->setPrice(editedCar.getPrice());
         car->setKmDriven(editedCar.getKmDriven());

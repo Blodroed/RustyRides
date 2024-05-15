@@ -12,7 +12,7 @@ public:
     // Constructor
     Car();
     explicit Car(const std::string &regNr, const std::string &color, const std::string &model, const std::string &carType,
-                 int year, int price, int kmDriven, int seats, bool available);
+                 const std::string &fuelType, int year, int price, int kmDriven, int seats, bool available);
 
     // Destructor
     virtual ~Car();
@@ -21,6 +21,7 @@ public:
     void setColor(std::string color);
     void setModel(std::string model);
     void setCarType(std::string carType);
+    void setFuelType(std::string fuelType);
     void setYear(int year);
     void setPrice(int price);
     void setKmDriven(int kmDriven);
@@ -32,6 +33,7 @@ public:
     std::string getColor() const;
     std::string getModel() const;
     std::string getCarType() const;
+    std::string getFuelType() const;
     int getYear() const;
     int getPrice() const;
     int getKmDriven() const;
@@ -42,6 +44,7 @@ private:
     std::string color;
     std::string model;
     std::string carType;
+    std::string fuelType;
     int year;
     int price;
     int kmDriven;

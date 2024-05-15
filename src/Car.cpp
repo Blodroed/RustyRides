@@ -15,7 +15,8 @@ Car::Car() {
     available = false;
 }
 
-Car::Car(const std::string &regNr, const std::string &color, const std::string &model, const std::string &carType, int year, int price, int kmDriven, int seats, bool available) {
+Car::Car(const std::string &regNr, const std::string &color, const std::string &model, const std::string &carType,
+         const std::string &fuelType, int year, int price, int kmDriven, int seats, bool available) {
     this->RegNr = regNr;
     this->color = color;
     this->model = model;
@@ -35,6 +36,7 @@ std::string Car::getRegNr() const {return RegNr;}
 std::string Car::getColor() const {return color;}
 std::string Car::getModel() const {return model;}
 std::string Car::getCarType() const {return carType;}
+std::string Car::getFuelType() const {return fuelType;}
 int Car::getSeats() const {return seats;}
 int Car::getYear() const {return year;}
 int Car::getPrice() const {return price;}
@@ -45,6 +47,7 @@ bool Car::getAvailable() const {return available;}
 void Car::setColor(std::string color) {this->color = color;}
 void Car::setModel(std::string model) {this->model = model;}
 void Car::setCarType(std::string carType) {this->carType = carType;}
+void Car::setFuelType(std::string fuelType) {this->fuelType = fuelType;}
 void Car::setYear(int year) {this->year = year;}
 void Car::setPrice(int price) {this->price = price;}
 void Car::setKmDriven(int newKmDriven) {this->kmDriven = newKmDriven;}

@@ -5,6 +5,7 @@
       "color": "unknown",
       "model": "unknown",
       "carType": "unknown",
+      "fuelType": "diesel/petrol/hybrid/pluginhybrid/electric",
       "year": 1234,
       "kmDriven": 12345,
       "price": 12345,
