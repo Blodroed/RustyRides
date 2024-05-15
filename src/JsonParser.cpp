@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <vector>
+#include <QString>
 
 using namespace rapidjson;
 JsonParser::JsonParser(const std::string &filepath) {
@@ -262,8 +263,18 @@ void JsonParser::importCustomersFromJson(std::vector<Customer> &customers) {
 
     // iterating through the cars array and adding it to the vector
     for (const auto &customerJson : customersJson.GetArray()) {
-        Customer customer(customerJson["personNummer"].GetString(), customerJson["name"].GetString(),
-                          customerJson["phoneNumber"].GetInt(), customersJson["email"].GetString(),
+        // create a vector which can be used to store the assigned cars registration numbers
+        std::vector<QString> assignedCarsRegNr;
+        for (const auto &assignedCar : customerJson["cars"].GetArray()) {
+            assignedCarsRegNr.push_back(QString::fromStdString(assignedCar.GetString()));
+        }
+
+        Customer customer(QString::fromStdString(customerJson["personNummer"].GetString()),
+                            QString::fromStdString(customerJson["email"].GetString()),
+                            QString::fromStdString(customerJson["phone"].GetString()),
+                            customerJson["age"].GetInt(),
+                            QString::fromStdString(customerJson["name"].GetString()),
+                            assignedCarsRegNr);
     }
 }
 
