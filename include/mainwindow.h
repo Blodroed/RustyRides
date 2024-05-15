@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(JsonParser& jsonParser,QWidget *parent = nullptr);
+    MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, QWidget *parent = nullptr);
     ~MainWindow();
 
 

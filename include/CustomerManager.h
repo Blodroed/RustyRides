@@ -10,14 +10,14 @@
 
 class customerManager {
 public:
-    customerManager();
+    explicit customerManager(std::vector<Customer>& customers) : customers(customers) {}
     void addCustomer(Customer&& customer);
     std::vector<Customer>& getAllCustomers();
     void displayCustomer(const Customer& customer) const;
     void displayAllCustomers() const;
 
 private:
-    std::vector<Customer> customers; // To be moved to main eventually
+    std::vector<Customer>& customers; // To be moved to main eventually
 };
 
 #endif // HELLHUB_CUSTOMERMANAGER_H

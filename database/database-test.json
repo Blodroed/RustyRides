@@ -61,7 +61,7 @@
             "availability": false
         }
     ],
-    "customer": [
+    "customers": [
         {
             "personNummer": "123456",
             "name": "John Doe",
@@ -79,5 +79,5 @@
             "cars": ["car1", "car2"]
         }
     ],
-    "lease": []
+    "leases": []
 }

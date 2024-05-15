@@ -255,7 +255,7 @@ void JsonParser::importCustomersFromJson(std::vector<Customer> &customers) {
     file.close();
 
     // accessing the cars array directly
-    const auto &customersJson = doc["customers"];
+    const auto &customersJson = doc["customer"];
 
     // clear the vector before adding new customers
     // this is to avoid duplicates. Database is considered to be the truth

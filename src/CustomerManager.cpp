@@ -5,8 +5,6 @@
 #include "../include/customermanager.h"
 #include <QDebug>
 
-customerManager::customerManager() {}
-
 void customerManager::addCustomer(Customer&& customer) {
     customers.push_back(std::move(customer));
 

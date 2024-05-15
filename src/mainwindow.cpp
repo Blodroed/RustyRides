@@ -3,10 +3,11 @@
 #include "../include/Customer.h"
 #include "../include/areyousuredialog.h"
 
-MainWindow::MainWindow(JsonParser& jsonParser,QWidget *parent)
+MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, QWidget *parent)
         : QMainWindow(parent)
         , ui(new Ui::MainWindow)
         , jsonParser(jsonParser)
+        , custManager(customers)
 {
     ui->setupUi(this);
 
@@ -25,7 +26,6 @@ MainWindow::~MainWindow()
 }
 
 // ==================== Customer window ====================
-
 // Ever so slightly changed the function, as the row behavior was bugged
 
 void MainWindow::updateCustomerTable() {
