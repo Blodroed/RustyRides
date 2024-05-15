@@ -17,7 +17,7 @@
     {
       "personNummer": "unknown",
       "name": "unknown",
-      "phoneNumber": 123456,
+      "phoneNumber": "123-456",
       "email": "unknown",
       "age": 23,
       "cars": [

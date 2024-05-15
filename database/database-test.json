@@ -65,7 +65,7 @@
         {
             "personNummer": "123456",
             "name": "John Doe",
-            "phoneNumber": 123456,
+            "phoneNumber": "123456",
             "email": "john@doe.com",
             "age": 23,
             "cars": []
@@ -73,7 +73,7 @@
         {
             "personNummer": "654321",
             "name": "Jane Doe",
-            "phoneNumber": 654321,
+            "phoneNumber": "654321",
             "email": "jane@doe",
             "age": 25,
             "cars": ["car1", "car2"]
