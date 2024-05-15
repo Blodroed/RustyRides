@@ -20,8 +20,8 @@
       "email": "unknown",
       "age": 23,
       "cars": [
-        {"regnNr": "unknown"},
-        {"regnNr": "unknown"}
+        "regNr",
+        "regNr"
       ]
     }
   ],
