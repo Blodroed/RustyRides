@@ -226,5 +226,42 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
     doc.Accept(writer);
  }
-
 /** @} */ // end of CarFunctions group
+
+/**
+ * @defgroup CustomerFunctions
+ * @brief Customer-related JSON parsing functions
+ *
+ * This group contains all the functions related to parsing JSON data for customers.
+ * @{
+ */
+
+void JsonParser::importCustomersFromJson(std::vector<Customer> &customers) {
+    std::ifstream file(filepath); // filepath should be set on construction of class
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+
+    // converting the ifstream to IStreamWrapper
+    // then reads it into memory for JSON document object
+    rapidjson::IStreamWrapper isw(file);
+    rapidjson::Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // accessing the cars array directly
+    const auto &customersJson = doc["customers"];
+
+    // clear the vector before adding new cars
+    // this is to avoid duplicates. Database is considered to be the truth
+    customers.clear();
+
+    // iterating through the cars array and adding it to the vector
+    for (const auto &customerJson : customersJson.GetArray()) {
+        Customer customer(customerJson["personNummer"].GetString(), customerJson["name"].GetString(),
+                          customerJson["phoneNumber"].GetInt(), customersJson["email"].GetString(),
+    }
+}
+
+/** @} */ // end of CustomerFunctions group
