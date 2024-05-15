@@ -10,7 +10,7 @@
             "kmDriven": 10000,
             "price": 20000,
             "seats": 4,
-            "availability": true
+            "availability": false
         },
         {
             "regNr": "car2",
@@ -22,7 +22,7 @@
             "kmDriven": 15000,
             "price": 25000,
             "seats": 5,
-            "availability": true
+            "availability": false
         },
         {
             "regNr": "car3",
@@ -61,6 +61,23 @@
             "availability": false
         }
     ],
-    "customer": [],
+    "customer": [
+        {
+            "personNummer": "123456",
+            "name": "John Doe",
+            "phoneNumber": 123456,
+            "email": "john@doe.com",
+            "age": 23,
+            "cars": []
+        },
+        {
+            "personNummer": "654321",
+            "name": "Jane Doe",
+            "phoneNumber": 654321,
+            "email": "jane@doe",
+            "age": 25,
+            "cars": ["car1", "car2"]
+        }
+    ],
     "lease": []
 }
