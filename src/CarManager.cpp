@@ -9,20 +9,11 @@
 #include <vector>
 
 void CarManager::createCar(std::vector<Car> &cars, const Car &newCar,JsonParser &jsonParser) {
-    /*
-     * This function is used to create a car object and add it to the vector cars
-     * The function takes a reference to the vector cars and a reference to the jsonParser
-     * The function uses the standard cli input to get the car data
-     * The function uses the jsonParser to export the car to the json document
-     * The function then creates a car object and adds it to the vector cars
-    */
-    Car car = newCar;
-
     // passing the car to the json document
-    jsonParser.exportSingleCarToJson(car);
+    jsonParser.exportSingleCarToJson(newCar);
 
     // taking the reference of the vector cars and adding the car to it
-    cars.push_back(car);
+    cars.push_back(newCar);
 }
 
 void CarManager::displayCar(const Car &car) {
