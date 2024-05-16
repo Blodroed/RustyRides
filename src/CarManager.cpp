@@ -29,11 +29,11 @@ void CarManager::displayCar(const Car &car) {
     std::cout << "========================" << std::endl;
     std::cout << "Car info" << std::endl;
     std::cout << "-------------------" << std::endl;
-    std::cout << "RegNr: " << car.getRegNr() << std::endl;
-    std::cout << "Color: " << car.getColor() << std::endl;
-    std::cout << "Model: " << car.getModel() << std::endl;
-    std::cout << "Car type: " << car.getCarType() << std::endl;
-    std::cout << "Fuel type: " << car.getFuelType() << std::endl;
+    std::cout << "RegNr: " << car.getRegNr().toStdString() << std::endl;
+    std::cout << "Color: " << car.getColor().toStdString() << std::endl;
+    std::cout << "Model: " << car.getModel().toStdString() << std::endl;
+    std::cout << "Car type: " << car.getCarType().toStdString() << std::endl;
+    std::cout << "Fuel type: " << car.getFuelType().toStdString() << std::endl;
     std::cout << "Year: " << car.getYear() << std::endl;
     std::cout << "Price: " << car.getPrice() << std::endl;
     std::cout << "Km driven: " << car.getKmDriven() << std::endl;
@@ -48,11 +48,11 @@ void CarManager::displayAllCars(const std::vector<Car> &cars) {
     std::cout << "=== All cars =====================" << std::endl;
     for (const auto &car : cars) {
         std::cout << "----------------------------" << std::endl;
-        std::cout << "RegNr: " << car.getRegNr()
-                  << ", Color: " << car.getColor()
-                  << ", Model: " << car.getModel()
-                  << ", Car type: " << car.getCarType()
-                  << ", Fuel type: " << car.getFuelType()
+        std::cout << "RegNr: " << car.getRegNr().toStdString()
+                  << ", Color: " << car.getColor().toStdString()
+                  << ", Model: " << car.getModel().toStdString()
+                  << ", Car type: " << car.getCarType().toStdString()
+                  << ", Fuel type: " << car.getFuelType().toStdString()
                   << ", Year: " << car.getYear()
                   << ", Price: " << car.getPrice()
                   << ", Km driven: " << car.getKmDriven() << std::endl;
@@ -65,11 +65,7 @@ void CarManager::displayAllCars(const std::vector<Car> &cars) {
     std::cout << "=================================" << std::endl;
 }
 
-void CarManager::addCarToVector(std::vector<Car> &cars, const Car &car) {
-    cars.push_back(car); // damn program is so strong it can push cars
-}
-
-Car* CarManager::searchForCarWithRegNR(std::vector<Car> &cars, const std::string &regNr) {
+Car* CarManager::searchForCarWithRegNR(std::vector<Car> &cars, const QString &regNr) {
     /*
      * This function is used to search for a car in the vector cars
      * The function takes a reference to the vector cars and a string regNr

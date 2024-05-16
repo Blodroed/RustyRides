@@ -17,12 +17,8 @@ JsonParser::JsonParser(const std::string &filepath) {
     this->filepath = filepath;
 }
 
-JsonParser::~JsonParser() {
-    /* Destructor for JsonParser
-     * closes the file if it is open
-     */
-    // TODO: close file if open
-};
+JsonParser::~JsonParser() = default;
+
 
 void JsonParser::setFilepath(const std::string &newFilepath) {
     /* Set the filepath for the json file
@@ -30,7 +26,7 @@ void JsonParser::setFilepath(const std::string &newFilepath) {
      * but with this function you can change it with the filepath in the argument
      */
     this->filepath = newFilepath;
-};
+}
 
 /**
  * @defgroup CarFunctions
@@ -72,8 +68,12 @@ void JsonParser::importCarsFromJson(std::vector<Car> &cars) {
 
     // iterating through the cars array and adding it to the vector
     for (const auto &carJson : carsJson.GetArray()) {
-        Car car(carJson["regNr"].GetString(), carJson["color"].GetString(), carJson["model"].GetString(),
-                carJson["carType"].GetString(), carJson["fuelType"].GetString(), carJson["year"].GetInt(),
+        Car car(QString::fromStdString(carJson["regNr"].GetString()),
+                QString::fromStdString(carJson["color"].GetString()),
+                QString::fromStdString(carJson["model"].GetString()),
+                QString::fromStdString(carJson["carType"].GetString()),
+                QString::fromStdString(carJson["fuelType"].GetString()),
+                carJson["year"].GetInt(),
                 carJson["price"].GetInt(), carJson["kmDriven"].GetInt(),
                 carJson["seats"].GetInt(), carJson["availability"].GetBool());
         cars.push_back(car);
@@ -120,11 +120,11 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     rapidjson::Value carJson(rapidjson::kObjectType);
     auto &allocator = doc.GetAllocator();
 
-    carJson.AddMember("regNr", rapidjson::Value(car.getRegNr().c_str(), allocator).Move(), allocator);
-    carJson.AddMember("color", rapidjson::Value(car.getColor().c_str(), allocator).Move(), allocator);
-    carJson.AddMember("model", rapidjson::Value(car.getModel().c_str(), allocator).Move(), allocator);
-    carJson.AddMember("carType", rapidjson::Value(car.getCarType().c_str(), allocator).Move(), allocator);
-    carJson.AddMember("fuelType", rapidjson::Value(car.getFuelType().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("regNr", rapidjson::Value((car.getRegNr().toStdString().c_str()), allocator).Move(), allocator);
+    carJson.AddMember("color", rapidjson::Value(car.getColor().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("model", rapidjson::Value(car.getModel().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("carType", rapidjson::Value(car.getCarType().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("fuelType", rapidjson::Value(car.getFuelType().toStdString().c_str(), allocator).Move(), allocator);
     carJson.AddMember("year", car.getYear(), allocator);
     carJson.AddMember("price", car.getPrice(), allocator);
     carJson.AddMember("kmDriven", car.getKmDriven(), allocator);
@@ -150,7 +150,7 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
  */
  void JsonParser::editSingleCarToJson(const Car &car) {
     // much needed variables
-    std::string targetRegNr = car.getRegNr();   // need this for some reason to work with comparisons
+    std::string targetRegNr = car.getRegNr().toStdString();   // need this for some reason to work with comparisons
     std::ifstream file(filepath);               // filepath should be set on construction of class
     if (!file.is_open()) {
         std::cerr << "Error: File not found or failed to open" << std::endl;
@@ -171,10 +171,10 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
         Value &carJson = *itr;      // dereference the iterator to get the car object
         if (carJson["regNr"].GetString() == targetRegNr) {
             // Update car's attributes other than the registration number
-            carJson["color"].SetString(car.getColor().c_str(), allocator);
-            carJson["model"].SetString(car.getModel().c_str(), allocator);
-            carJson["carType"].SetString(car.getCarType().c_str(), allocator);
-            carJson["fuelType"].SetString(car.getFuelType().c_str(), allocator);
+            carJson["color"].SetString(car.getColor().toStdString().c_str(), allocator);
+            carJson["model"].SetString(car.getModel().toStdString().c_str(), allocator);
+            carJson["carType"].SetString(car.getCarType().toStdString().c_str(), allocator);
+            carJson["fuelType"].SetString(car.getFuelType().toStdString().c_str(), allocator);
             carJson["year"].SetInt(car.getYear());
             carJson["price"].SetInt(car.getPrice());
             carJson["kmDriven"].SetInt(car.getKmDriven());
@@ -193,7 +193,7 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
 
  void JsonParser::deleteSingleCarFromJson(const Car *car) {
     // much needed variables
-    std::string targetRegNr = car->getRegNr();   // need this for some reason to work with comparisons
+    std::string targetRegNr = car->getRegNr().toStdString();   // need this for some reason to work with comparisons
 
     // same procedure as last year ms SOfie?
     std::ifstream file(filepath);

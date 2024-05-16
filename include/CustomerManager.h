@@ -17,7 +17,6 @@ public:
     void displayAllCustomers() const;
 
 private:
-    std::vector<Customer>& customers; // To be moved to main eventually
 };
 
 #endif // HELLHUB_CUSTOMERMANAGER_H
