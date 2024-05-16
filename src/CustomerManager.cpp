@@ -38,6 +38,17 @@ void CustomerManager::deleteCustomer(std::vector<Customer> &customers, Customer 
     }
 }
 
+Customer* CustomerManager::searchForCustomerWithPersonNr(std::vector<Customer> &customers, const QString &personNr) {
+    // returns nullpointer if the customer is not found
+    for (auto &customer : customers) {
+        if (customer.getPersonNr() == personNr) {
+            return &customer;
+        }
+    }
+    std::cerr << "Customer not found" << std::endl;
+    return nullptr;
+}
+
 std::vector<const Customer*> CustomerManager::searchForCustomerWithSeveralParameters(const std::vector<Customer> &customers,
                                                                            Customer &searchCustomer) {
     // creating a pointer vector to found customers
