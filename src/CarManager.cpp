@@ -149,7 +149,7 @@ void CarManager::deleteCar(std::vector<Car> &cars, Car *car, JsonParser &jsonPar
         return;
     }
 
-    jsonParser.deleteSingleCarFromJson(car);
+    jsonParser.deleteSingleCarFromJson(*car);
 
     for (auto it = cars.begin(); it != cars.end(); ++it) {
         if (it->getRegNr() == car->getRegNr()) {
