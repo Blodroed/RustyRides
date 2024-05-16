@@ -129,13 +129,13 @@ void MainWindow::on_EdtCustBtn_clicked() {
     customerDialog->setModal(true);
 
     // Make the personNr field read-only
-    // customerDialog->getPersonNrLineEdit()->setReadOnly(true);
+    customerDialog->getPersonNrLineEdit()->setReadOnly(true);
 
     if (customerDialog->exec() == QDialog::Accepted) {
         // Create a new Customer object with the updated data
         Customer updatedCustomer(customerDialog->getPersonNr(), customerDialog->getEmail(),
                                  customerDialog->getPhone(), customerDialog->getAge(),
-                                 customerDialog->getName(), {});
+                                 customerDialog->getName(), selectedCustomer.getAssignedCarsRegNr());
 
         // Call the editCustomer function
         CustomerManager::editCustomerAllInstances(selectedCustomer, updatedCustomer, jsonParser);

@@ -2,6 +2,7 @@
 #define CUSTOMERDIALOG_H
 
 #include <QDialog>
+#include <QLineEdit>
 
 namespace Ui {
     class CustomerDialog;
@@ -28,8 +29,13 @@ public:
     QString getPhone() const;
     int getAge() const;
     QString getName() const;
+
+    // Get the edit fields
+    QLineEdit* getPersonNrLineEdit() const;
+
 private:
     Ui::CustomerDialog *ui;
+    QLineEdit* personalNumberLineEdit;
 signals:
 };
 

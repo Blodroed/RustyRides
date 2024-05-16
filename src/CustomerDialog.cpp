@@ -25,3 +25,4 @@ QString CustomerDialog::getEmail() const { return ui->emailLineEdit->text(); }
 QString CustomerDialog::getPhone() const { return ui->phoneLineEdit->text(); }
 int CustomerDialog::getAge() const { return ui->ageLineEdit->text().toInt(); }
 QString CustomerDialog::getName() const { return ui->nameLineEdit->text(); }
+QLineEdit* CustomerDialog::getPersonNrLineEdit() const { return ui->personalNumberLineEdit; }
