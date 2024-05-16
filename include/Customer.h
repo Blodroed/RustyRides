@@ -27,7 +27,8 @@ public:
     void setPhone(const QString &phone);
     void setAge(int age);
     void setName(const QString &name);
-    void assignCar(const Car &car);
+    void assignCar(const QString &regNr);
+    void removeCar(const QString &regNr);
 
     // Getters
     QString getPersonNr() const;
@@ -37,14 +38,12 @@ public:
     QString getName() const;
     std::vector<QString> getAssignedCarsRegNr() const;
 
-
 private:
     QString personNr;
     QString email;
     QString phone;
     int age;
     QString name;
-
     std::vector<QString> assignedCarsRegNr;
 };
 
