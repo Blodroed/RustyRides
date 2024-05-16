@@ -5,23 +5,25 @@
 #ifndef HELLHUB_CAR_H
 #define HELLHUB_CAR_H
 
-#include <string>
+#include <QString>
+
 
 class Car {
 public:
     // Constructor
     Car();
-    explicit Car(const std::string &regNr, const std::string &color, const std::string &model, const std::string &carType,
-                 const std::string &fuelType, int year, int price, int kmDriven, int seats, bool available);
+    explicit Car(const QString &regNr, const QString &color, const QString &model, const QString &carType,
+                 const QString &fuelType, int year, int price, int kmDriven,
+                 int seats, bool available);
 
     // Destructor
     virtual ~Car();
 
     // Setters for private members
-    void setColor(std::string color);
-    void setModel(std::string model);
-    void setCarType(std::string carType);
-    void setFuelType(std::string fuelType);
+    void setColor(const QString &color);
+    void setModel(const QString &model);
+    void setCarType(const QString &carType);
+    void setFuelType(const QString &fuelType);
     void setYear(int year);
     void setPrice(int price);
     void setKmDriven(int kmDriven);
@@ -29,22 +31,22 @@ public:
     void setAvailable(bool available);
 
     // Getters for each private member
-    std::string getRegNr() const;
-    std::string getColor() const;
-    std::string getModel() const;
-    std::string getCarType() const;
-    std::string getFuelType() const;
+    QString getRegNr() const;
+    QString getColor() const;
+    QString getModel() const;
+    QString getCarType() const;
+    QString getFuelType() const;
     int getYear() const;
     int getPrice() const;
     int getKmDriven() const;
     int getSeats() const;
     bool getAvailable() const;
 private:
-    std::string RegNr;
-    std::string color;
-    std::string model;
-    std::string carType;
-    std::string fuelType;
+    QString RegNr;
+    QString color;
+    QString model;
+    QString carType;
+    QString fuelType;
     int year;
     int price;
     int kmDriven;
