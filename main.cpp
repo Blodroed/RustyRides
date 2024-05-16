@@ -19,7 +19,6 @@ int main(int argc, char *argv[])
     std::vector<Customer> customers;
 
     // init customer manager
-    CustomerManager customerManager(customers);
 
     std::cout << "C++ version: " << __cplusplus << std::endl;
     // init json parser with database path
