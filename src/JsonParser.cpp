@@ -191,9 +191,9 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     doc.Accept(writer);
  }
 
- void JsonParser::deleteSingleCarFromJson(const Car *car) {
+ void JsonParser::deleteSingleCarFromJson(const Car &car) {
     // much needed variables
-    std::string targetRegNr = car->getRegNr().toStdString();   // need this for some reason to work with comparisons
+    std::string targetRegNr = car.getRegNr().toStdString();   // need this for some reason to work with comparisons
 
     // same procedure as last year ms SOfie?
     std::ifstream file(filepath);
@@ -321,6 +321,42 @@ void JsonParser::exportSingleCustomerToJson(const Customer &customer) {
     doc["customers"].PushBack(customerJson, allocator);
 
     // writing the JSON object to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+}
+
+
+void JsonParser::deleteSingleCustomerFromJson(const Customer &customer) {
+    // target personnummer
+    std::string targetPersonNr = customer.getPersonNr().toStdString();
+
+    // same procedure as last year ms SOfie?
+    std::ifstream
+    file(filepath);
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+    // same procedure as every year, James
+    IStreamWrapper isw(file);
+    Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // Iterate over the customers array
+    for (Value::ValueIterator itr = doc["customers"].Begin(); itr != doc["customers"].End();) {
+        Value &customerJson = *itr;
+        if (customerJson["personNummer"].GetString() == targetPersonNr) {
+            // If the personnummer matches, erase this element
+            itr = doc["customers"].Erase(itr);
+        } else {
+            ++itr;
+        }
+    }
+
+    // writing to the file
     std::ofstream ofstream(filepath);
     rapidjson::OStreamWrapper osw(ofstream);
     rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
