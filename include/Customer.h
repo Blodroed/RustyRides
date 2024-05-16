@@ -35,6 +35,8 @@ public:
     QString getPhone() const;
     int getAge() const;
     QString getName() const;
+    std::vector<QString> getAssignedCarsRegNr() const;
+
 
 private:
     QString personNr;

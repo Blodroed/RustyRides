@@ -37,3 +37,4 @@ QString Customer::getEmail() const { return email; }
 QString Customer::getPhone() const { return phone; }
 int Customer::getAge() const { return age; }
 QString Customer::getName() const { return name; }
+std::vector<QString> Customer::getAssignedCarsRegNr() const { return assignedCarsRegNr; }
