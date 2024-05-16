@@ -8,6 +8,7 @@
 #include "../include/customerManager.h"
 #include "../include/JsonParser.h"
 #include <QMainWindow>
+#include <vector>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -37,6 +38,8 @@ private:
     Ui::MainWindow *ui;
     CustomerManager custManager;
     void updateCustomerTable();
+
+    std::vector<Customer>& customersRef;
 
     JsonParser& jsonParser;
 };

@@ -1,6 +1,7 @@
 #include "../include/mainwindow.h"
 #include "ui_mainwindow.h"
 #include "../include/Customer.h"
+#include "../include/CustomerDialog.h""
 #include "../include/areyousuredialog.h"
 
 MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, QWidget *parent)
@@ -12,6 +13,7 @@ MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers,
 
     // Table view of the customers
     // TODO: Similar table view for cars and leases
+    customersRef = customers;
 
     ui->CustTable->setColumnCount(5);
     QStringList headers = {"Personal Number", "Email", "Phone", "Age", "Name"};
@@ -30,11 +32,11 @@ MainWindow::~MainWindow()
 void MainWindow::updateCustomerTable() {
     ui->CustTable->setRowCount(0);
 
-    auto& customers = custManager.getAllCustomers();
+
     qDebug() << "Updating table with customer count: " << customers.size();
 
-    for (size_t row = 0; row < customers.size(); ++row) {
-        const auto& customer = customers[row];
+    for (size_t row = 0; row < customersRef.size(); ++row) {
+        const auto& customer = customersRef[row];
         ui->CustTable->insertRow(row);
 
         qDebug() << "Setting row:" << row
@@ -91,8 +93,6 @@ void MainWindow::on_EdtCustBtn_clicked() {
         qDebug() << "No customer selected for editing";
         return;
     }
-
-    auto& customers = custManager.getAllCustomers();
 
     Customer& selectedCustomer = customers[currentRow];
 

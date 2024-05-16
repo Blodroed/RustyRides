@@ -29,6 +29,8 @@ set(PROJECT_SOURCES
         src/Customer.cpp
         src/CustomerManager.cpp
         include/CustomerManager.h
+        include/CustomerDialog.h
+        src/CustomerDialog.cpp
         src/areyousuredialog.cpp
         include/areyousuredialog.h
         src/areyousuredialog.ui
