@@ -58,3 +58,12 @@ std::vector<const Customer*> CustomerManager::searchForCustomerWithSeveralParame
     return foundCustomers;
 }
 
+void CustomerManager::assignCarToCustomer(Customer &customer, const Car &car, JsonParser &jsonParser) {
+    customer.assignCar(car.getRegNr());
+    jsonParser.editSingleCustomerToJson(customer);
+}
+
+void CustomerManager::removeCarFromCustomer(Customer &customer, const Car &car, JsonParser &jsonParser) {
+    customer.removeCar(car.getRegNr());
+    jsonParser.editSingleCustomerToJson(customer);
+}

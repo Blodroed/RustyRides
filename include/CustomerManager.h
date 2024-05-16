@@ -22,8 +22,8 @@ public:
                                                                                Customer &searchCustomer);
     static void deleteCustomer(std::vector<Customer> &customers, Customer *customer, JsonParser &jsonParser);
 
-    static void assignCarToCustomer(Customer *customer, const Car &car);
-    static void removeCarFromCustomer(Customer *customer, const Car &car);
+    static void assignCarToCustomer(Customer &customer, const Car &car, JsonParser &jsonParser);
+    static void removeCarFromCustomer(Customer &customer, const Car &car, JsonParser &jsonParser);
 };
 
 #endif // HELLHUB_CUSTOMERMANAGER_H
