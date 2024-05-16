@@ -5,33 +5,21 @@
 #ifndef HELLHUB_CUSTOMER_H
 #define HELLHUB_CUSTOMER_H
 
-#include <QDialog>
+
 #include <QString>
 #include <vector>
 
 #include "../include/Car.h"
 
-namespace Ui {
-    class Customer;
-}
-
-class Customer : public QDialog
-{
-    Q_OBJECT
-
+class Customer {
 public:
-    explicit Customer(QWidget *parent = nullptr);
-    Customer(const QString &personNr, const QString &email, const QString &phone, int age,
-             const QString &name, const std::vector<QString> &assignedCarsRegNr);
+    // Constructor
+    Customer();
+    explicit Customer(const QString &personNr, const QString &email, const QString &phone, int age,
+                      const QString &name, const std::vector<QString> &assignedCarsRegNr);
 
-    // Move constructor and assignment operator
-    Customer(Customer&& other) noexcept;
-    Customer& operator=(Customer&& other) noexcept;
-
-    Customer(const Customer& other) = delete;
-    Customer& operator=(const Customer& other) = delete;
-
-    ~Customer();
+    // Destructor
+    virtual ~Customer();
 
     // Setters
     void setPersonNr(const QString &personNr);
@@ -39,7 +27,7 @@ public:
     void setPhone(const QString &phone);
     void setAge(int age);
     void setName(const QString &name);
-    void assignCar(const Car* car);
+    void assignCar(const Car &car);
 
     // Getters
     QString getPersonNr() const;
@@ -49,7 +37,6 @@ public:
     QString getName() const;
 
 private:
-    Ui::Customer *ui;
     QString personNr;
     QString email;
     QString phone;
