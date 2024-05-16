@@ -66,10 +66,7 @@ void CustomerManager::deleteCustomer(std::vector<Customer> &customers, Customer 
 void CustomerManager::editCustomerObject(Customer &customer, Customer &editedCustomer) {
     // editing the customer object
     if (customer.getPersonNr() == editedCustomer.getPersonNr()) {
-        customer.setEmail(editedCustomer.getEmail());
-        customer.setPhone(editedCustomer.getPhone());
-        customer.setAge(editedCustomer.getAge());
-        customer.setName(editedCustomer.getName());
+        customer = editedCustomer;
     } else {
         std::cout << "The personNr of the customer object and the edited customer object do not match" << std::endl;
     }

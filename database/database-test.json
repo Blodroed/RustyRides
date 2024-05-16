@@ -83,8 +83,8 @@
         },
         {
             "personNummer": "123",
-            "email": "123",
-            "phoneNumber": "123",
+            "email": "email",
+            "phoneNumber": "991",
             "age": 123,
             "name": "123",
             "cars": []

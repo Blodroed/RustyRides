@@ -139,7 +139,6 @@ void MainWindow::on_EdtCustBtn_clicked() {
 
         // Call the editCustomer function
         CustomerManager::editCustomerAllInstances(selectedCustomer, updatedCustomer, jsonParser);
-
         // Update the table to reflect the changes
         updateCustomerTable();
     }
