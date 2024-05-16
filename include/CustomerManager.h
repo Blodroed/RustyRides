@@ -7,16 +7,22 @@
 
 #include <vector>
 #include "../include/Customer.h"
+#include "../include/JsonParser.h"
 
-class customerManager {
+class CustomerManager {
 public:
-    explicit customerManager(std::vector<Customer>& customers) : customers(customers) {}
-    void addCustomer(Customer&& customer);
-    std::vector<Customer>& getAllCustomers();
-    void displayCustomer(const Customer& customer) const;
-    void displayAllCustomers() const;
+    static void createCustomer(std::vector<Customer> &customers, const Customer &newCustomer, JsonParser &jsonParser);
+    static void displayCustomer(const Customer& customer);
+    static void displayAllCustomers();
 
-private:
+    static void editCustomerObject(Customer *customer, Customer &editedCustomer);
+    static void editCustomerAllInstances(Customer *customer, Customer &editedCustomer, JsonParser &jsonParser);
+    static Customer* searchForCustomerWithPersonNr(std::vector<Customer> &customers, const QString &personNr);
+    static Customer* searchForCustomerWithSeveralParameters(const std::vector<Customer> &customers); // TODO
+    static void deleteCustomer(std::vector<Customer> &customers, Customer *customer, JsonParser &jsonParser);
+
+    static void assignCarToCustomer(Customer *customer, const Car &car);
+    static void removeCarFromCustomer(Customer *customer, const Car &car);
 };
 
 #endif // HELLHUB_CUSTOMERMANAGER_H

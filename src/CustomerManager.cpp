@@ -5,15 +5,10 @@
 #include "../include/customermanager.h"
 #include <QDebug>
 
-void customerManager::addCustomer(Customer&& customer) {
-    customers.push_back(std::move(customer));
+void CustomerManager::createCustomer(std::vector<Customer> &customers, const Customer &newCustomer, JsonParser &jsonParser) {
+    jsonParser.exportSingleCustomerToJson(newCustomer);
 
-    // Part of the debug code when the tableview wasn't working properly
-    qDebug() << "Added Customer. Total now: " << customers.size();
-}
-
-std::vector<Customer>& customerManager::getAllCustomers() {
-    return customers;
+    customers.push_back(newCustomer);
 }
 
 // Removed functions that served no purpose
