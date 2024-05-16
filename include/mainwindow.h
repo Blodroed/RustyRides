@@ -24,6 +24,8 @@ public:
     MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void on_tabWidget_currentChanged(int index);
 
 // Worth noting: These autogenerate upon assigning a button to a slot in the UI designer
 private slots:
@@ -36,7 +38,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    CustomerManager custManager;
     void updateCustomerTable();
 
     std::vector<Customer>& customersRef;

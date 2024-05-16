@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     // init json parser with database path
     JsonParser jsonParser("../database/database-test.json");
     jsonParser.importCarsFromJson(cars);
-    CarManager::displayAllCars(cars);
+    jsonParser.importCustomersFromJson(customers);
 
     QApplication a(argc, argv);
     MainWindow w(jsonParser, customers);

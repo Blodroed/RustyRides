@@ -55,7 +55,7 @@ void CustomerManager::editCustomerAllInstances(Customer &customer, Customer &edi
     editCustomerObject(customer, editedCustomer);
 
     // exporting the edited customer to the json document
-    jsonParser.editSingleCustomerToJson(customer);
+    jsonParser.editSingleCustomerToJson(editedCustomer);
 }
 
 Customer* CustomerManager::searchForCustomerWithPersonNr(std::vector<Customer> &customers, const QString &personNr) {

@@ -76,7 +76,18 @@
             "phoneNumber": "654321",
             "email": "jane@doe",
             "age": 25,
-            "cars": ["car1", "car2"]
+            "cars": [
+                "car1",
+                "car2"
+            ]
+        },
+        {
+            "personNummer": "123",
+            "email": "123",
+            "phoneNumber": "123",
+            "age": 123,
+            "name": "123",
+            "cars": []
         }
     ],
     "leases": []
