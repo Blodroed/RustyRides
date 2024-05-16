@@ -38,6 +38,26 @@ void CustomerManager::deleteCustomer(std::vector<Customer> &customers, Customer 
     }
 }
 
+void CustomerManager::editCustomerObject(Customer &customer, Customer &editedCustomer) {
+    // editing the customer object
+    if (customer.getPersonNr() == editedCustomer.getPersonNr()) {
+        customer.setEmail(editedCustomer.getEmail());
+        customer.setPhone(editedCustomer.getPhone());
+        customer.setAge(editedCustomer.getAge());
+        customer.setName(editedCustomer.getName());
+    } else {
+        std::cout << "The personNr of the customer object and the edited customer object do not match" << std::endl;
+    }
+}
+
+void CustomerManager::editCustomerAllInstances(Customer &customer, Customer &editedCustomer, JsonParser &jsonParser) {
+    // editing the customer object
+    editCustomerObject(customer, editedCustomer);
+
+    // exporting the edited customer to the json document
+    jsonParser.editSingleCustomerToJson(customer);
+}
+
 Customer* CustomerManager::searchForCustomerWithPersonNr(std::vector<Customer> &customers, const QString &personNr) {
     // returns nullpointer if the customer is not found
     for (auto &customer : customers) {

@@ -15,8 +15,8 @@ public:
     static void displayCustomer(const Customer& customer);
     static void displayAllCustomers(const std::vector<Customer> &customers);
 
-    static void editCustomerObject(Customer *customer, Customer &editedCustomer);
-    static void editCustomerAllInstances(Customer *customer, Customer &editedCustomer, JsonParser &jsonParser);
+    static void editCustomerObject(Customer &customer, Customer &editedCustomer);
+    static void editCustomerAllInstances(Customer &customer, Customer &editedCustomer, JsonParser &jsonParser);
     static Customer* searchForCustomerWithPersonNr(std::vector<Customer> &customers, const QString &personNr);
     static std::vector<const Customer*> searchForCustomerWithSeveralParameters(const std::vector<Customer> &customers,
                                                                                Customer &searchCustomer);
