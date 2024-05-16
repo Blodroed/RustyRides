@@ -35,7 +35,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    customerManager custManager;
+    CustomerManager custManager;
     void updateCustomerTable();
 
     JsonParser& jsonParser;
