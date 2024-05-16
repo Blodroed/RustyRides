@@ -285,4 +285,46 @@ void JsonParser::importCustomersFromJson(std::vector<Customer> &customers) {
     }
 }
 
+void JsonParser::exportSingleCustomerToJson(const Customer &customer) {
+    std::ifstream file(filepath); // filepath should be set on construction of class
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+
+    // converting the ifstream to IStreamWrapper
+    // then reads it into memory for JSON document object
+    rapidjson::IStreamWrapper isw(file);
+    rapidjson::Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // accessing the cars array directly
+    auto &customersJson = doc["customers"];
+
+    // creating a new JSON object for the car
+    rapidjson::Value customerJson(rapidjson::kObjectType);
+    auto &allocator = doc.GetAllocator();
+
+    customerJson.AddMember("personNummer", rapidjson::Value(customer.getPersonNr().toStdString().c_str(), allocator).Move(), allocator);
+    customerJson.AddMember("email", rapidjson::Value(customer.getEmail().toStdString().c_str(), allocator).Move(), allocator);
+    customerJson.AddMember("phoneNumber", rapidjson::Value(customer.getPhone().toStdString().c_str(), allocator).Move(), allocator);
+    customerJson.AddMember("age", customer.getAge(), allocator);
+    customerJson.AddMember("name", rapidjson::Value(customer.getName().toStdString().c_str(), allocator).Move(), allocator);
+
+    // adding the cars array to the customer object
+    customerJson.AddMember("cars", rapidjson::Value(rapidjson::kArrayType), allocator);
+    for (const auto &car : customer.getAssignedCarsRegNr()) {
+        customerJson["cars"].PushBack(rapidjson::Value(car.toStdString().c_str(), allocator).Move(), allocator);
+    }
+
+    doc["customers"].PushBack(customerJson, allocator);
+
+    // writing the JSON object to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+}
+
 /** @} */ // end of CustomerFunctions group
