@@ -327,6 +327,47 @@ void JsonParser::exportSingleCustomerToJson(const Customer &customer) {
     doc.Accept(writer);
 }
 
+void JsonParser::editSingleCustomerToJson(const Customer &customer) {
+    // much needed variables
+    std::string targetPersonNr = customer.getPersonNr().toStdString();   // need this for some reason to work with comparisons
+    std::ifstream file(filepath);               // filepath should be set on construction of class
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+
+    // converting the ifstream to IStreamWrapper
+    IStreamWrapper isw(file);
+    Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // get allocator
+    auto &allocator = doc.GetAllocator();
+
+    for (Value::ValueIterator itr = doc["customers"].Begin(); itr != doc["customers"].End(); ++itr) {
+        Value &customerJson = *itr;      // dereference the iterator to get the customer object
+        if (customerJson["personNummer"].GetString() == targetPersonNr) {
+            // Update customer's attributes other than the personnummer
+            customerJson["email"].SetString(customer.getEmail().toStdString().c_str(), allocator);
+            customerJson["phoneNumber"].SetString(customer.getPhone().toStdString().c_str(), allocator);
+            customerJson["age"].SetInt(customer.getAge());
+            customerJson["name"].SetString(customer.getName().toStdString().c_str(), allocator);
+            // update the cars array
+            customerJson["cars"].Clear();
+            for (const auto &car: customer.getAssignedCarsRegNr()) {
+                customerJson["cars"].PushBack(rapidjson::Value(car.toStdString().c_str(), allocator).Move(), allocator);
+            }
+            break; // Once found and updated, exit the loop
+        }
+    }
+
+    // writing the JSON object to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+}
 
 void JsonParser::deleteSingleCustomerFromJson(const Customer &customer) {
     // target personnummer

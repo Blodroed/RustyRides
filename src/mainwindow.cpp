@@ -7,7 +7,6 @@ MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers,
         : QMainWindow(parent)
         , ui(new Ui::MainWindow)
         , jsonParser(jsonParser)
-        , custManager(customers)
 {
     ui->setupUi(this);
 
@@ -77,7 +76,7 @@ void MainWindow::on_NewCustBtn_clicked() {
         qDebug() << "Fetched from dialog - Name:" << name;
 
         Customer newCustomer(personNr, email, phone, age, name, {});
-        custManager.addCustomer(std::move(newCustomer));
+        custManager.createCustomer(std::move(newCustomer));
         updateCustomerTable();
     }
 
