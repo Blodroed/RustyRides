@@ -14,6 +14,31 @@ void CustomerManager::createCustomer(std::vector<Customer> &customers, const Cus
     customers.push_back(newCustomer);
 }
 
+void CustomerManager::displayCustomer(const Customer &customer) {
+    // displaying the customer
+    std::cout << "----------------------------------------------------" << std::endl;
+    std::cout << "PersonNr: " << customer.getPersonNr().toStdString()
+    << ", Email: " << customer.getEmail().toStdString()
+    << ", Phone: " << customer.getPhone().toStdString()
+    << ", Age: " << customer.getAge()
+    << ", Name: " << customer.getName().toStdString() << std::endl;
+    std::cout << "Assigned cars: ";
+    for (const auto &car : customer.getAssignedCarsRegNr()) {
+        std::cout << car.toStdString() << ", ";
+    }
+    std::cout << std::endl;
+    std::cout << "----------------------------------------------------" << std::endl;
+}
+
+void CustomerManager::displayAllCustomers(const std::vector<Customer> &customers) {
+    // displaying all customers
+    std::cout << "============ All customers ===========" << std::endl;
+    for (const auto &customer : customers) {
+        displayCustomer(customer);
+    }
+    std::cout << "======================================" << std::endl;
+}
+
 void CustomerManager::deleteCustomer(std::vector<Customer> &customers, Customer *customer, JsonParser &jsonParser) {
     if (customer == nullptr) {
         std::cout << "Customer not found";

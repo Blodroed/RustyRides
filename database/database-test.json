@@ -88,6 +88,14 @@
             "age": 123,
             "name": "123",
             "cars": []
+        },
+        {
+            "personNummer": "234",
+            "email": "234",
+            "phoneNumber": "234",
+            "age": 154,
+            "name": "frode",
+            "cars": []
         }
     ],
     "leases": []
