@@ -1,7 +1,7 @@
 #include "../include/mainwindow.h"
 #include "ui_mainwindow.h"
 #include "../include/Customer.h"
-#include "../include/CustomerDialog.h""
+#include "../include/CustomerDialog.h"
 #include "../include/areyousuredialog.h"
 
 MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, QWidget *parent)
