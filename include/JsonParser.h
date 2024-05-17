@@ -6,6 +6,7 @@
 #define HELLHUB_JSONPARSER_H
 
 #include "Car.h"
+#include "Customer.h"
 
 #include <vector>
 #include <fstream>
@@ -73,13 +74,18 @@ public:
      * @brief Deletes a single car from the JSON file.
      * @param car A reference to a Car object to be deleted from the JSON file.
      */
-     void deleteSingleCarFromJson(const Car *car);
+     void deleteSingleCarFromJson(const Car &car);
 
     /**@}*/
 
     // ===== Customers Functions ================================================
 
     // TODO: put relevant functions here
+    void importCustomersFromJson(std::vector<Customer> &customers);
+    void exportCustomersToJson(const std::vector<Customer> &customers);
+    void exportSingleCustomerToJson(const Customer &customer);
+    void editSingleCustomerToJson(const Customer &customer);
+    void deleteSingleCustomerFromJson(const Customer &customer);
 
     // full backup and import
     void fullBackup(const std::vector<Car> &cars); // TODO add other vectors before fullBackup

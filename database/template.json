@@ -5,6 +5,7 @@
       "color": "unknown",
       "model": "unknown",
       "carType": "unknown",
+      "fuelType": "diesel/petrol/hybrid/pluginhybrid/electric",
       "year": 1234,
       "kmDriven": 12345,
       "price": 12345,
@@ -12,20 +13,20 @@
       "availability": "true or false"
     }
   ],
-  "customer": [
+  "customers": [
     {
       "personNummer": "unknown",
       "name": "unknown",
-      "phoneNumber": 123456,
+      "phoneNumber": "123-456",
       "email": "unknown",
       "age": 23,
       "cars": [
-        {"regnNr": "unknown"},
-        {"regnNr": "unknown"}
+        "regNr",
+        "regNr"
       ]
     }
   ],
-  "lease": [
+  "leases": [
     {
       "leaseId": 1,
       "carId": 1,

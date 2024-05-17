@@ -3,30 +3,33 @@
         {
             "regNr": "car1",
             "color": "red",
-            "model": "sedan",
-            "carType": "electric",
+            "model": "toyota",
+            "carType": "hatchback",
+            "fuelType": "electric",
             "year": 2020,
             "kmDriven": 10000,
             "price": 20000,
             "seats": 4,
-            "availability": true
+            "availability": false
         },
         {
             "regNr": "car2",
             "color": "blue",
-            "model": "SUV",
-            "carType": "gas",
+            "model": "jeep",
+            "carType": "SUV",
+            "fuelType": "gas",
             "year": 2019,
             "kmDriven": 15000,
             "price": 25000,
             "seats": 5,
-            "availability": true
+            "availability": false
         },
         {
             "regNr": "car3",
             "color": "green",
-            "model": "hatchback",
-            "carType": "hybrid",
+            "model": "volvo",
+            "carType": "sedan",
+            "fuelType": "hybrid",
             "year": 2021,
             "kmDriven": 5000,
             "price": 30000,
@@ -36,8 +39,9 @@
         {
             "regNr": "car4",
             "color": "black",
-            "model": "coupe",
-            "carType": "diesel",
+            "model": "volvo",
+            "carType": "sedan",
+            "fuelType": "diesel",
             "year": 2018,
             "kmDriven": 20000,
             "price": 35000,
@@ -47,8 +51,9 @@
         {
             "regNr": "car5",
             "color": "white",
-            "model": "convertible",
-            "carType": "gas",
+            "model": "Ford",
+            "carType": "hatchback",
+            "fuelType": "gas",
             "year": 2022,
             "kmDriven": 1000,
             "price": 40000,
@@ -56,6 +61,42 @@
             "availability": false
         }
     ],
-    "customer": [],
-    "lease": []
+    "customers": [
+        {
+            "personNummer": "123456",
+            "name": "John Doe",
+            "phoneNumber": "123456",
+            "email": "john@doe.com",
+            "age": 23,
+            "cars": []
+        },
+        {
+            "personNummer": "654321",
+            "name": "Jane Doe",
+            "phoneNumber": "654321",
+            "email": "jane@doe",
+            "age": 25,
+            "cars": [
+                "car1",
+                "car2"
+            ]
+        },
+        {
+            "personNummer": "123",
+            "email": "email",
+            "phoneNumber": "991",
+            "age": 123,
+            "name": "123",
+            "cars": []
+        },
+        {
+            "personNummer": "234",
+            "email": "234",
+            "phoneNumber": "234",
+            "age": 154,
+            "name": "frode",
+            "cars": []
+        }
+    ],
+    "leases": []
 }

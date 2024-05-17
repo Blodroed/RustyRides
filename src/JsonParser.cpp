@@ -10,17 +10,15 @@
 
 #include <iostream>
 #include <vector>
+#include <QString>
+
 using namespace rapidjson;
 JsonParser::JsonParser(const std::string &filepath) {
     this->filepath = filepath;
 }
 
-JsonParser::~JsonParser() {
-    /* Destructor for JsonParser
-     * closes the file if it is open
-     */
-    // TODO: close file if open
-};
+JsonParser::~JsonParser() = default;
+
 
 void JsonParser::setFilepath(const std::string &newFilepath) {
     /* Set the filepath for the json file
@@ -28,7 +26,7 @@ void JsonParser::setFilepath(const std::string &newFilepath) {
      * but with this function you can change it with the filepath in the argument
      */
     this->filepath = newFilepath;
-};
+}
 
 /**
  * @defgroup CarFunctions
@@ -70,8 +68,12 @@ void JsonParser::importCarsFromJson(std::vector<Car> &cars) {
 
     // iterating through the cars array and adding it to the vector
     for (const auto &carJson : carsJson.GetArray()) {
-        Car car(carJson["regNr"].GetString(), carJson["color"].GetString(), carJson["model"].GetString(),
-                carJson["carType"].GetString(), carJson["year"].GetInt(),
+        Car car(QString::fromStdString(carJson["regNr"].GetString()),
+                QString::fromStdString(carJson["color"].GetString()),
+                QString::fromStdString(carJson["model"].GetString()),
+                QString::fromStdString(carJson["carType"].GetString()),
+                QString::fromStdString(carJson["fuelType"].GetString()),
+                carJson["year"].GetInt(),
                 carJson["price"].GetInt(), carJson["kmDriven"].GetInt(),
                 carJson["seats"].GetInt(), carJson["availability"].GetBool());
         cars.push_back(car);
@@ -118,10 +120,11 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     rapidjson::Value carJson(rapidjson::kObjectType);
     auto &allocator = doc.GetAllocator();
 
-    carJson.AddMember("regNr", rapidjson::Value(car.getRegNr().c_str(), allocator).Move(), allocator);
-    carJson.AddMember("color", rapidjson::Value(car.getColor().c_str(), allocator).Move(), allocator);
-    carJson.AddMember("model", rapidjson::Value(car.getModel().c_str(), allocator).Move(), allocator);
-    carJson.AddMember("carType", rapidjson::Value(car.getCarType().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("regNr", rapidjson::Value((car.getRegNr().toStdString().c_str()), allocator).Move(), allocator);
+    carJson.AddMember("color", rapidjson::Value(car.getColor().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("model", rapidjson::Value(car.getModel().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("carType", rapidjson::Value(car.getCarType().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("fuelType", rapidjson::Value(car.getFuelType().toStdString().c_str(), allocator).Move(), allocator);
     carJson.AddMember("year", car.getYear(), allocator);
     carJson.AddMember("price", car.getPrice(), allocator);
     carJson.AddMember("kmDriven", car.getKmDriven(), allocator);
@@ -147,7 +150,7 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
  */
  void JsonParser::editSingleCarToJson(const Car &car) {
     // much needed variables
-    std::string targetRegNr = car.getRegNr();   // need this for some reason to work with comparisons
+    std::string targetRegNr = car.getRegNr().toStdString();   // need this for some reason to work with comparisons
     std::ifstream file(filepath);               // filepath should be set on construction of class
     if (!file.is_open()) {
         std::cerr << "Error: File not found or failed to open" << std::endl;
@@ -168,9 +171,10 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
         Value &carJson = *itr;      // dereference the iterator to get the car object
         if (carJson["regNr"].GetString() == targetRegNr) {
             // Update car's attributes other than the registration number
-            carJson["color"].SetString(car.getColor().c_str(), allocator);
-            carJson["model"].SetString(car.getModel().c_str(), allocator);
-            carJson["carType"].SetString(car.getCarType().c_str(), allocator);
+            carJson["color"].SetString(car.getColor().toStdString().c_str(), allocator);
+            carJson["model"].SetString(car.getModel().toStdString().c_str(), allocator);
+            carJson["carType"].SetString(car.getCarType().toStdString().c_str(), allocator);
+            carJson["fuelType"].SetString(car.getFuelType().toStdString().c_str(), allocator);
             carJson["year"].SetInt(car.getYear());
             carJson["price"].SetInt(car.getPrice());
             carJson["kmDriven"].SetInt(car.getKmDriven());
@@ -187,9 +191,9 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     doc.Accept(writer);
  }
 
- void JsonParser::deleteSingleCarFromJson(const Car *car) {
+ void JsonParser::deleteSingleCarFromJson(const Car &car) {
     // much needed variables
-    std::string targetRegNr = car->getRegNr();   // need this for some reason to work with comparisons
+    std::string targetRegNr = car.getRegNr().toStdString();   // need this for some reason to work with comparisons
 
     // same procedure as last year ms SOfie?
     std::ifstream file(filepath);
@@ -226,5 +230,178 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
     doc.Accept(writer);
  }
-
 /** @} */ // end of CarFunctions group
+
+/**
+ * @defgroup CustomerFunctions
+ * @brief Customer-related JSON parsing functions
+ *
+ * This group contains all the functions related to parsing JSON data for customers.
+ * @{
+ */
+
+void JsonParser::importCustomersFromJson(std::vector<Customer> &customers) {
+    std::ifstream file(filepath); // filepath should be set on construction of class
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+
+    // converting the ifstream to IStreamWrapper
+    // then reads it into memory for JSON document object
+    rapidjson::IStreamWrapper isw(file);
+    rapidjson::Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // accessing the cars array directly
+    const auto &customersJson = doc["customers"];
+
+    // clear the vector before adding new customers
+    // this is to avoid duplicates. Database is considered to be the truth
+    customers.clear();
+
+    // iterating through the cars array and adding it to the vector
+    for (const auto &customerJson : customersJson.GetArray()) {
+        if (!customerJson.IsObject()) {
+            std::cout << "Error: customer is not an object in the JSON document" << std::endl;
+            continue;
+        }
+
+        QString personNummer = QString::fromStdString(customerJson["personNummer"].GetString());
+        QString name = QString::fromStdString(customerJson["name"].GetString());
+        QString phoneNumber = QString::fromStdString(customerJson["phoneNumber"].GetString());
+        QString email = QString::fromStdString(customerJson["email"].GetString());
+        int age = customerJson["age"].GetInt();
+
+        std::vector<QString> cars;
+        if (customerJson.HasMember("cars") && customerJson["cars"].IsArray()) {
+            for (const auto &carJson: customerJson["cars"].GetArray()) {
+                cars.push_back(QString::fromStdString(carJson.GetString()));
+            }
+        }
+        Customer customer(personNummer, email, phoneNumber, age, name, cars);
+        customers.emplace_back(std::move(customer));
+    }
+}
+
+void JsonParser::exportSingleCustomerToJson(const Customer &customer) {
+    std::ifstream file(filepath); // filepath should be set on construction of class
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+
+    // converting the ifstream to IStreamWrapper
+    // then reads it into memory for JSON document object
+    rapidjson::IStreamWrapper isw(file);
+    rapidjson::Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // accessing the cars array directly
+    auto &customersJson = doc["customers"];
+
+    // creating a new JSON object for the car
+    rapidjson::Value customerJson(rapidjson::kObjectType);
+    auto &allocator = doc.GetAllocator();
+
+    customerJson.AddMember("personNummer", rapidjson::Value(customer.getPersonNr().toStdString().c_str(), allocator).Move(), allocator);
+    customerJson.AddMember("email", rapidjson::Value(customer.getEmail().toStdString().c_str(), allocator).Move(), allocator);
+    customerJson.AddMember("phoneNumber", rapidjson::Value(customer.getPhone().toStdString().c_str(), allocator).Move(), allocator);
+    customerJson.AddMember("age", customer.getAge(), allocator);
+    customerJson.AddMember("name", rapidjson::Value(customer.getName().toStdString().c_str(), allocator).Move(), allocator);
+
+    // adding the cars array to the customer object
+    customerJson.AddMember("cars", rapidjson::Value(rapidjson::kArrayType), allocator);
+    for (const auto &car : customer.getAssignedCarsRegNr()) {
+        customerJson["cars"].PushBack(rapidjson::Value(car.toStdString().c_str(), allocator).Move(), allocator);
+    }
+
+    doc["customers"].PushBack(customerJson, allocator);
+
+    // writing the JSON object to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+}
+
+void JsonParser::editSingleCustomerToJson(const Customer &customer) {
+    // much needed variables
+    std::string targetPersonNr = customer.getPersonNr().toStdString();   // need this for some reason to work with comparisons
+    std::ifstream file(filepath);               // filepath should be set on construction of class
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+
+    // converting the ifstream to IStreamWrapper
+    IStreamWrapper isw(file);
+    Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // get allocator
+    auto &allocator = doc.GetAllocator();
+
+    for (Value::ValueIterator itr = doc["customers"].Begin(); itr != doc["customers"].End(); ++itr) {
+        Value &customerJson = *itr;      // dereference the iterator to get the customer object
+        if (customerJson["personNummer"].GetString() == targetPersonNr) {
+            // Update customer's attributes other than the personnummer
+            customerJson["email"].SetString(customer.getEmail().toStdString().c_str(), allocator);
+            customerJson["phoneNumber"].SetString(customer.getPhone().toStdString().c_str(), allocator);
+            customerJson["age"].SetInt(customer.getAge());
+            customerJson["name"].SetString(customer.getName().toStdString().c_str(), allocator);
+            // update the cars array
+            customerJson["cars"].Clear();
+            for (const auto &car: customer.getAssignedCarsRegNr()) {
+                customerJson["cars"].PushBack(rapidjson::Value(car.toStdString().c_str(), allocator).Move(), allocator);
+            }
+            break; // Once found and updated, exit the loop
+        }
+    }
+
+    // writing the JSON object to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+}
+
+void JsonParser::deleteSingleCustomerFromJson(const Customer &customer) {
+    // target personnummer
+    std::string targetPersonNr = customer.getPersonNr().toStdString();
+
+    // same procedure as last year ms SOfie?
+    std::ifstream
+    file(filepath);
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+    // same procedure as every year, James
+    IStreamWrapper isw(file);
+    Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // Iterate over the customers array
+    for (Value::ValueIterator itr = doc["customers"].Begin(); itr != doc["customers"].End();) {
+        Value &customerJson = *itr;
+        if (customerJson["personNummer"].GetString() == targetPersonNr) {
+            // If the personnummer matches, erase this element
+            itr = doc["customers"].Erase(itr);
+        } else {
+            ++itr;
+        }
+    }
+
+    // writing to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+}
+
+/** @} */ // end of CustomerFunctions group

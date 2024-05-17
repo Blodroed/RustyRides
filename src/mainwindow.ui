@@ -98,7 +98,7 @@
        <string>Edit car</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="RmCarBtn">
+     <widget class="QPushButton" name="DelCarBtn">
       <property name="geometry">
        <rect>
         <x>620</x>
@@ -146,7 +146,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Register new Customer</string>
+       <string>Register new customer</string>
       </property>
      </widget>
      <widget class="QPushButton" name="EdtCustBtn">
@@ -164,10 +164,10 @@
        </font>
       </property>
       <property name="text">
-       <string>Edit Customer</string>
+       <string>Edit customer</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="RmCustBtn">
+     <widget class="QPushButton" name="DelCustBtn">
       <property name="geometry">
        <rect>
         <x>620</x>
@@ -182,7 +182,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Remove Customer</string>
+       <string>Delete customer</string>
       </property>
      </widget>
      <widget class="QTableWidget" name="CustTable">
@@ -193,6 +193,18 @@
         <width>551</width>
         <height>511</height>
        </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
       </property>
       <property name="sortingEnabled">
        <bool>true</bool>
@@ -239,7 +251,7 @@
        <string>Edit lease</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="RmLeaseBtn">
+     <widget class="QPushButton" name="DelLeaseBtn">
       <property name="geometry">
        <rect>
         <x>620</x>
@@ -277,7 +289,7 @@
      <x>0</x>
      <y>0</y>
      <width>840</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOptions">
