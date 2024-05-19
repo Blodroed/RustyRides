@@ -4,6 +4,9 @@
 
 #include "../include/Lease.h"
 
+// init static variable
+int Lease::lastLeaseId = 0;
+
 // creation of new lease constructor
 Lease::Lease(QString &regNr, QString &personNr, QString &startDate, int daysOfLease, int negotiatedPrice)
             : Lease(++lastLeaseId, regNr, personNr, startDate, daysOfLease, negotiatedPrice, negotiatedPrice * daysOfLease, false) {}
