@@ -264,7 +264,7 @@ void JsonParser::importCustomersFromJson(std::vector<Customer> &customers) {
     // iterating through the cars array and adding it to the vector
     for (const auto &customerJson : customersJson.GetArray()) {
         if (!customerJson.IsObject()) {
-            std::cout << "Error: customer is not an object in the JSON document" << std::endl;
+            std::cout << "Error: skipping the entry, not an object" << std::endl;
             continue;
         }
 
@@ -403,5 +403,49 @@ void JsonParser::deleteSingleCustomerFromJson(const Customer &customer) {
     rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
     doc.Accept(writer);
 }
-
 /** @} */ // end of CustomerFunctions group
+
+/**
+ * @defgroup LeaseFunctions
+ * @brief Lease-related JSON parsing functions
+ *
+ * This group contains all the functions related to parsing JSON data for leases.
+ * @{
+ */
+
+void JsonParser::importLeasesFromJson(std::vector<Lease> &leases) {
+    std::ifstream file(filepath); // filepath should be set on construction of class
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+    IStreamWrapper isw(file);
+    Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // accessing the leases array directly
+    const auto &leasesJson = doc["leases"];
+
+    leases.clear();
+
+    for (const auto &leaseJson : leasesJson.GetArray()) {
+        if (!leaseJson.IsObject()) {
+            std::cout << "Error: skipping the entry, not an object" << std::endl;
+            continue;
+        }
+
+        int leaseId = leaseJson["leaseId"].GetInt();
+        QString regNr = QString::fromStdString(leaseJson["regNr"].GetString());
+        QString personNummer = QString::fromStdString(leaseJson["customerId"].GetString());
+        QString startDate = QString::fromStdString(leaseJson["startDate"].GetString());
+        int daysOfLease = leaseJson["daysOfLease"].GetInt();
+        int negotiatedPrice = leaseJson["negotiatedPrice"].GetInt();
+        int totalPrice = leaseJson["totalPrice"].GetInt();
+        bool openOrClosed = leaseJson["openOrClosed"].GetBool();
+
+        // creation and adding of lease object to vector
+        Lease lease(leaseId, regNr, personNummer, startDate, daysOfLease, negotiatedPrice, totalPrice, openOrClosed);
+        leases.emplace_back(std::move(lease));
+    }
+}
