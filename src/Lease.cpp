@@ -13,7 +13,9 @@ Lease::Lease(int id, QString &regNr, QString &personNr, QString &startDate, int 
              int totalPrice, bool openOrClosed)
              : leaseId(id), regNr(regNr), personNr(personNr), startDate(startDate),
                daysOfLease(daysOfLease), negotiatedPrice(negotiatedPrice), totalPrice(totalPrice),
-               openOrClosed(openOrClosed) {}
+               openOrClosed(openOrClosed) {
+    if (id > lastLeaseId) lastLeaseId = id;
+}
 
 // getters
 int Lease::getleaseId() const { return leaseId; }
@@ -34,4 +36,5 @@ void Lease::setNegotiatedPrice(int newNegotiatedPrice) {
     negotiatedPrice = newNegotiatedPrice;
     totalPrice = daysOfLease * negotiatedPrice;
 }
+
 void Lease::setOpenOrClosed(bool newOpenOrClosed) { openOrClosed = newOpenOrClosed; }
