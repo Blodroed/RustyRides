@@ -449,3 +449,118 @@ void JsonParser::importLeasesFromJson(std::vector<Lease> &leases) {
         leases.emplace_back(std::move(lease));
     }
 }
+
+void JsonParser::exportLeasesToJson(const std::vector<Lease> &leases) {}
+
+void JsonParser::exportSingleLeaseToJson(const Lease &lease) {
+    std::ifstream file(filepath); // filepath should be set on construction of class
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+
+    // converting the ifstream to IStreamWrapper
+    IStreamWrapper isw(file);
+    Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // accessing the leases array directly
+    auto &leasesJson = doc["leases"];
+
+    rapidjson::Value leaseJson(rapidjson::kObjectType);
+    auto &allocator = doc.GetAllocator();
+
+    leaseJson.AddMember("leaseId", lease.getleaseId(), allocator);
+    leaseJson.AddMember("regNr", rapidjson::Value(lease.getRegNr().toStdString().c_str(), allocator).Move(), allocator);
+    leaseJson.AddMember("customerId", rapidjson::Value(lease.getPersonNr().toStdString().c_str(), allocator).Move(), allocator);
+    leaseJson.AddMember("startDate", rapidjson::Value(lease.getStartDate().toStdString().c_str(), allocator).Move(), allocator);
+    leaseJson.AddMember("daysOfLease", lease.getDaysOfLease(), allocator);
+    leaseJson.AddMember("negotiatedPrice", lease.getNegotiatedPrice(), allocator);
+    leaseJson.AddMember("totalPrice", lease.getTotalPrice(), allocator);
+    leaseJson.AddMember("openOrClosed", lease.isOpenOrClosed(), allocator);
+
+    doc["leases"].PushBack(leaseJson, allocator);
+
+    // writing the JSON object to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+}
+
+void JsonParser::editSingleLeaseToJson(const Lease &lease) {
+    // much needed variables
+    int targetLeaseId = lease.getleaseId();   // need this for some reason to work with comparisons
+    std::ifstream file(filepath);             // filepath should be set on construction of class
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+
+    // converting the ifstream to IStreamWrapper
+    IStreamWrapper isw(file);
+    Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // get allocator
+    auto &allocator = doc.GetAllocator();
+
+    for (Value::ValueIterator itr = doc["leases"].Begin(); itr != doc["leases"].End(); ++itr) {
+        Value &leaseJson = *itr;      // dereference the iterator to get the lease object
+        if (leaseJson["leaseId"].GetInt() == targetLeaseId) {
+            // Update lease's attributes other than the leaseId
+            leaseJson["regNr"].SetString(lease.getRegNr().toStdString().c_str(), allocator);
+            leaseJson["customerId"].SetString(lease.getPersonNr().toStdString().c_str(), allocator);
+            leaseJson["startDate"].SetString(lease.getStartDate().toStdString().c_str(), allocator);
+            leaseJson["daysOfLease"].SetInt(lease.getDaysOfLease());
+            leaseJson["negotiatedPrice"].SetInt(lease.getNegotiatedPrice());
+            leaseJson["totalPrice"].SetInt(lease.getTotalPrice());
+            leaseJson["openOrClosed"].SetBool(lease.isOpenOrClosed());
+            break; // Once found and updated, exit the loop
+        }
+    }
+
+    // writing the JSON object to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+}
+
+void JsonParser::deleteSingleLeaseFromJson(const Lease &lease) {
+    // target leaseId
+    int targetLeaseId = lease.getleaseId();
+
+    // same procedure as last year ms SOfie?
+    std::ifstream file(filepath);
+    if (!file.is_open()) {
+        std::cerr << "Error: File not found or failed to open" << std::endl;
+        return;
+    }
+    // same procedure as every year, James
+    IStreamWrapper isw(file);
+    Document doc;
+    doc.ParseStream(isw);
+    file.close();
+
+    // Iterate over the leases array
+    for (Value::ValueIterator itr = doc["leases"].Begin(); itr != doc["leases"].End();) {
+        Value &leaseJson = *itr;
+        if (leaseJson["leaseId"].GetInt() == targetLeaseId) {
+            // If the leaseId matches, erase this element
+            itr = doc["leases"].Erase(itr);
+        } else {
+            ++itr;
+        }
+    }
+
+    // writing to the file
+    std::ofstream ofstream(filepath);
+    rapidjson::OStreamWrapper osw(ofstream);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    doc.Accept(writer);
+}
+
+/** @} */ // end of LeaseFunctions group
