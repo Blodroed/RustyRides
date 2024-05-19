@@ -10,10 +10,12 @@
 class Lease {
 public:
     // creation construcor
-    Lease(QString &regNr, QString &personNr, QString &startDate, int daysOfLease, int negotiatedPrice);
+    Lease(const QString &regNr, const QString &personNr, const QString &startDate, const int daysOfLease,
+          const int negotiatedPrice);
 
     // import from database constructor
-    Lease(int id, QString &regNr, QString &personNr, QString &startDate, int daysOfLease, int negotiatedPrice, int totalPrice, bool openOrClosed);
+    Lease(const int id, const QString &regNr, const QString &personNr, const QString &startDate, const int daysOfLease,
+          const int negotiatedPrice, const int totalPrice, const bool openOrClosed);
 
     // getters
     int getleaseId() const;

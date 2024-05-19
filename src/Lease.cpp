@@ -8,12 +8,12 @@
 int Lease::lastLeaseId = 0;
 
 // creation of new lease constructor
-Lease::Lease(QString &regNr, QString &personNr, QString &startDate, int daysOfLease, int negotiatedPrice)
+Lease::Lease(const QString &regNr, const QString &personNr, const QString &startDate, const int daysOfLease, const int negotiatedPrice)
             : Lease(++lastLeaseId, regNr, personNr, startDate, daysOfLease, negotiatedPrice, negotiatedPrice * daysOfLease, false) {}
 
 // import from database constructor
-Lease::Lease(int id, QString &regNr, QString &personNr, QString &startDate, int daysOfLease, int negotiatedPrice,
-             int totalPrice, bool openOrClosed)
+Lease::Lease(const int id, const QString &regNr, const QString &personNr, const QString &startDate, const int daysOfLease, const int negotiatedPrice,
+             const int totalPrice, const bool openOrClosed)
              : leaseId(id), regNr(regNr), personNr(personNr), startDate(startDate),
                daysOfLease(daysOfLease), negotiatedPrice(negotiatedPrice), totalPrice(totalPrice),
                openOrClosed(openOrClosed) {
