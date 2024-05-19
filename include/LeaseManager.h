@@ -16,8 +16,8 @@
 
 class LeaseManager {
     static void createLease(Customer &customer, Car &car, QString &startDate, int daysOfLease, JsonParser &jsonParser);
-    static void extendLease(Lease &lease, int daysOfLease);
-    static void editLease(Lease &lease, int daysOfLease, int negotiatedPrice);
+    static void extendLease(Lease &lease, int daysOfLease, JsonParser &jsonParser);
+    static void editLease(Lease &lease, int daysOfLease, int negotiatedPrice, JsonParser &jsonParser);
     static void closeLease(Lease &lease, std::vector<Car> &cars, std::vector<Customer> &customers, JsonParser &jsonParser);
 };
 

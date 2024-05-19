@@ -42,7 +42,7 @@ private:
     int daysOfLease;        // days of lease
     int negotiatedPrice;    // car price the first day of lease
     int totalPrice;         // negotiaded price * days of lease
-    bool openOrClosed;      // 0 = open, 1 = closed
+    bool openOrClosed;      // 1 = open, 0 = closed
 };
 
 
