@@ -35,6 +35,10 @@ set(PROJECT_SOURCES
         src/areyousuredialog.cpp
         include/areyousuredialog.h
         src/areyousuredialog.ui
+        include/Lease.h
+        src/Lease.cpp
+        include/LeaseManager.h
+        src/LeaseManager.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -32,6 +32,7 @@ void Customer::assignCar(const QString &regNr) {
     // do not use this function to assign the car, use the one in customermanager
     this->assignedCarsRegNr.push_back(regNr);
 }
+
 void Customer::removeCar(const QString &regNr) {
     // do not use this function to remove the car, use the one in customermanager
     for (auto it = assignedCarsRegNr.begin(); it != assignedCarsRegNr.end(); ++it) {

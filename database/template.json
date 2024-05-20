@@ -28,12 +28,14 @@
   ],
   "leases": [
     {
-      "leaseId": 1,
-      "carId": 1,
-      "customerId": 1,
-      "startDate": "unknown",
-      "endDate": "unknown",
-      "price": 12345
+      "leaseId": 123,
+      "regNr": "123",
+      "customerId": "123",
+      "startDate": "YYYY-MM-DDTHH:MM:SSZ",
+      "daysOfLease": 2,
+      "negotiadedPrice": 12345,
+      "totalPrice": 12345,
+      "open": "true or false"
     }
   ]
 }

@@ -7,6 +7,7 @@
 
 #include "Car.h"
 #include "Customer.h"
+#include "Lease.h"
 
 #include <vector>
 #include <fstream>
@@ -79,13 +80,19 @@ public:
     /**@}*/
 
     // ===== Customers Functions ================================================
-
-    // TODO: put relevant functions here
     void importCustomersFromJson(std::vector<Customer> &customers);
     void exportCustomersToJson(const std::vector<Customer> &customers);
     void exportSingleCustomerToJson(const Customer &customer);
     void editSingleCustomerToJson(const Customer &customer);
     void deleteSingleCustomerFromJson(const Customer &customer);
+
+    // ===== Leases Functions ================================================
+    void importLeasesFromJson(std::vector<Lease> &leases);
+    void exportLeasesToJson(const std::vector<Lease> &leases);
+    void exportSingleLeaseToJson(const Lease &lease);
+    void editSingleLeaseToJson(const Lease &lease);
+    void deleteSingleLeaseFromJson(const Lease &lease);
+
 
     // full backup and import
     void fullBackup(const std::vector<Car> &cars); // TODO add other vectors before fullBackup
