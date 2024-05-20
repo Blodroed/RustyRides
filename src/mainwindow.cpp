@@ -9,7 +9,7 @@
 
 #include <QMessageBox>
 
-MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, QWidget *parent)
+MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, std::vector<Car>& cars, QWidget *parent)
         : QMainWindow(parent)
         , ui(new Ui::MainWindow)
         , jsonParser(jsonParser)
@@ -47,6 +47,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_tabWidget_currentChanged(int index) {
     // Update the tables
     updateCustomerTable();
+    updateCarTable();
     // TODO: add upcoming tables
 }
 

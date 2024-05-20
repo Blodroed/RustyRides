@@ -2,7 +2,7 @@
 // Created by Marcus on 18.05.2024.
 //
 
-#include "../include/cardialog.h"
+#include "../include/CarDialog.h"
 #include "ui_cardialog.h"
 
 CarDialog::CarDialog(QWidget *parent)

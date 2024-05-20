@@ -23,8 +23,8 @@ set(PROJECT_SOURCES
         src/CarManager.cpp
         include/JsonParser.h
         src/JsonParser.cpp
-        test/testForStuff.h
-        test/testForStuff.cpp
+        #test/testForStuff.h
+        #test/testForStuff.cpp
         include/Customer.h
         src/Customer.cpp
         src/CustomerManager.cpp
@@ -41,6 +41,7 @@ set(PROJECT_SOURCES
         src/LeaseManager.cpp
         include/CarDialog.h
         src/CarDialog.cpp
+        src/cardialog.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

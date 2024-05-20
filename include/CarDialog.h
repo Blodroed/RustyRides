@@ -5,54 +5,53 @@
 #ifndef HELLHUB_CARDIALOG_H
 #define HELLHUB_CARDIALOG_H
 
-#include "../include/cardialog.h"
-#include "ui_cardialog.h"
+#include <QDialog>
+#include <QLineEdit>
 
-CarDialog::CarDialog(QWidget *parent)
-        : QDialog(parent)
-        , ui(new Ui::CarDialog)
+namespace Ui {
+    class CarDialog;
+}
+
+class CarDialog : public QDialog
 {
-    ui->setupUi(this);
-}
+    Q_OBJECT
 
-CarDialog::~CarDialog()
-{
-    delete ui;
-}
+public:
+    explicit CarDialog(QWidget *parent = nullptr);
+    ~CarDialog();
 
-// Setters for UI elements
-void CarDialog::setRegNr(const QString& regNr) { ui->RegNrLineEdit->setText(regNr); }
-void CarDialog::setMake(const QString& regNr) { ui->MakeLineEdit->setText(regNr); }
-void CarDialog::setModel(const QString& model) { ui->ModelEdit->setText(model); }
-void CarDialog::setColor(const QString& color) { ui->KmLineEdit->setText(color); }
-void CarDialog::setCarType(const QString& carType) { ui->CarTypeEdit->setText(carType); }
-void CarDialog::setFuelType(const QString& fuelType) { ui->FuelTypeEdit->setText(fuelType); }
-void CarDialog::setYear(int year) { ui->YearEdit->setText(QString::number(year)); }
-void CarDialog::setPrice(int price) { ui->PricePerDayLineEdit->setText(QString::number(price)); }
-void CarDialog::setKmDriven(int kmDriven) { ui->KmLineEdit->setText(QString::number(kmDriven)); }
-void CarDialog::setSeats(int seats) { ui->SeatsLineEdit->setText(QString::number(seats)); }
-void CarDialog::setAvailable(bool available) {
-    ui->availabilityCheckBox->setChecked(available);
-}
+    // Setters for UI elements
+    void setRegNr(const QString& regNr);
+    void setMake(const QString& regNr);
+    void setModel(const QString& model);
+    void setColor(const QString& color);
+    void setCarType(const QString& carType);
+    void setFuelType(const QString& fuelType);
+    void setYear(int year);
+    void setPrice(int price);
+    void setKmDriven(int kmDriven);
+    void setSeats(int seats);
+    void setAvailable(bool available);
 
-// Getters for UI elements
-QString CarDialog::getRegNr() const { return ui->RegNrLineEdit->text(); }
-QString CarDialog::getMake() const { return ui->MakeLineEdit->text(); }
-QString CarDialog::getModel() const { return ui->ModelEdit->text(); }
-QString CarDialog::getColor() const { return ui->KmLineEdit->text(); }
-QString CarDialog::getCarType() const { return ui->CarTypeEdit->text(); }
-QString CarDialog::getFuelType() const { return ui->FuelTypeEdit->text(); }
-int CarDialog::getYear() const { return ui->YearEdit->text().toInt(); }
-int CarDialog::getPrice() const { return ui->PricePerDayLineEdit->text().toInt(); }
-int CarDialog::getKmDriven() const { return ui->KmLineEdit->text().toInt(); }
-int CarDialog::getSeats() const { return ui->SeatsLineEdit->text().toInt(); }
-bool CarDialog::getAvailable() const {
-    return ui->availabilityCheckBox->isChecked();
-}
+    // Getters for UI elements
+    QString getRegNr() const;
+    QString getMake() const;
+    QString getModel() const;
+    QString getColor() const;
+    QString getCarType() const;
+    QString getFuelType() const;
+    int getYear() const;
+    int getPrice() const;
+    int getKmDriven() const;
+    int getSeats() const;
+    bool getAvailable() const;
 
-// Get the edit field for RegNr
-QLineEdit* CarDialog::getRegNrLineEdit() const { return ui->MakeLineEdit; }
-
-
+    // Get the edit field for RegNr
+    QLineEdit* getRegNrLineEdit() const;
+private:
+    Ui::CarDialog *ui;
+    QLineEdit* regNrLineEdit;
+signals:
+};
 
 #endif //HELLHUB_CARDIALOG_H
