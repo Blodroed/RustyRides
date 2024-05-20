@@ -28,7 +28,7 @@ MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers,
 
     // Table view of the cars
 
-    ui->CarTable->setColumnCount(10);
+    ui->CarTable->setColumnCount(11);
     QStringList carHeaders = {"Reg Nr", "Make", "Model", "Color", "Car Type", "Fuel Type", "Year", "Price", "Km Driven", "Seats", "Available"};
     ui->CarTable->setHorizontalHeaderLabels(carHeaders);
     ui->CarTable->horizontalHeader()->setStretchLastSection(false);
