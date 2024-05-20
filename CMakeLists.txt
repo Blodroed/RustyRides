@@ -39,6 +39,8 @@ set(PROJECT_SOURCES
         src/Lease.cpp
         include/LeaseManager.h
         src/LeaseManager.cpp
+        include/CarDialog.h
+        src/CarDialog.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

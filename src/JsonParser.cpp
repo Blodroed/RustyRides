@@ -69,8 +69,9 @@ void JsonParser::importCarsFromJson(std::vector<Car> &cars) {
     // iterating through the cars array and adding it to the vector
     for (const auto &carJson : carsJson.GetArray()) {
         Car car(QString::fromStdString(carJson["regNr"].GetString()),
-                QString::fromStdString(carJson["color"].GetString()),
+                QString::fromStdString(carJson["make"].GetString()),
                 QString::fromStdString(carJson["model"].GetString()),
+                QString::fromStdString(carJson["color"].GetString()),
                 QString::fromStdString(carJson["carType"].GetString()),
                 QString::fromStdString(carJson["fuelType"].GetString()),
                 carJson["year"].GetInt(),
