@@ -6,6 +6,7 @@
 #include <QLineEdit>
 #include <QHeaderView>
 #include <QTableWidgetItem>
+#include <QDateEdit>
 
 LeaseDialog::LeaseDialog(const std::vector<Car>& carsRef, const std::vector<Customer>& customerRef, QWidget *parent)
     : QDialog(parent)
@@ -15,6 +16,7 @@ LeaseDialog::LeaseDialog(const std::vector<Car>& carsRef, const std::vector<Cust
 {
     ui->setupUi(this);
     connect(ui->CustomerPhone, &QLineEdit::textChanged, this, &LeaseDialog::on_CustomerPhone_textChanged);
+    connect(ui->leaseFromDateTimeEdit, &QDateEdit::dateChanged, this, &LeaseDialog::on_leaseFromDateTimeEdit_dateChanged);
 
     // Tableview for cars
     ui->FilteredCarTable->setColumnCount(10);
@@ -29,6 +31,10 @@ LeaseDialog::LeaseDialog(const std::vector<Car>& carsRef, const std::vector<Cust
     ui->FilteredCustomerTable->setHorizontalHeaderLabels(customerHeaders);
     ui->FilteredCustomerTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->FilteredCustomerTable->horizontalHeader()->setStretchLastSection(true);
+
+    // set minimum dates for date picker
+    ui->leaseFromDateTimeEdit->setMinimumDateTime(QDateTime::currentDateTime());
+    ui->leaseUntilDateTimeEdit->setMinimumDateTime(QDateTime::currentDateTime());
 }
 
 LeaseDialog::~LeaseDialog()
@@ -37,8 +43,7 @@ LeaseDialog::~LeaseDialog()
 }
 
 // value changed slot
-void LeaseDialog::on_CustomerPhone_textChanged(const QString& text)
-{
+void LeaseDialog::on_CustomerPhone_textChanged(const QString& text) {
     qDebug() << "Text changed: " << text;
     // filter customers cleared
     filteredCustomers.clear();
@@ -64,6 +69,14 @@ void LeaseDialog::on_CustomerPhone_textChanged(const QString& text)
         QString tempCars;
         CustomerManager::getCarsFromCustomerAsString(customer, tempCars, carsRef);
         ui->FilteredCustomerTable->setItem(row, 5, new QTableWidgetItem(tempCars));
+    }
+}
+
+// date changed slot
+void LeaseDialog::on_leaseFromDateTimeEdit_dateChanged(const QDate& date) {
+    qDebug() << "Date changed: " << date.addDays(+1);
+    if (ui->leaseUntilDateTimeEdit->date() < date.addDays(+1)) {
+        ui->leaseUntilDateTimeEdit->setDate(date.addDays(+1));
     }
 }
 

@@ -274,13 +274,23 @@
     </item>
     <item row="0" column="1">
      <widget class="QDateTimeEdit" name="leaseFromDateTimeEdit">
+      <property name="dateTime">
+       <datetime>
+        <hour>0</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>2000</year>
+        <month>3</month>
+        <day>12</day>
+       </datetime>
+      </property>
       <property name="minimumDateTime">
        <datetime>
         <hour>0</hour>
         <minute>0</minute>
         <second>0</second>
-        <year>2024</year>
-        <month>9</month>
+        <year>2000</year>
+        <month>1</month>
         <day>14</day>
        </datetime>
       </property>
@@ -298,6 +308,16 @@
     </item>
     <item row="1" column="1">
      <widget class="QDateTimeEdit" name="leaseUntilDateTimeEdit">
+      <property name="minimumDateTime">
+       <datetime>
+        <hour>0</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>2000</year>
+        <month>9</month>
+        <day>14</day>
+       </datetime>
+      </property>
       <property name="calendarPopup">
        <bool>true</bool>
       </property>

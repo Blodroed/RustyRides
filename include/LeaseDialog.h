@@ -33,6 +33,7 @@ public:
 
 private slots:
     void on_CustomerPhone_textChanged(const QString& phoneNumber);
+    void on_leaseFromDateTimeEdit_dateChanged(const QDate& date);
 
 private:
     Ui::LeaseDialog *ui;
