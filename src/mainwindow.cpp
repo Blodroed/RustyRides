@@ -12,6 +12,7 @@
 #include "../include/areyousuredialog.h"
 
 #include <QMessageBox>
+#include <QTableWidgetItem>
 
 MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, std::vector<Car>& cars, QWidget *parent)
         : QMainWindow(parent)

@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <QDialog>
+#include <QString>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -29,6 +30,9 @@ public:
     int getSeats() const;
     int getMinPrice() const;
     int getMaxPrice() const;
+
+private slots:
+    void on_CustomerPhone_textChanged(const QString& phoneNumber);
 
 private:
     Ui::LeaseDialog *ui;

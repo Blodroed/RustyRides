@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>520</width>
-    <height>523</height>
+    <width>519</width>
+    <height>595</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QComboBox" name="CarTypeFilter">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>50</y>
+     <x>20</x>
+     <y>230</y>
      <width>81</width>
      <height>22</height>
     </rect>
@@ -123,8 +123,8 @@
   <widget class="QComboBox" name="FuelTypeFilter">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>80</y>
+     <x>110</x>
+     <y>230</y>
      <width>81</width>
      <height>22</height>
     </rect>
@@ -158,27 +158,27 @@
     </property>
    </item>
   </widget>
-  <widget class="QTableView" name="tableView">
+  <widget class="QTableWidget" name="FilteredCarTable">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>160</y>
-     <width>221</width>
-     <height>131</height>
+     <x>20</x>
+     <y>330</y>
+     <width>491</width>
+     <height>161</height>
     </rect>
    </property>
   </widget>
   <widget class="QLabel" name="CarFilterResults">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>140</y>
+     <x>20</x>
+     <y>310</y>
      <width>211</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>Results</string>
+    <string>Cars Available:</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -187,8 +187,8 @@
   <widget class="QDialogButtonBox" name="OKCancel">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>490</y>
+     <x>330</x>
+     <y>560</y>
      <width>164</width>
      <height>18</height>
     </rect>
@@ -200,8 +200,8 @@
   <widget class="QLabel" name="LabelCarFilter">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>20</y>
+     <x>20</x>
+     <y>210</y>
      <width>111</width>
      <height>20</height>
     </rect>
@@ -217,7 +217,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>20</y>
+     <y>10</y>
      <width>211</width>
      <height>20</height>
     </rect>
@@ -230,7 +230,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>50</y>
+     <y>30</y>
      <width>221</width>
      <height>20</height>
     </rect>
@@ -240,7 +240,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>140</y>
+     <y>70</y>
      <width>211</width>
      <height>20</height>
     </rect>
@@ -249,22 +249,12 @@
     <string>Customer details</string>
    </property>
   </widget>
-  <widget class="QListView" name="listView">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>160</y>
-     <width>221</width>
-     <height>131</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QWidget" name="formLayoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>330</y>
-     <width>221</width>
+     <y>500</y>
+     <width>231</width>
      <height>75</height>
     </rect>
    </property>
@@ -318,9 +308,9 @@
   <widget class="QLabel" name="LabelLeaseCost">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>410</y>
-     <width>181</width>
+     <x>370</x>
+     <y>500</y>
+     <width>131</width>
      <height>16</height>
     </rect>
    </property>
@@ -331,9 +321,9 @@
   <widget class="QLineEdit" name="CostCalcPlaceholder">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>430</y>
-     <width>221</width>
+     <x>370</x>
+     <y>520</y>
+     <width>121</width>
      <height>20</height>
     </rect>
    </property>
@@ -344,22 +334,22 @@
   <widget class="QLabel" name="LabelPriceMinMax">
    <property name="geometry">
     <rect>
-     <x>420</x>
-     <y>20</y>
+     <x>20</x>
+     <y>270</y>
      <width>101</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>Price range</string>
+    <string>Price range:</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="MinPrice">
    <property name="geometry">
     <rect>
-     <x>420</x>
-     <y>50</y>
-     <width>91</width>
+     <x>110</x>
+     <y>270</y>
+     <width>81</width>
      <height>21</height>
     </rect>
    </property>
@@ -373,9 +363,9 @@
   <widget class="QLineEdit" name="MaxPrice">
    <property name="geometry">
     <rect>
-     <x>420</x>
-     <y>80</y>
-     <width>91</width>
+     <x>210</x>
+     <y>270</y>
+     <width>81</width>
      <height>21</height>
     </rect>
    </property>
@@ -389,14 +379,37 @@
   <widget class="QLineEdit" name="SeatCapacityFilter">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>110</y>
+     <x>210</x>
+     <y>230</y>
      <width>81</width>
      <height>21</height>
     </rect>
    </property>
    <property name="placeholderText">
     <string>Seats...</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="FilteredCustomerTable">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>100</y>
+     <width>491</width>
+     <height>91</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>-10</x>
+     <y>190</y>
+     <width>541</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
    </property>
   </widget>
  </widget>
