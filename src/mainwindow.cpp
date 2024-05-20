@@ -1,10 +1,14 @@
 #include "../include/mainwindow.h"
 #include "ui_mainwindow.h"
 #include "../include/Customer.h"
+#include "../include/CustomerManager.h"
 #include "../include/CustomerDialog.h"
 #include "../include/Car.h"
 #include "../include/CarManager.h"
 #include "../include/CarDialog.h"
+#include "../include/lease.h"
+#include "../include/LeaseManager.h"
+#include "../include/LeaseDialog.h"
 #include "../include/areyousuredialog.h"
 
 #include <QMessageBox>
@@ -261,3 +265,14 @@ void MainWindow::on_NewCarBtn_clicked() {
 // Should also check if customer has any leases or cars
 
 // TODO: similar stuff for cars and leases
+
+// ==================== Leases Tab ====================
+
+void MainWindow::on_NewLeaseBtn_clicked() {
+    LeaseDialog* leaseDialog = new LeaseDialog(carsRef, customersRef, this);
+    leaseDialog->setModal(true);
+    qDebug() << "Opened the lease dialog";
+    if (leaseDialog->exec() == QDialog::Accepted) {
+    }
+    delete leaseDialog;
+}

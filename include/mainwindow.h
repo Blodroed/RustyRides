@@ -39,6 +39,12 @@ private slots:
         // void on_EdtCarBtn_clicked();
         // void on_DelCarBtn_clicked();
 
+    // Lease related buttons
+        void on_NewLeaseBtn_clicked();
+        // void on_ExtLeaseBtn_clicked();
+        // void on_ClsLeaseBtn_clicked();
+        // void on_EdtLeaseBtn_clicked();
+
     // TODO: Buttons for the other two tabs
 
 private:
@@ -46,6 +52,10 @@ private:
     void updateCustomerTable();
     void updateCarTable();
 
+    // filter vectors for creating new leases
+
+
+    // refference to the vector in main.cpp
     std::vector<Customer>& customersRef;
     std::vector<Car>& carsRef;
 

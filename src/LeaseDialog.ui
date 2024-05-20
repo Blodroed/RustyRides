@@ -34,6 +34,91 @@
    <property name="placeholderText">
     <string>Car type</string>
    </property>
+   <item>
+    <property name="text">
+     <string>Sedan</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Hatchback</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>SUV</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Coupe</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Convertible</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Wagon</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Minivan</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Pickup Truck</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Van</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Luxury</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Sports Car</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Muscle Car</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Roadster</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Supercar</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Microcar</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Compact Car</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>-No Type-</string>
+    </property>
+   </item>
   </widget>
   <widget class="QComboBox" name="FuelTypeFilter">
    <property name="geometry">
@@ -47,19 +132,31 @@
    <property name="placeholderText">
     <string>Fuel type</string>
    </property>
-  </widget>
-  <widget class="QComboBox" name="SeatsFilter">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>110</y>
-     <width>81</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="placeholderText">
-    <string>Seats</string>
-   </property>
+   <item>
+    <property name="text">
+     <string>Diesel</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Gasoline</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Hybrid</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Plugin-Hybrid</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Electric</string>
+    </property>
+   </item>
   </widget>
   <widget class="QTableView" name="tableView">
    <property name="geometry">
@@ -129,7 +226,7 @@
     <string>Enter customer phone number:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="CustomerPhone">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -168,7 +265,7 @@
      <x>20</x>
      <y>330</y>
      <width>221</width>
-     <height>61</height>
+     <height>75</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
@@ -187,6 +284,16 @@
     </item>
     <item row="0" column="1">
      <widget class="QDateTimeEdit" name="leaseFromDateTimeEdit">
+      <property name="minimumDateTime">
+       <datetime>
+        <hour>0</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>2024</year>
+        <month>9</month>
+        <day>14</day>
+       </datetime>
+      </property>
       <property name="calendarPopup">
        <bool>true</bool>
       </property>
@@ -230,6 +337,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QLabel" name="LabelPriceMinMax">
    <property name="geometry">
@@ -244,30 +354,49 @@
     <string>Price range</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QLineEdit" name="MinPrice">
    <property name="geometry">
     <rect>
      <x>420</x>
      <y>50</y>
-     <width>81</width>
-     <height>22</height>
+     <width>91</width>
+     <height>21</height>
     </rect>
    </property>
+   <property name="text">
+    <string/>
+   </property>
    <property name="placeholderText">
-    <string>Minimum</string>
+    <string>Min...</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox_2">
+  <widget class="QLineEdit" name="MaxPrice">
    <property name="geometry">
     <rect>
      <x>420</x>
      <y>80</y>
+     <width>91</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="placeholderText">
+    <string>Max...</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="SeatCapacityFilter">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>110</y>
      <width>81</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="placeholderText">
-    <string>Maximum</string>
+    <string>Seats...</string>
    </property>
   </widget>
  </widget>
