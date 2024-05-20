@@ -209,7 +209,7 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     file.close();
 
     /*
-     * we should also check if the car is available before deleting it
+     * TODO: we should also check if the car is available before deleting it
      */
 
      // Iterate over the cars array
