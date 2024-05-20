@@ -7,7 +7,6 @@
 #include "include/LeaseManager.h"
 #include "include/JsonParser.h"
 // tests
-#include "test/testForStuff.h"
 
 #include <vector>
 #include <iostream>
@@ -30,7 +29,7 @@ int main(int argc, char *argv[])
     jsonParser.importCustomersFromJson(customers);
 
     QApplication a(argc, argv);
-    MainWindow w(jsonParser, customers);
+    MainWindow w(jsonParser, customers, cars);
     w.show();
     return a.exec();
 }

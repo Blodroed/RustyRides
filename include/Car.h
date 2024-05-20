@@ -1,5 +1,5 @@
 //
-// Created by Alber on 17.04.2024.
+// Created by Albert on 17.04.2024.
 //
 
 #ifndef HELLHUB_CAR_H
@@ -12,7 +12,7 @@ class Car {
 public:
     // Constructor
     Car();
-    explicit Car(const QString &regNr, const QString &color, const QString &model, const QString &carType,
+    explicit Car(const QString &regNr, const QString& make, const QString &model, const QString &color, const QString &carType,
                  const QString &fuelType, int year, int price, int kmDriven,
                  int seats, bool available);
 
@@ -20,8 +20,10 @@ public:
     virtual ~Car();
 
     // Setters for private members
-    void setColor(const QString &color);
+    void setRegNr(const QString &RegNr);
+    void setMake(const QString &make);
     void setModel(const QString &model);
+    void setColor(const QString &color);
     void setCarType(const QString &carType);
     void setFuelType(const QString &fuelType);
     void setYear(int year);
@@ -32,8 +34,9 @@ public:
 
     // Getters for each private member
     QString getRegNr() const;
-    QString getColor() const;
+    QString getMake() const;
     QString getModel() const;
+    QString getColor() const;
     QString getCarType() const;
     QString getFuelType() const;
     int getYear() const;
@@ -44,6 +47,7 @@ public:
 private:
     QString RegNr;
     QString color;
+    QString make;
     QString model;
     QString carType;
     QString fuelType;
@@ -53,6 +57,8 @@ private:
     int seats;
     bool available;
 };
+
+
 
 
 #endif //HELLHUB_CAR_H

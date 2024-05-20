@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CarDialog</class>
+ <widget class="QDialog" name="CarDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>398</width>
+    <height>373</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>320</y>
+     <width>341</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   </property>
+  </widget>
+  <widget class="QWidget" name="formLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>371</width>
+     <height>301</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <item row="1" column="0">
+     <widget class="QLabel" name="MakeLabel">
+      <property name="text">
+       <string>Make</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="MakeLineEdit"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="ModelLabel">
+      <property name="text">
+       <string>Model</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="ModelEdit"/>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="CarTypeLabel">
+      <property name="text">
+       <string>Car Type</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="CarTypeEdit"/>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="FuelTypeLabel">
+      <property name="text">
+       <string>Fuel Type</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="FuelTypeEdit"/>
+    </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="YearLabel">
+      <property name="text">
+       <string>Year</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLineEdit" name="YearEdit"/>
+    </item>
+    <item row="7" column="0">
+     <widget class="QLabel" name="SeatsLabel">
+      <property name="text">
+       <string>Seats</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QLineEdit" name="SeatsLineEdit"/>
+    </item>
+    <item row="11" column="0">
+     <widget class="QLabel" name="availabilityLabel">
+      <property name="text">
+       <string>Available?</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="1">
+     <widget class="QCheckBox" name="availabilityCheckBox"/>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="RegNrLabel">
+      <property name="text">
+       <string>RegNr</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="RegNrLineEdit"/>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="ColorLabel">
+      <property name="text">
+       <string>Color</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="ColorLineEdit"/>
+    </item>
+    <item row="8" column="0">
+     <widget class="QLabel" name="KmLabel">
+      <property name="text">
+       <string>Odometer</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QLineEdit" name="KmLineEdit"/>
+    </item>
+    <item row="9" column="0">
+     <widget class="QLabel" name="PricePerDayLabel">
+      <property name="text">
+       <string>Price per day</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="1">
+     <widget class="QLineEdit" name="PricePerDayLineEdit"/>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>RegNrLineEdit</tabstop>
+  <tabstop>MakeLineEdit</tabstop>
+  <tabstop>ModelEdit</tabstop>
+  <tabstop>ColorLineEdit</tabstop>
+  <tabstop>CarTypeEdit</tabstop>
+  <tabstop>FuelTypeEdit</tabstop>
+  <tabstop>YearEdit</tabstop>
+  <tabstop>SeatsLineEdit</tabstop>
+  <tabstop>KmLineEdit</tabstop>
+  <tabstop>PricePerDayLineEdit</tabstop>
+  <tabstop>availabilityCheckBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>CarDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>CarDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

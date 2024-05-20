@@ -12,7 +12,7 @@ void testForStuff::carAddToJsonTest() {
     std::string filepath;
     JsonParser jsonParser("../database/database-test.json");
     std::vector<Car> cars;
-    Car newcar("AB12345", "Black", "Volvo", "hatchback", "Diesel", 2020, 1000, 10000, 5, true);
+    // Car newcar("AB12345", "Black", "Volvo", "hatchback", "Diesel", 2020, 1000, 10000, 5, true);
 
     jsonParser.importCarsFromJson(cars);
     CarManager::displayAllCars(cars);
@@ -40,7 +40,7 @@ void testForStuff::editCarTest(JsonParser &jsonParser) {
     CarManager::displayCar(*car);  // dereferenced before passing to the function
 
     // make new car Obect for editing
-    Car editedCar("AB12345", "Black", "Volvo", "sedan","Diesel", 2020, 1000, 10000, 5, true);
+    // Car editedCar("AB12345", "Black", "Volvo", "sedan","Diesel", 2020, 1000, 10000, 5, true);
 
     CarManager::editCarAllInstances(car, editedCar, jsonParser);
     CarManager::displayCar(*car);  // dereferenced before passing to the function

@@ -69,8 +69,9 @@ void JsonParser::importCarsFromJson(std::vector<Car> &cars) {
     // iterating through the cars array and adding it to the vector
     for (const auto &carJson : carsJson.GetArray()) {
         Car car(QString::fromStdString(carJson["regNr"].GetString()),
-                QString::fromStdString(carJson["color"].GetString()),
+                QString::fromStdString(carJson["make"].GetString()),
                 QString::fromStdString(carJson["model"].GetString()),
+                QString::fromStdString(carJson["color"].GetString()),
                 QString::fromStdString(carJson["carType"].GetString()),
                 QString::fromStdString(carJson["fuelType"].GetString()),
                 carJson["year"].GetInt(),
@@ -121,8 +122,9 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     auto &allocator = doc.GetAllocator();
 
     carJson.AddMember("regNr", rapidjson::Value((car.getRegNr().toStdString().c_str()), allocator).Move(), allocator);
-    carJson.AddMember("color", rapidjson::Value(car.getColor().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("make", rapidjson::Value(car.getMake().toStdString().c_str(), allocator).Move(), allocator);
     carJson.AddMember("model", rapidjson::Value(car.getModel().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("color", rapidjson::Value(car.getColor().toStdString().c_str(), allocator).Move(), allocator);
     carJson.AddMember("carType", rapidjson::Value(car.getCarType().toStdString().c_str(), allocator).Move(), allocator);
     carJson.AddMember("fuelType", rapidjson::Value(car.getFuelType().toStdString().c_str(), allocator).Move(), allocator);
     carJson.AddMember("year", car.getYear(), allocator);
@@ -171,8 +173,9 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
         Value &carJson = *itr;      // dereference the iterator to get the car object
         if (carJson["regNr"].GetString() == targetRegNr) {
             // Update car's attributes other than the registration number
-            carJson["color"].SetString(car.getColor().toStdString().c_str(), allocator);
+            carJson["make"].SetString(car.getMake().toStdString().c_str(), allocator);
             carJson["model"].SetString(car.getModel().toStdString().c_str(), allocator);
+            carJson["color"].SetString(car.getColor().toStdString().c_str(), allocator);
             carJson["carType"].SetString(car.getCarType().toStdString().c_str(), allocator);
             carJson["fuelType"].SetString(car.getFuelType().toStdString().c_str(), allocator);
             carJson["year"].SetInt(car.getYear());
@@ -208,7 +211,7 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     file.close();
 
     /*
-     * we should also check if the car is available before deleting it
+     * TODO: we should also check if the car is available before deleting it
      */
 
      // Iterate over the cars array

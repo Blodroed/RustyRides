@@ -2,10 +2,11 @@
   "cars": [
     {
       "regNr": "unknown",
-      "color": "unknown",
+      "make": "unknown",
       "model": "unknown",
+      "color": "unknown",
       "carType": "unknown",
-      "fuelType": "diesel/petrol/hybrid/pluginhybrid/electric",
+      "fuelType": "diesel/gasoline/hybrid/pluginhybrid/electric",
       "year": 1234,
       "kmDriven": 12345,
       "price": 12345,
