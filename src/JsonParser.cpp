@@ -122,8 +122,9 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     auto &allocator = doc.GetAllocator();
 
     carJson.AddMember("regNr", rapidjson::Value((car.getRegNr().toStdString().c_str()), allocator).Move(), allocator);
-    carJson.AddMember("color", rapidjson::Value(car.getColor().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("make", rapidjson::Value(car.getMake().toStdString().c_str(), allocator).Move(), allocator);
     carJson.AddMember("model", rapidjson::Value(car.getModel().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("color", rapidjson::Value(car.getColor().toStdString().c_str(), allocator).Move(), allocator);
     carJson.AddMember("carType", rapidjson::Value(car.getCarType().toStdString().c_str(), allocator).Move(), allocator);
     carJson.AddMember("fuelType", rapidjson::Value(car.getFuelType().toStdString().c_str(), allocator).Move(), allocator);
     carJson.AddMember("year", car.getYear(), allocator);
@@ -172,8 +173,9 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
         Value &carJson = *itr;      // dereference the iterator to get the car object
         if (carJson["regNr"].GetString() == targetRegNr) {
             // Update car's attributes other than the registration number
-            carJson["color"].SetString(car.getColor().toStdString().c_str(), allocator);
+            carJson["make"].SetString(car.getMake().toStdString().c_str(), allocator);
             carJson["model"].SetString(car.getModel().toStdString().c_str(), allocator);
+            carJson["color"].SetString(car.getColor().toStdString().c_str(), allocator);
             carJson["carType"].SetString(car.getCarType().toStdString().c_str(), allocator);
             carJson["fuelType"].SetString(car.getFuelType().toStdString().c_str(), allocator);
             carJson["year"].SetInt(car.getYear());
