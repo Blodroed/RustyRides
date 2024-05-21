@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, std::vector<Car>& cars, QWidget *parent = nullptr);
+    MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, std::vector<Car>& cars, std::vector<Lease>& leases, QWidget *parent = nullptr);
     ~MainWindow();
 
 public slots:
@@ -51,13 +51,12 @@ private:
     Ui::MainWindow *ui;
     void updateCustomerTable();
     void updateCarTable();
-
-    // filter vectors for creating new leases
-
+    void updateLeaseTable();
 
     // refference to the vector in main.cpp
     std::vector<Customer>& customersRef;
     std::vector<Car>& carsRef;
+    std::vector<Lease>& leasesRef;
 
     JsonParser& jsonParser;
 };

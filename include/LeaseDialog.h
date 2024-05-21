@@ -27,11 +27,16 @@ public:
     // getters
     Car getSelectedCar();
     Customer getSelectedCustomer();
+    const int getDaysOfLease();
+    const QString getDateTimeAsString();
 
 private slots:
     void on_CustomerPhone_textChanged(const QString& phoneNumber);
-    void on_leaseFromDateTimeEdit_dateChanged(const QDate& date);
+    void on_FilteredCustomerTable_itemSelectionChanged();
+    void on_FilteredCarTable_itemSelectionChanged();
     void filterCars();
+    void on_leaseFromDateTimeEdit_dateChanged(const QDate& date);
+    void on_leaseUntilDateTimeEdit_dateChanged(const QDate& date);
 
 private:
     Ui::LeaseDialog *ui;
@@ -49,6 +54,9 @@ private:
     Customer selectedCustomer;
 
     // lease class values
-    Lease newLease;
+    //Lease newLease;
+
+    // extra variables for lease info getters
+    int daysOfLease;
 };
 #endif // LEASEDIALOG_H

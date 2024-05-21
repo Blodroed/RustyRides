@@ -22,6 +22,7 @@ LeaseDialog::LeaseDialog(const std::vector<Car>& carsRef, const std::vector<Cust
 
     // connect signals and slots for customer
     connect(ui->CustomerPhone, &QLineEdit::textChanged, this, &LeaseDialog::on_CustomerPhone_textChanged);
+    connect(ui->FilteredCustomerTable, &QTableWidget::itemSelectionChanged, this, &LeaseDialog::getSelectedCustomer);
 
     // connect signals and slots for car
     connect(ui->CarTypeFilter, &QComboBox::currentTextChanged, this, &LeaseDialog::filterCars);
@@ -32,6 +33,7 @@ LeaseDialog::LeaseDialog(const std::vector<Car>& carsRef, const std::vector<Cust
 
     // datetime picker
     connect(ui->leaseFromDateTimeEdit, &QDateEdit::dateChanged, this, &LeaseDialog::on_leaseFromDateTimeEdit_dateChanged);
+    connect(ui->leaseUntilDateTimeEdit, &QDateEdit::dateChanged, this, &LeaseDialog::on_leaseUntilDateTimeEdit_dateChanged);
 
     // Tableview for cars
     ui->FilteredCarTable->setColumnCount(10);
@@ -40,7 +42,7 @@ LeaseDialog::LeaseDialog(const std::vector<Car>& carsRef, const std::vector<Cust
     ui->FilteredCarTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->FilteredCarTable->horizontalHeader()->setStretchLastSection(true);
 
-    // ListView for customers
+    // tableview for customers
     ui->FilteredCustomerTable->setColumnCount(6);
     QStringList customerHeaders = {"Name", "Phone", "Email", "Age", "PersonNr", "Leases"};
     ui->FilteredCustomerTable->setHorizontalHeaderLabels(customerHeaders);
@@ -83,9 +85,20 @@ void LeaseDialog::on_CustomerPhone_textChanged(const QString& text) {
         ui->FilteredCustomerTable->setItem(row, 3, new QTableWidgetItem(QString::number(customer.getAge())));
         ui->FilteredCustomerTable->setItem(row, 4, new QTableWidgetItem(customer.getPersonNr()));
         QString tempCars;
-        CustomerManager::getCarsFromCustomerAsString(customer, tempCars, carsRef);
+        CustomerManager::getCarsFromCustomerAsString(customer, tempCars);
         ui->FilteredCustomerTable->setItem(row, 5, new QTableWidgetItem(tempCars));
     }
+}
+
+// selected customer changed, slot
+void LeaseDialog::on_FilteredCustomerTable_itemSelectionChanged() {
+    qDebug() << "Customer selected";
+    // get the selected customer
+    int row = ui->FilteredCustomerTable->currentRow();
+    if (row < 0 || row >= filteredCustomers.size()) {
+        return;
+    }
+    selectedCustomer = filteredCustomers[row];
 }
 
 // value carfilters changed, slot
@@ -136,14 +149,52 @@ void LeaseDialog::filterCars() {
     }
 }
 
+// selected car changed, slot
+void LeaseDialog::on_FilteredCarTable_itemSelectionChanged() {
+    qDebug() << "Car selected";
+    // get the selected car
+    int row = ui->FilteredCarTable->currentRow();
+    if (row < 0 || row >= filteredCars.size()) {
+        return;
+    }
+    selectedCar = filteredCars[row];
+
+    // set the total price
+    ui->CostCalcPlaceholder->setText(QString::number(selectedCar.getPrice() * daysOfLease));
+}
+
 // value FromDate changed, slot
 void LeaseDialog::on_leaseFromDateTimeEdit_dateChanged(const QDate& date) {
     qDebug() << "Date changed: " << date.addDays(+1);
     if (ui->leaseUntilDateTimeEdit->date() < date.addDays(+1)) {
         ui->leaseUntilDateTimeEdit->setDate(date.addDays(+1));
+        ui->leaseUntilDateTimeEdit->setMinimumDate(date.addDays(+1));
     }
+    QDate untilDate = ui->leaseUntilDateTimeEdit->date();
+    daysOfLease = date.daysTo(untilDate);
+
+    qDebug() << "Days of lease: " << daysOfLease;
+
+    // update total price with the new days of lease
+    ui->CostCalcPlaceholder->setText(QString::number(selectedCar.getPrice() * daysOfLease));
+}
+
+void LeaseDialog::on_leaseUntilDateTimeEdit_dateChanged(const QDate &date) {
+    qDebug() << "Date changed: " << date;
+    // get the FromDateTimeEdit
+    QDate fromDate = ui->leaseFromDateTimeEdit->date();
+    daysOfLease = fromDate.daysTo(date);
+
+    qDebug() << "Days of lease: " << daysOfLease;
+    ui->CostCalcPlaceholder->setText(QString::number(selectedCar.getPrice() * daysOfLease));
 }
 
 // getters
 Car LeaseDialog::getSelectedCar() {return selectedCar;}
 Customer LeaseDialog::getSelectedCustomer() {return selectedCustomer;}
+const int LeaseDialog::getDaysOfLease() {return daysOfLease;}
+const QString LeaseDialog::getDateTimeAsString() {
+    QDateTime dateTime = ui->leaseFromDateTimeEdit->dateTime();
+    QString isostring = dateTime.toString(Qt::ISODate);
+    return isostring;
+}

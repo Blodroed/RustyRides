@@ -4,9 +4,9 @@
 
 #include "../include/LeaseManager.h"
 
-void LeaseManager::createLease(Customer &customer, Car &car, QString &startDate, int daysOfLease, JsonParser &jsonParser) {
-    Lease lease(car.getRegNr(), customer.getPersonNr(), startDate, daysOfLease, car.getPrice());
-    jsonParser.exportSingleLeaseToJson(lease);
+void LeaseManager::createLease(std::vector<Lease> &leases, const Lease &newLease, JsonParser &jsonParser) {
+    leases.push_back(newLease);
+    jsonParser.exportSingleLeaseToJson(newLease);
 }
 
 void LeaseManager::extendLease(Lease &lease, int daysOfLease, JsonParser &jsonParser) {

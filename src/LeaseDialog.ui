@@ -181,6 +181,12 @@
      <height>161</height>
     </rect>
    </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
+   <property name="selectionBehavior">
+    <enum>QAbstractItemView::SelectRows</enum>
+   </property>
   </widget>
   <widget class="QLabel" name="CarFilterResults">
    <property name="geometry">
@@ -397,6 +403,12 @@
      <height>121</height>
     </rect>
    </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
+   <property name="selectionBehavior">
+    <enum>QAbstractItemView::SelectRows</enum>
+   </property>
   </widget>
   <widget class="Line" name="line">
    <property name="geometry">
@@ -416,7 +428,7 @@
     <rect>
      <x>340</x>
      <y>270</y>
-     <width>48</width>
+     <width>71</width>
      <height>21</height>
     </rect>
    </property>
@@ -424,7 +436,7 @@
   <widget class="QLabel" name="SeatCapLabel">
    <property name="geometry">
     <rect>
-     <x>250</x>
+     <x>270</x>
      <y>270</y>
      <width>91</width>
      <height>20</height>
@@ -450,7 +462,7 @@
   <widget class="QLabel" name="MaxLabel">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>200</x>
      <y>320</y>
      <width>31</width>
      <height>20</height>
@@ -465,7 +477,7 @@
     <rect>
      <x>50</x>
      <y>320</y>
-     <width>61</width>
+     <width>141</width>
      <height>21</height>
     </rect>
    </property>
@@ -479,9 +491,9 @@
   <widget class="QSpinBox" name="MaxPriceFilter">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>230</x>
      <y>320</y>
-     <width>61</width>
+     <width>131</width>
      <height>21</height>
     </rect>
    </property>
@@ -497,5 +509,38 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>OKCancel</sender>
+   <signal>accepted()</signal>
+   <receiver>LeaseDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>411</x>
+     <y>608</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>259</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>OKCancel</sender>
+   <signal>rejected()</signal>
+   <receiver>LeaseDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>411</x>
+     <y>608</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>259</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

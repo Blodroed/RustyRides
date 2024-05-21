@@ -23,7 +23,7 @@ public:
     static void deleteCustomer(std::vector<Customer> &customers, Customer *customer, JsonParser &jsonParser);
 
     // cars array related functions
-    static void getCarsFromCustomerAsString(const Customer &customer, QString &carsAsString, const std::vector<Car> &cars);
+    static void getCarsFromCustomerAsString(const Customer &customer, QString &carsAsString);
     static void assignCarToCustomer(Customer &customer, const Car &car, JsonParser &jsonParser);
     static void removeCarFromCustomer(Customer &customer, const Car &car, JsonParser &jsonParser);
 };

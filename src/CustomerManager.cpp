@@ -112,14 +112,11 @@ std::vector<const Customer*> CustomerManager::searchForCustomerWithSeveralParame
 }
 
 // Function returns the vector of cars assigned to the customer
-void CustomerManager::getCarsFromCustomerAsString(const Customer &customer, QString &carsAsString, const std::vector<Car> &cars) {
+void CustomerManager::getCarsFromCustomerAsString(const Customer &customer, QString &carsAsString) {
     // creating a string of all cars assigned to the customer
     for (const auto &carRegNr : customer.getAssignedCarsRegNr()) {
-        for (const auto &car : cars) {
-            if (car.getRegNr() == carRegNr) {
-                carsAsString += car.getRegNr() + ", ";
-            }
-        }
+        carsAsString.append(carRegNr);
+        carsAsString.append(", ");
     }
 }
 

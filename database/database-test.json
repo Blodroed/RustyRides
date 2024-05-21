@@ -11,7 +11,7 @@
             "kmDriven": 10000,
             "price": 20000,
             "seats": 4,
-            "availability": false
+            "availability": true
         },
         {
             "regNr": "car2",
@@ -37,7 +37,7 @@
             "kmDriven": 5000,
             "price": 30000,
             "seats": 4,
-            "availability": true
+            "availability": false
         },
         {
             "regNr": "car4",
@@ -73,7 +73,9 @@
             "phoneNumber": "123456",
             "email": "john@doe.com",
             "age": 23,
-            "cars": []
+            "cars": [
+                "car3"
+            ]
         },
         {
             "personNummer": "654321",
@@ -81,10 +83,7 @@
             "phoneNumber": "654321",
             "email": "jane@doe",
             "age": 25,
-            "cars": [
-                "car1",
-                "car2"
-            ]
+            "cars": []
         },
         {
             "personNummer": "123",
@@ -100,8 +99,72 @@
             "phoneNumber": "234",
             "age": 154,
             "name": "frode",
-            "cars": []
+            "cars": [
+                "car5",
+                "car2"
+            ]
         }
     ],
-    "leases": []
+    "leases": [
+        {
+            "leaseId": 1,
+            "regNr": "ABC123",
+            "customerId": "111",
+            "startDate": "2022-01-01T10:00Z",
+            "daysOfLease": 5,
+            "negotiatedPrice": 20000,
+            "totalPrice": 100000,
+            "open": false
+        },
+        {
+            "leaseId": 2,
+            "regNr": "DEF456",
+            "customerId": "222",
+            "startDate": "2022-02-01T11:00Z",
+            "daysOfLease": 7,
+            "negotiatedPrice": 15000,
+            "totalPrice": 105000,
+            "open": false
+        },
+        {
+            "leaseId": 3,
+            "regNr": "GHI789",
+            "customerId": "333",
+            "startDate": "2022-03-01T12:00Z",
+            "daysOfLease": 10,
+            "negotiatedPrice": 10000,
+            "totalPrice": 100000,
+            "open": false
+        },
+        {
+            "leaseId": 4,
+            "regNr": "car3",
+            "customerId": "123456",
+            "startDate": "2024-05-21T15:56:01",
+            "daysOfLease": 1,
+            "negotiatedPrice": 30000,
+            "totalPrice": 30000,
+            "open": false
+        },
+        {
+            "leaseId": 5,
+            "regNr": "car5",
+            "customerId": "234",
+            "startDate": "2024-05-23T16:01:17",
+            "daysOfLease": 1,
+            "negotiatedPrice": 40000,
+            "totalPrice": 40000,
+            "open": false
+        },
+        {
+            "leaseId": 6,
+            "regNr": "car2",
+            "customerId": "234",
+            "startDate": "2024-05-24T16:18:15",
+            "daysOfLease": 4,
+            "negotiatedPrice": 100000,
+            "totalPrice": 400000,
+            "open": false
+        }
+    ]
 }

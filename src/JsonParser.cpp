@@ -445,7 +445,7 @@ void JsonParser::importLeasesFromJson(std::vector<Lease> &leases) {
         int daysOfLease = leaseJson["daysOfLease"].GetInt();
         int negotiatedPrice = leaseJson["negotiatedPrice"].GetInt();
         int totalPrice = leaseJson["totalPrice"].GetInt();
-        bool openOrClosed = leaseJson["openOrClosed"].GetBool();
+        bool openOrClosed = leaseJson["open"].GetBool();
 
         // creation and adding of lease object to vector
         Lease lease(leaseId, regNr, personNummer, startDate, daysOfLease, negotiatedPrice, totalPrice, openOrClosed);
@@ -481,7 +481,7 @@ void JsonParser::exportSingleLeaseToJson(const Lease &lease) {
     leaseJson.AddMember("daysOfLease", lease.getDaysOfLease(), allocator);
     leaseJson.AddMember("negotiatedPrice", lease.getNegotiatedPrice(), allocator);
     leaseJson.AddMember("totalPrice", lease.getTotalPrice(), allocator);
-    leaseJson.AddMember("openOrClosed", lease.isOpenOrClosed(), allocator);
+    leaseJson.AddMember("open", lease.isOpenOrClosed(), allocator);
 
     doc["leases"].PushBack(leaseJson, allocator);
 
@@ -520,7 +520,7 @@ void JsonParser::editSingleLeaseToJson(const Lease &lease) {
             leaseJson["daysOfLease"].SetInt(lease.getDaysOfLease());
             leaseJson["negotiatedPrice"].SetInt(lease.getNegotiatedPrice());
             leaseJson["totalPrice"].SetInt(lease.getTotalPrice());
-            leaseJson["openOrClosed"].SetBool(lease.isOpenOrClosed());
+            leaseJson["open"].SetBool(lease.isOpenOrClosed());
             break; // Once found and updated, exit the loop
         }
     }

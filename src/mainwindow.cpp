@@ -14,33 +14,40 @@
 #include <QMessageBox>
 #include <QTableWidgetItem>
 
-MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, std::vector<Car>& cars, QWidget *parent)
+MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, std::vector<Car>& cars, std::vector<Lease>& leases, QWidget *parent)
         : QMainWindow(parent)
         , ui(new Ui::MainWindow)
         , jsonParser(jsonParser)
         , customersRef(customers)
         , carsRef(cars)
+        , leasesRef(leases)
 {
     ui->setupUi(this);
 
     // Table view of the customers
     // TODO: Similar table view for cars and leases
-
-    ui->CustTable->setColumnCount(5);
-    QStringList headers = {"Personal Number", "Email", "Phone", "Age", "Name"};
+    ui->CustTable->setColumnCount(6);
+    QStringList headers = {"Personal Number", "Email", "Phone", "Age", "Name", "Assigned Cars"};
     ui->CustTable->setHorizontalHeaderLabels(headers);
     ui->CustTable->horizontalHeader()->setStretchLastSection(true);
 
     // Table view of the cars
-
     ui->CarTable->setColumnCount(11);
     QStringList carHeaders = {"Reg Nr", "Make", "Model", "Color", "Car Type", "Fuel Type", "Year", "Price", "Km Driven", "Seats", "Available"};
     ui->CarTable->setHorizontalHeaderLabels(carHeaders);
     ui->CarTable->horizontalHeader()->setStretchLastSection(false);
 
+    // Table view of the leases
+    ui->LeaseTable->setColumnCount(6);
+    QStringList leaseHeaders = {"Reg Nr", "Person Nr", "Days of Lease", "Negotiated Price", "StartDate", "Open or Closed"};
+    ui->LeaseTable->setHorizontalHeaderLabels(leaseHeaders);
+    ui->LeaseTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->LeaseTable->horizontalHeader()->setStretchLastSection(true);
+
     // update relevant tables
     updateCustomerTable();
     updateCarTable();
+    updateLeaseTable();
 }
 
 MainWindow::~MainWindow()
@@ -68,18 +75,23 @@ void MainWindow::updateCustomerTable() {
         const auto& customer = customersRef[row];
         ui->CustTable->insertRow(row);
 
+        QString carsAsString;
+        CustomerManager::getCarsFromCustomerAsString(customer, carsAsString);
+
         qDebug() << "Setting row:" << row
                  << "PN:" << customer.getPersonNr()
                  << "Email:" << customer.getEmail()
                  << "Phone:" << customer.getPhone()
                  << "Age:" << customer.getAge()
-                 << "Name:" << customer.getName();
+                 << "Name:" << customer.getName()
+                 << "Assigned Cars:" << customer.getAssignedCarsRegNr().size();
 
         ui->CustTable->setItem(row, 0, new QTableWidgetItem(customer.getPersonNr()));
         ui->CustTable->setItem(row, 1, new QTableWidgetItem(customer.getEmail()));
         ui->CustTable->setItem(row, 2, new QTableWidgetItem(customer.getPhone()));
         ui->CustTable->setItem(row, 3, new QTableWidgetItem(QString::number(customer.getAge())));
         ui->CustTable->setItem(row, 4, new QTableWidgetItem(customer.getName()));
+        ui->CustTable->setItem(row, 5, new QTableWidgetItem(carsAsString));
     }
 }
 
@@ -268,12 +280,63 @@ void MainWindow::on_NewCarBtn_clicked() {
 // TODO: similar stuff for cars and leases
 
 // ==================== Leases Tab ====================
+void MainWindow::updateLeaseTable() {
+    ui->LeaseTable->setRowCount(0);
+    qDebug() << "Updating table with lease count: " << leasesRef.size();
+
+    for (size_t row = 0; row < leasesRef.size(); ++row) {
+        const auto& lease = leasesRef[row];
+        ui->LeaseTable->insertRow(row);
+
+        qDebug() << "Setting row:" << row
+                 << "RegNr:" << lease.getRegNr()
+                 << "PersonNr:" << lease.getPersonNr()
+                 << "Days of lease:" << lease.getDaysOfLease()
+                 << "Negotiated price:" << lease.getNegotiatedPrice()
+                 << "StartDate:" << lease.getStartDate()
+                 << "Open or closed:" << lease.isOpenOrClosed();
+
+        ui->LeaseTable->setItem(row, 0, new QTableWidgetItem(lease.getRegNr()));
+        ui->LeaseTable->setItem(row, 1, new QTableWidgetItem(lease.getPersonNr()));
+        ui->LeaseTable->setItem(row, 2, new QTableWidgetItem(QString::number(lease.getDaysOfLease())));
+        ui->LeaseTable->setItem(row, 3, new QTableWidgetItem(QString::number(lease.getNegotiatedPrice())));
+        ui->LeaseTable->setItem(row, 4, new QTableWidgetItem(lease.getStartDate()));
+        ui->LeaseTable->setItem(row, 5, new QTableWidgetItem(lease.isOpenOrClosed() ? "Closed" : "Open"));
+    }
+}
 
 void MainWindow::on_NewLeaseBtn_clicked() {
     LeaseDialog* leaseDialog = new LeaseDialog(carsRef, customersRef, this);
     leaseDialog->setModal(true);
     qDebug() << "Opened the lease dialog";
     if (leaseDialog->exec() == QDialog::Accepted) {
+        Car selectedCar = leaseDialog->getSelectedCar();
+        Customer selectedCustomer = leaseDialog->getSelectedCustomer();
+        QString dateTimeAsString = leaseDialog->getDateTimeAsString();
+        int daysOfLease = leaseDialog->getDaysOfLease();
+        int totalPrice = selectedCar.getPrice() * daysOfLease;
+
+        qDebug() << "Selected car: " << selectedCar.getRegNr();
+        qDebug() << "Selected customer: " << selectedCustomer.getPersonNr();
+        qDebug() << "Days of lease: " << daysOfLease;
+
+        // Create a new lease
+        Lease newLease(selectedCar.getRegNr(), selectedCustomer.getPersonNr(), dateTimeAsString, daysOfLease, totalPrice);
+        LeaseManager::createLease(leasesRef, newLease, jsonParser);
+
+        // Update the car and customer objects
+        selectedCar.setAvailable(false);
+        auto carToEdit = CarManager::searchForCarWithRegNr(carsRef, selectedCar.getRegNr());
+        auto customerToEdit = CustomerManager::searchForCustomerWithPersonNr(customersRef, selectedCustomer.getPersonNr());
+
+        CustomerManager::assignCarToCustomer(selectedCustomer, selectedCar, jsonParser);
+        CarManager::editCarAllInstances(carToEdit, selectedCar, jsonParser);
+        CustomerManager::editCustomerAllInstances(*customerToEdit, selectedCustomer, jsonParser);
+
+        // Update the tables
+        updateCarTable();
+        updateCustomerTable();
+        updateLeaseTable();
     }
     delete leaseDialog;
 }
