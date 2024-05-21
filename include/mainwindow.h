@@ -43,7 +43,7 @@ private slots:
         void on_NewLeaseBtn_clicked();
         // void on_DelLeaseBtn_clicked();
         // void on_ClsLeaseBtn_clicked();
-        // void on_EdtLeaseBtn_clicked();
+        void on_EdtLeaseBtn_clicked();
 
     // TODO: Buttons for the other two tabs
 

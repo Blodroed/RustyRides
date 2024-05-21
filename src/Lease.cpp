@@ -39,5 +39,6 @@ void Lease::setNegotiatedPrice(int newNegotiatedPrice) {
     negotiatedPrice = newNegotiatedPrice;
     totalPrice = daysOfLease * negotiatedPrice;
 }
+void Lease::setStartDate(const QString &newStartDate) { startDate = newStartDate; }
 
 void Lease::setOpenOrClosed(bool newOpenOrClosed) { openOrClosed = newOpenOrClosed; }

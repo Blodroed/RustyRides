@@ -14,9 +14,10 @@ void LeaseManager::extendLease(Lease &lease, int daysOfLease, JsonParser &jsonPa
     jsonParser.editSingleLeaseToJson(lease);
 }
 
-void LeaseManager::editLease(Lease &lease, int daysOfLease, int negotiatedPrice, JsonParser &jsonParser) {
+void LeaseManager::editLease(Lease &lease, int daysOfLease, int negotiatedPrice, const QString &newStartDate, JsonParser &jsonParser) {
     lease.setDaysOfLease(daysOfLease);
     lease.setNegotiatedPrice(negotiatedPrice);
+    lease.setStartDate(newStartDate);
     jsonParser.editSingleLeaseToJson(lease);
 }
 
@@ -42,4 +43,13 @@ void LeaseManager::closeLease(Lease &lease, std::vector<Car> &cars, std::vector<
             break;
         }
     }
+}
+
+Lease* LeaseManager::searchForLeaseWithID(std::vector<Lease> &leases, const int id) {
+    for (auto &lease : leases) {
+        if (lease.getleaseId() == id) {
+            return &lease;
+        }
+    }
+    return nullptr;
 }

@@ -9,6 +9,7 @@
 #include "../include/lease.h"
 #include "../include/LeaseManager.h"
 #include "../include/LeaseDialog.h"
+#include "../include/editleasedialog.h"
 #include "../include/areyousuredialog.h"
 
 #include <QMessageBox>
@@ -352,3 +353,25 @@ void MainWindow::on_NewLeaseBtn_clicked() {
 }
 
 
+void MainWindow::on_EdtLeaseBtn_clicked() {
+    int currentRow = ui->LeaseTable->currentRow();
+    if (currentRow < 0) {
+        qDebug() << "No lease selected for editing";
+        return;
+    }
+
+    int leaseId = ui->LeaseTable->item(currentRow, 0)->text().toInt();
+    Lease *selectedLease = LeaseManager::searchForLeaseWithID(leasesRef, leaseId);
+
+    auto carFromLease = CarManager::searchForCarWithRegNr(carsRef, selectedLease->getRegNr());
+    auto customerFromLease = CustomerManager::searchForCustomerWithPersonNr(customersRef, selectedLease->getPersonNr());
+
+    EditLeaseDialog* editLeaseDialog = new EditLeaseDialog(*carFromLease, *customerFromLease, *selectedLease, this);
+
+
+    if (editLeaseDialog->exec() == QDialog::Accepted) {
+
+    }
+
+    delete editLeaseDialog;
+}
