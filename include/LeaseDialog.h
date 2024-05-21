@@ -24,16 +24,13 @@ public:
     ~LeaseDialog();
 
     // getters
-    QString getPhoneNumber() const;
-    QString getCarType() const;
-    QString getFuelType() const;
-    int getSeats() const;
-    int getMinPrice() const;
-    int getMaxPrice() const;
+    Car getSelectedCar();
+    Customer getSelectedCustomer();
 
 private slots:
     void on_CustomerPhone_textChanged(const QString& phoneNumber);
     void on_leaseFromDateTimeEdit_dateChanged(const QDate& date);
+    void filterCars();
 
 private:
     Ui::LeaseDialog *ui;
@@ -45,5 +42,9 @@ private:
     // filter vectors for creating new leases
     std::vector<Car> filteredCars;
     std::vector<Customer> filteredCustomers;
+
+    // Selected car and customer
+    Car selectedCar;
+    Customer selectedCustomer;
 };
 #endif // LEASEDIALOG_H
