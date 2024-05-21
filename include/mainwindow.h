@@ -41,7 +41,7 @@ private slots:
 
     // Lease related buttons
         void on_NewLeaseBtn_clicked();
-        // void on_ExtLeaseBtn_clicked();
+        // void on_DelLeaseBtn_clicked();
         // void on_ClsLeaseBtn_clicked();
         // void on_EdtLeaseBtn_clicked();
 

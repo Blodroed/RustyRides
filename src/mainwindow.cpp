@@ -25,7 +25,6 @@ MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers,
     ui->setupUi(this);
 
     // Table view of the customers
-    // TODO: Similar table view for cars and leases
     ui->CustTable->setColumnCount(6);
     QStringList headers = {"Personal Number", "Email", "Phone", "Age", "Name", "Assigned Cars"};
     ui->CustTable->setHorizontalHeaderLabels(headers);
@@ -38,8 +37,8 @@ MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers,
     ui->CarTable->horizontalHeader()->setStretchLastSection(false);
 
     // Table view of the leases
-    ui->LeaseTable->setColumnCount(6);
-    QStringList leaseHeaders = {"Reg Nr", "Person Nr", "Days of Lease", "Negotiated Price", "StartDate", "Open or Closed"};
+    ui->LeaseTable->setColumnCount(7);
+    QStringList leaseHeaders = {"LeaseID", "Reg Nr", "Person Nr", "Days of Lease", "Negotiated Price", "StartDate", "Open or Closed"};
     ui->LeaseTable->setHorizontalHeaderLabels(leaseHeaders);
     ui->LeaseTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->LeaseTable->horizontalHeader()->setStretchLastSection(true);
@@ -60,7 +59,7 @@ void MainWindow::on_tabWidget_currentChanged(int index) {
     // Update the tables
     updateCustomerTable();
     updateCarTable();
-    // TODO: add upcoming tables
+    updateLeaseTable();
 }
 
 // ==================== Customer window ====================
@@ -86,7 +85,12 @@ void MainWindow::updateCustomerTable() {
                  << "Name:" << customer.getName()
                  << "Assigned Cars:" << customer.getAssignedCarsRegNr().size();
 
-        ui->CustTable->setItem(row, 0, new QTableWidgetItem(customer.getPersonNr()));
+        // hidden personNr for selecting the customer
+        QTableWidgetItem* item = new QTableWidgetItem(customer.getPersonNr());
+        item->setData(Qt::UserRole, customer.getPersonNr()); // Store personNummer as hidden data
+        ui->CustTable->setItem(row, 0, item);
+
+        ui->CustTable->setItem(row, 0, item);
         ui->CustTable->setItem(row, 1, new QTableWidgetItem(customer.getEmail()));
         ui->CustTable->setItem(row, 2, new QTableWidgetItem(customer.getPhone()));
         ui->CustTable->setItem(row, 3, new QTableWidgetItem(QString::number(customer.getAge())));
@@ -145,17 +149,18 @@ void MainWindow::on_EdtCustBtn_clicked() {
         return;
     }
 
-    Customer& selectedCustomer = customersRef[currentRow];
+    QString personNummer = ui->CustTable->item(currentRow, 0)->data(Qt::UserRole).toString();
+    Customer *selectedCustomer = CustomerManager::searchForCustomerWithPersonNr(customersRef, personNummer);
 
     // This opens the same dialog window as "register new customer"
     // Values are pre-entered to easily know what you're changing
 
     CustomerDialog* customerDialog = new CustomerDialog(this);
-    customerDialog->setPersonNr(selectedCustomer.getPersonNr());
-    customerDialog->setEmail(selectedCustomer.getEmail());
-    customerDialog->setPhone(selectedCustomer.getPhone());
-    customerDialog->setAge(selectedCustomer.getAge());
-    customerDialog->setName(selectedCustomer.getName());
+    customerDialog->setPersonNr(selectedCustomer->getPersonNr());
+    customerDialog->setEmail(selectedCustomer->getEmail());
+    customerDialog->setPhone(selectedCustomer->getPhone());
+    customerDialog->setAge(selectedCustomer->getAge());
+    customerDialog->setName(selectedCustomer->getName());
     customerDialog->setModal(true);
 
     // Make the personNr field read-only
@@ -165,10 +170,10 @@ void MainWindow::on_EdtCustBtn_clicked() {
         // Create a new Customer object with the updated data
         Customer updatedCustomer(customerDialog->getPersonNr(), customerDialog->getEmail(),
                                  customerDialog->getPhone(), customerDialog->getAge(),
-                                 customerDialog->getName(), selectedCustomer.getAssignedCarsRegNr());
+                                 customerDialog->getName(), selectedCustomer->getAssignedCarsRegNr());
 
         // Call the editCustomer function
-        CustomerManager::editCustomerAllInstances(selectedCustomer, updatedCustomer, jsonParser);
+        CustomerManager::editCustomerAllInstances(*selectedCustomer, updatedCustomer, jsonParser);
         // Update the table to reflect the changes
         updateCustomerTable();
     }
@@ -184,9 +189,12 @@ void MainWindow::on_DelCustBtn_clicked() {
         return;
     }
 
+    QString personNummer = ui->CustTable->item(currentRow, 0)->data(Qt::UserRole).toString();
+    Customer *selectedCustomer = CustomerManager::searchForCustomerWithPersonNr(customersRef, personNummer);
+
     AreYouSureDialog confirmDialog(this);
     if (confirmDialog.exec() == QDialog::Accepted) {
-        CustomerManager::deleteCustomer(customersRef, &customersRef[currentRow], jsonParser);
+        CustomerManager::deleteCustomer(customersRef, selectedCustomer, jsonParser);
         updateCustomerTable();
     }
 }
@@ -289,6 +297,7 @@ void MainWindow::updateLeaseTable() {
         ui->LeaseTable->insertRow(row);
 
         qDebug() << "Setting row:" << row
+                 << "LeaseId:" << lease.getleaseId()
                  << "RegNr:" << lease.getRegNr()
                  << "PersonNr:" << lease.getPersonNr()
                  << "Days of lease:" << lease.getDaysOfLease()
@@ -296,12 +305,13 @@ void MainWindow::updateLeaseTable() {
                  << "StartDate:" << lease.getStartDate()
                  << "Open or closed:" << lease.isOpenOrClosed();
 
-        ui->LeaseTable->setItem(row, 0, new QTableWidgetItem(lease.getRegNr()));
-        ui->LeaseTable->setItem(row, 1, new QTableWidgetItem(lease.getPersonNr()));
-        ui->LeaseTable->setItem(row, 2, new QTableWidgetItem(QString::number(lease.getDaysOfLease())));
-        ui->LeaseTable->setItem(row, 3, new QTableWidgetItem(QString::number(lease.getNegotiatedPrice())));
-        ui->LeaseTable->setItem(row, 4, new QTableWidgetItem(lease.getStartDate()));
-        ui->LeaseTable->setItem(row, 5, new QTableWidgetItem(lease.isOpenOrClosed() ? "Closed" : "Open"));
+        ui->LeaseTable->setItem(row, 0, new QTableWidgetItem(QString::number(lease.getleaseId())));
+        ui->LeaseTable->setItem(row, 1, new QTableWidgetItem(lease.getRegNr()));
+        ui->LeaseTable->setItem(row, 2, new QTableWidgetItem(lease.getPersonNr()));
+        ui->LeaseTable->setItem(row, 3, new QTableWidgetItem(QString::number(lease.getDaysOfLease())));
+        ui->LeaseTable->setItem(row, 4, new QTableWidgetItem(QString::number(lease.getNegotiatedPrice())));
+        ui->LeaseTable->setItem(row, 5, new QTableWidgetItem(lease.getStartDate()));
+        ui->LeaseTable->setItem(row, 6, new QTableWidgetItem(lease.isOpenOrClosed() ? "Open" : "Closed"));
     }
 }
 
@@ -340,3 +350,5 @@ void MainWindow::on_NewLeaseBtn_clicked() {
     }
     delete leaseDialog;
 }
+
+

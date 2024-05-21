@@ -89,8 +89,8 @@
             "personNummer": "123",
             "email": "email",
             "phoneNumber": "991",
-            "age": 123,
-            "name": "123",
+            "age": 34,
+            "name": "Aristidis",
             "cars": []
         },
         {
@@ -144,7 +144,7 @@
             "daysOfLease": 1,
             "negotiatedPrice": 30000,
             "totalPrice": 30000,
-            "open": false
+            "open": true
         },
         {
             "leaseId": 5,
@@ -154,7 +154,7 @@
             "daysOfLease": 1,
             "negotiatedPrice": 40000,
             "totalPrice": 40000,
-            "open": false
+            "open": true
         },
         {
             "leaseId": 6,
@@ -164,7 +164,7 @@
             "daysOfLease": 4,
             "negotiatedPrice": 100000,
             "totalPrice": 400000,
-            "open": false
+            "open": true
         }
     ]
 }
