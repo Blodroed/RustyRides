@@ -8,14 +8,21 @@
 #include <QTableWidgetItem>
 #include <QDateEdit>
 
-LeaseDialog::LeaseDialog(const std::vector<Car>& carsRef, const std::vector<Customer>& customerRef, QWidget *parent)
+LeaseDialog::LeaseDialog(std::vector<Car>& carsRef, std::vector<Customer>& customerRef, QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::LeaseDialog)
     , carsRef(carsRef)
     , customerRef(customerRef)
 {
     ui->setupUi(this);
+
+    // connect signals and slots for customer
     connect(ui->CustomerPhone, &QLineEdit::textChanged, this, &LeaseDialog::on_CustomerPhone_textChanged);
+
+    // connect signals and slots for car
+
+
+    // datetime picker
     connect(ui->leaseFromDateTimeEdit, &QDateEdit::dateChanged, this, &LeaseDialog::on_leaseFromDateTimeEdit_dateChanged);
 
     // Tableview for cars
@@ -42,6 +49,7 @@ LeaseDialog::~LeaseDialog()
     delete ui;
 }
 
+// ================== SLOTS ==================
 // value changed slot
 void LeaseDialog::on_CustomerPhone_textChanged(const QString& text) {
     qDebug() << "Text changed: " << text;
@@ -49,25 +57,25 @@ void LeaseDialog::on_CustomerPhone_textChanged(const QString& text) {
     filteredCustomers.clear();
 
     // This for loop compares phone in strict position from start to finish
-    for (const auto& customer : customerRef) {
-        const QString& phone = customer.getPhone();
+    for (auto customerPtr : customerRef) {
+        const QString& phone = customerPtr.getPhone();
         if (phone.startsWith(text)) {
-            filteredCustomers.push_back(customer);
+            filteredCustomers.push_back(&customerPtr);
         }
     }
 
-    // the table is then updated with the matching customers
+// the table is then updated with the matching customers
     ui->FilteredCustomerTable->setRowCount(0);
-    for (const auto& customer : filteredCustomers) {
+    for (const auto& customerPtr : filteredCustomers) {
         int row = ui->FilteredCustomerTable->rowCount();
         ui->FilteredCustomerTable->insertRow(row);
-        ui->FilteredCustomerTable->setItem(row, 0, new QTableWidgetItem(customer.getName()));
-        ui->FilteredCustomerTable->setItem(row, 1, new QTableWidgetItem(customer.getPhone()));
-        ui->FilteredCustomerTable->setItem(row, 2, new QTableWidgetItem(customer.getEmail()));
-        ui->FilteredCustomerTable->setItem(row, 3, new QTableWidgetItem(QString::number(customer.getAge())));
-        ui->FilteredCustomerTable->setItem(row, 4, new QTableWidgetItem(customer.getPersonNr()));
+        ui->FilteredCustomerTable->setItem(row, 0, new QTableWidgetItem(customerPtr->getName()));
+        ui->FilteredCustomerTable->setItem(row, 1, new QTableWidgetItem(customerPtr->getPhone()));
+        ui->FilteredCustomerTable->setItem(row, 2, new QTableWidgetItem(customerPtr->getEmail()));
+        ui->FilteredCustomerTable->setItem(row, 3, new QTableWidgetItem(QString::number(customerPtr->getAge())));
+        ui->FilteredCustomerTable->setItem(row, 4, new QTableWidgetItem(customerPtr->getPersonNr()));
         QString tempCars;
-        CustomerManager::getCarsFromCustomerAsString(customer, tempCars, carsRef);
+        CustomerManager::getCarsFromCustomerAsString(*customerPtr, tempCars, carsRef);
         ui->FilteredCustomerTable->setItem(row, 5, new QTableWidgetItem(tempCars));
     }
 }

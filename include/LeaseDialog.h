@@ -20,7 +20,7 @@ class LeaseDialog : public QDialog
     Q_OBJECT
 
 public:
-    LeaseDialog(const std::vector<Car>& carsRef, const std::vector<Customer>& customerRef, QWidget *parent = nullptr);
+    LeaseDialog(std::vector<Car>& carsRef, std::vector<Customer>& customerRef, QWidget *parent = nullptr);
     ~LeaseDialog();
 
     // getters
@@ -39,11 +39,11 @@ private:
     Ui::LeaseDialog *ui;
 
     // ref to the vectors in main.cpp
-    const std::vector<Car>& carsRef;
-    const std::vector<Customer>& customerRef;
+    std::vector<Car>& carsRef;
+    std::vector<Customer>& customerRef;
 
     // filter vectors for creating new leases
-    std::vector<Car> filteredCars;
-    std::vector<Customer> filteredCustomers;
+    std::vector<Car*> filteredCars;
+    std::vector<Customer*> filteredCustomers;
 };
 #endif // LEASEDIALOG_H

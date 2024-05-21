@@ -18,7 +18,7 @@
     <rect>
      <x>20</x>
      <y>230</y>
-     <width>81</width>
+     <width>91</width>
      <height>22</height>
     </rect>
    </property>
@@ -28,12 +28,20 @@
    <property name="currentText">
     <string notr="true"/>
    </property>
+   <property name="currentIndex">
+    <number>-1</number>
+   </property>
    <property name="maxVisibleItems">
     <number>5</number>
    </property>
    <property name="placeholderText">
     <string>Car type</string>
    </property>
+   <item>
+    <property name="text">
+     <string>-no cartype-</string>
+    </property>
+   </item>
    <item>
     <property name="text">
      <string>Sedan</string>
@@ -114,24 +122,30 @@
      <string>Compact Car</string>
     </property>
    </item>
-   <item>
-    <property name="text">
-     <string>-No Type-</string>
-    </property>
-   </item>
   </widget>
   <widget class="QComboBox" name="FuelTypeFilter">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>130</x>
      <y>230</y>
-     <width>81</width>
+     <width>91</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="currentIndex">
+    <number>-1</number>
+   </property>
+   <property name="maxVisibleItems">
+    <number>5</number>
    </property>
    <property name="placeholderText">
     <string>Fuel type</string>
    </property>
+   <item>
+    <property name="text">
+     <string>-no fueltype-</string>
+    </property>
+   </item>
    <item>
     <property name="text">
      <string>Diesel</string>
@@ -399,7 +413,7 @@
   <widget class="QLineEdit" name="SeatCapacityFilter">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>240</x>
      <y>230</y>
      <width>81</width>
      <height>21</height>
