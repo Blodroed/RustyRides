@@ -21,7 +21,7 @@ CarDialog::~CarDialog()
 void CarDialog::setRegNr(const QString& regNr) { ui->RegNrLineEdit->setText(regNr); }
 void CarDialog::setMake(const QString& regNr) { ui->MakeLineEdit->setText(regNr); }
 void CarDialog::setModel(const QString& model) { ui->ModelEdit->setText(model); }
-void CarDialog::setColor(const QString& color) { ui->KmLineEdit->setText(color); }
+void CarDialog::setColor(const QString& color) { ui->ColorLineEdit->setText(color); }
 void CarDialog::setCarType(const QString& carType) { ui->CarTypeEdit->setText(carType); }
 void CarDialog::setFuelType(const QString& fuelType) { ui->FuelTypeEdit->setText(fuelType); }
 void CarDialog::setYear(int year) { ui->YearEdit->setText(QString::number(year)); }
@@ -36,7 +36,7 @@ void CarDialog::setAvailable(bool available) {
 QString CarDialog::getRegNr() const { return ui->RegNrLineEdit->text(); }
 QString CarDialog::getMake() const { return ui->MakeLineEdit->text(); }
 QString CarDialog::getModel() const { return ui->ModelEdit->text(); }
-QString CarDialog::getColor() const { return ui->KmLineEdit->text(); }
+QString CarDialog::getColor() const { return ui->ColorLineEdit->text(); }
 QString CarDialog::getCarType() const { return ui->CarTypeEdit->text(); }
 QString CarDialog::getFuelType() const { return ui->FuelTypeEdit->text(); }
 int CarDialog::getYear() const { return ui->YearEdit->text().toInt(); }

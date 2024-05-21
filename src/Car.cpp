@@ -1,6 +1,7 @@
 //
 // Created by Albert on 17.04.2024.
 //
+
 #include <QString>
 
 #include "../include/Car.h"

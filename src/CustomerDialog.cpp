@@ -1,3 +1,7 @@
+//
+// Created by Albert on 18.05.2024.
+//
+
 #include "../include/CustomerDialog.h"
 #include "ui_customerdialog.h"
 

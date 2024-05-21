@@ -25,19 +25,19 @@ public:
     ~MainWindow();
 
 public slots:
-    void on_tabWidget_currentChanged(int index);
+            void on_tabWidget_currentChanged(int index);
 
-// Worth noting: These autogenerate upon assigning a button to a slot in the UI designer
+    // Worth noting: These autogenerate upon assigning a button to a slot in the UI designer
 private slots:
     // Customer related buttons
-        void on_NewCustBtn_clicked();
-        void on_EdtCustBtn_clicked();
-        void on_DelCustBtn_clicked();
+    void on_NewCustBtn_clicked();
+    void on_EdtCustBtn_clicked();
+    void on_DelCustBtn_clicked();
 
     // Car related buttons
-        void on_NewCarBtn_clicked();
-        // void on_EdtCarBtn_clicked();
-        // void on_DelCarBtn_clicked();
+    void on_NewCarBtn_clicked();
+    void on_EdtCarBtn_clicked();
+    void on_DelCarBtn_clicked();
 
     // TODO: Buttons for the other two tabs
 
@@ -52,4 +52,4 @@ private:
     JsonParser& jsonParser;
 };
 
-#endif // HELLHUB_MAINWINDOW_H
+#endif //HELLHUB_MAINWINDOW_H

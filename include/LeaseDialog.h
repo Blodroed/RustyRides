@@ -1,5 +1,9 @@
-#ifndef LEASEDIALOG_H
-#define LEASEDIALOG_H
+//
+// Created by Marcus on 15.05.2024.
+//
+
+#ifndef HELLHUB_LEASEDIALOG_H
+#define HELLHUB_LEASEDIALOG_H
 
 #include <QDialog>
 
@@ -20,4 +24,4 @@ public:
 private:
     Ui::LeaseDialog *ui;
 };
-#endif // LEASEDIALOG_H
+#endif // HELLHUB_LEASEDIALOG_H

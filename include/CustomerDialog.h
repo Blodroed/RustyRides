@@ -1,5 +1,9 @@
-#ifndef CUSTOMERDIALOG_H
-#define CUSTOMERDIALOG_H
+//
+// Created by Albert on ??.05.2024.
+//
+
+#ifndef HELLHUB_CUSTOMERDIALOG_H
+#define HELLHUB_CUSTOMERDIALOG_H
 
 #include <QDialog>
 #include <QLineEdit>
@@ -39,4 +43,4 @@ private:
 signals:
 };
 
-#endif // CUSTOMERDIALOG_H
+#endif //HELLHUB_CUSTOMERDIALOG_H
