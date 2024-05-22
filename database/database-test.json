@@ -141,19 +141,19 @@
             "regNr": "car3",
             "customerId": "123456",
             "startDate": "2024-05-21T15:56:01",
-            "daysOfLease": 1,
+            "daysOfLease": 2,
             "negotiatedPrice": 30000,
-            "totalPrice": 30000,
+            "totalPrice": 60000,
             "open": true
         },
         {
             "leaseId": 5,
             "regNr": "car5",
             "customerId": "234",
-            "startDate": "2024-05-23T16:01:17",
-            "daysOfLease": 1,
-            "negotiatedPrice": 40000,
-            "totalPrice": 40000,
+            "startDate": "2024-05-24T16:02:17",
+            "daysOfLease": 2,
+            "negotiatedPrice": 39000,
+            "totalPrice": 78000,
             "open": true
         },
         {

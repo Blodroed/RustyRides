@@ -5,6 +5,8 @@
 #include <QTableWidgetItem>
 #include <QString>
 #include <QDateTime>
+#include <QDateTimeEdit>
+#include <QSpinBox>
 
 EditLeaseDialog::EditLeaseDialog(const Car& carRef, const Customer& customerRef, Lease& selectedLease, QWidget *parent)
     : QDialog(parent)
@@ -14,8 +16,18 @@ EditLeaseDialog::EditLeaseDialog(const Car& carRef, const Customer& customerRef,
     , customerRef(customerRef)
 {
     ui->setupUi(this);
+    // set old values in new values
+    newDaysOfLease = selectedLease.getDaysOfLease();
+    newNegotiatedPrice = selectedLease.getNegotiatedPrice();
+    newTotalPrice = selectedLease.getTotalPrice();
+    newStartDate = selectedLease.getStartDate();
 
-    // CustomerInfo in table
+    // connect signals and slots for datetime and price
+    connect(ui->leaseFromDateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &EditLeaseDialog::on_leaseFromDateTimeEdit_dateChanged);
+    connect(ui->leaseUntilDateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &EditLeaseDialog::on_leaseUntilDateTimeEdit_dateChanged);
+    connect(ui->NegotiatedPriceBox, &QSpinBox::valueChanged, this, &EditLeaseDialog::on_NegotiatedPriceBox_valueChanged);
+
+    // Init CustomerInfo table
     ui->CustomerInfoTable->setColumnCount(6);
     QStringList customerHeaders = {"Name", "Phone", "Email", "Age", "PersonNr", "Leases"};
     ui->CustomerInfoTable->setHorizontalHeaderLabels(customerHeaders);
@@ -23,18 +35,19 @@ EditLeaseDialog::EditLeaseDialog(const Car& carRef, const Customer& customerRef,
     ui->CustomerInfoTable->horizontalHeader()->setStretchLastSection(true);
     updateCustomerInfoTable();
 
-    // CarInfo in table
+    // Init carinfo table
     ui->CarInfoTable->setColumnCount(10);
     QStringList carHeaders = {"Reg Nr", "Make", "Model", "Color", "Car Type", "Fuel Type", "Year", "Price", "Km Driven", "Seats"};
     ui->CarInfoTable->setHorizontalHeaderLabels(carHeaders);
     ui->CarInfoTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    ui->CarInfoTable->horizontalHeader()->setStretchLastSection(true);
+    ui->CarInfoTable->horizontalHeader()->setStretchLastSection(false);
     updateCarInfoTable();
 
     // set startdate values
     ui->leaseFromDateTimeEdit->setDateTime(QDateTime::fromString(selectedLease.getStartDate(), Qt::ISODate));
     if (QDateTime::fromString(selectedLease.getStartDate(), Qt::ISODate) < QDateTime::currentDateTime()) {
         ui->leaseFromDateTimeEdit->setMinimumDateTime(QDateTime::fromString(selectedLease.getStartDate(), Qt::ISODate));
+        ui->leaseFromDateTimeEdit->setReadOnly(true);
     } else {
         ui->leaseFromDateTimeEdit->setMinimumDateTime(QDateTime::currentDateTime());
     }
@@ -43,6 +56,10 @@ EditLeaseDialog::EditLeaseDialog(const Car& carRef, const Customer& customerRef,
     ui->leaseUntilDateTimeEdit->setMinimumDateTime(QDateTime::currentDateTime());
     QDateTime leaseUntil = QDateTime::fromString(selectedLease.getStartDate(), Qt::ISODate).addDays(selectedLease.getDaysOfLease());
     ui->leaseUntilDateTimeEdit->setDateTime(leaseUntil);
+
+    // Set price fields
+    ui->NegotiatedPriceBox->setValue(selectedLease.getNegotiatedPrice());
+    ui->TotalPriceLineEdit->setText(QString::number(selectedLease.getTotalPrice()));
 
 }
 
@@ -76,3 +93,32 @@ void EditLeaseDialog::updateCarInfoTable() {
     ui->CarInfoTable->setItem(0, 8, new QTableWidgetItem(QString::number(carRef.getKmDriven())));
     ui->CarInfoTable->setItem(0, 9, new QTableWidgetItem(QString::number(carRef.getSeats())));
 }
+
+// slots
+void EditLeaseDialog::on_leaseFromDateTimeEdit_dateChanged(const QDateTime &date) {
+    newStartDate = date.toString(Qt::ISODate);
+    newDaysOfLease = date.daysTo(ui->leaseUntilDateTimeEdit->dateTime());
+    newTotalPrice = newNegotiatedPrice * newDaysOfLease;
+
+    ui->TotalPriceLineEdit->setText(QString::number(newTotalPrice));
+    ui->leaseUntilDateTimeEdit->setMinimumDateTime(date.addDays(1));
+}
+
+void EditLeaseDialog::on_leaseUntilDateTimeEdit_dateChanged(const QDateTime &date) {
+    QDateTime leaseFrom = ui->leaseFromDateTimeEdit->dateTime();
+    newDaysOfLease = leaseFrom.daysTo(date);
+    newTotalPrice = newNegotiatedPrice * newDaysOfLease;
+    ui->TotalPriceLineEdit->setText(QString::number(newNegotiatedPrice * newDaysOfLease));
+}
+
+void EditLeaseDialog::on_NegotiatedPriceBox_valueChanged(const int newValue) {
+    newNegotiatedPrice = newValue;
+    newTotalPrice = newValue * newDaysOfLease;
+    ui->TotalPriceLineEdit->setText(QString::number(newTotalPrice));
+}
+
+// getters
+int EditLeaseDialog::getNewDaysOfLease() const {return newDaysOfLease;}
+int EditLeaseDialog::getNewNegotiatedPrice() const {return newNegotiatedPrice;}
+int EditLeaseDialog::getNewTotalPrice() const {return newTotalPrice;}
+QString EditLeaseDialog::getNewStartDate() const {return newStartDate;}

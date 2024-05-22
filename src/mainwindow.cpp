@@ -38,8 +38,8 @@ MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers,
     ui->CarTable->horizontalHeader()->setStretchLastSection(false);
 
     // Table view of the leases
-    ui->LeaseTable->setColumnCount(7);
-    QStringList leaseHeaders = {"LeaseID", "Reg Nr", "Person Nr", "Days of Lease", "Negotiated Price", "StartDate", "Open or Closed"};
+    ui->LeaseTable->setColumnCount(8);
+    QStringList leaseHeaders = {"LeaseID", "Reg Nr", "Person Nr", "Days of Lease", "Negotiated Price", "Total Price", "StartDate", "Open or Closed"};
     ui->LeaseTable->setHorizontalHeaderLabels(leaseHeaders);
     ui->LeaseTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->LeaseTable->horizontalHeader()->setStretchLastSection(true);
@@ -303,6 +303,7 @@ void MainWindow::updateLeaseTable() {
                  << "PersonNr:" << lease.getPersonNr()
                  << "Days of lease:" << lease.getDaysOfLease()
                  << "Negotiated price:" << lease.getNegotiatedPrice()
+                 << "Total price:" << lease.getTotalPrice()
                  << "StartDate:" << lease.getStartDate()
                  << "Open or closed:" << lease.isOpenOrClosed();
 
@@ -311,8 +312,9 @@ void MainWindow::updateLeaseTable() {
         ui->LeaseTable->setItem(row, 2, new QTableWidgetItem(lease.getPersonNr()));
         ui->LeaseTable->setItem(row, 3, new QTableWidgetItem(QString::number(lease.getDaysOfLease())));
         ui->LeaseTable->setItem(row, 4, new QTableWidgetItem(QString::number(lease.getNegotiatedPrice())));
-        ui->LeaseTable->setItem(row, 5, new QTableWidgetItem(lease.getStartDate()));
-        ui->LeaseTable->setItem(row, 6, new QTableWidgetItem(lease.isOpenOrClosed() ? "Open" : "Closed"));
+        ui->LeaseTable->setItem(row, 5, new QTableWidgetItem(QString::number(lease.getTotalPrice())));
+        ui->LeaseTable->setItem(row, 6, new QTableWidgetItem(lease.getStartDate()));
+        ui->LeaseTable->setItem(row, 7, new QTableWidgetItem(lease.isOpenOrClosed() ? "Open" : "Closed"));
     }
 }
 
@@ -352,7 +354,6 @@ void MainWindow::on_NewLeaseBtn_clicked() {
     delete leaseDialog;
 }
 
-
 void MainWindow::on_EdtLeaseBtn_clicked() {
     int currentRow = ui->LeaseTable->currentRow();
     if (currentRow < 0) {
@@ -360,18 +361,32 @@ void MainWindow::on_EdtLeaseBtn_clicked() {
         return;
     }
 
+    // finding the selected lease in the original vector
     int leaseId = ui->LeaseTable->item(currentRow, 0)->text().toInt();
     Lease *selectedLease = LeaseManager::searchForLeaseWithID(leasesRef, leaseId);
 
+    // finding the car and customer objects related to the selected lease
     auto carFromLease = CarManager::searchForCarWithRegNr(carsRef, selectedLease->getRegNr());
     auto customerFromLease = CustomerManager::searchForCustomerWithPersonNr(customersRef, selectedLease->getPersonNr());
 
+    // creating and excecuting the dialog
     EditLeaseDialog* editLeaseDialog = new EditLeaseDialog(*carFromLease, *customerFromLease, *selectedLease, this);
 
-
     if (editLeaseDialog->exec() == QDialog::Accepted) {
+        int daysOfLease = editLeaseDialog->getNewDaysOfLease();
+        int negotiatedPrice = editLeaseDialog->getNewNegotiatedPrice();
+        QString newStartDate = editLeaseDialog->getNewStartDate();
 
+        qDebug() << "Updtated Lease:, " << selectedLease->getleaseId()
+                << "Days of lease: " << daysOfLease
+                << "Negotiated price: " << negotiatedPrice
+                << "Total price: " << daysOfLease * negotiatedPrice
+                << "Start date: " << newStartDate;
+
+        LeaseManager::editLease(*selectedLease, daysOfLease, negotiatedPrice, newStartDate, jsonParser);
+
+        // Update the tables
+        updateLeaseTable();
     }
-
     delete editLeaseDialog;
 }

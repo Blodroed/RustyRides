@@ -21,7 +21,18 @@ public:
     explicit EditLeaseDialog(const Car& carRef, const Customer& customerRef, Lease& selectedLease, QWidget *parent = nullptr);
     ~EditLeaseDialog();
 
+    // getters
+    int getNewDaysOfLease() const;
+    int getNewNegotiatedPrice() const;
+    int getNewTotalPrice() const;
+    QString getNewStartDate() const;
+
+private slots:
+    void on_leaseFromDateTimeEdit_dateChanged(const QDateTime &date);
+    void on_leaseUntilDateTimeEdit_dateChanged(const QDateTime &date);
+    void on_NegotiatedPriceBox_valueChanged(const int newValue);
 private:
+    // update tables
     void updateCustomerInfoTable();
     void updateCarInfoTable();
 
@@ -29,6 +40,12 @@ private:
     Lease& selectedLease;
     const Car& carRef;
     const Customer& customerRef;
+
+    // new values
+    int newDaysOfLease;
+    int newNegotiatedPrice;
+    int newTotalPrice;
+    QString newStartDate;
 };
 
 #endif // EDITLEASEDIALOG_H
