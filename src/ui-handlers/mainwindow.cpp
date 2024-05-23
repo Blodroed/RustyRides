@@ -176,11 +176,7 @@ void MainWindow::on_EdtCustBtn_clicked() {
 
     CustomerDialog* customerDialog = new CustomerDialog(this);
     customerDialog->setWindowTitle("Edit Customer");
-    customerDialog->setPersonNr(selectedCustomer->getPersonNr());
-    customerDialog->setEmail(selectedCustomer->getEmail());
-    customerDialog->setPhone(selectedCustomer->getPhone());
-    customerDialog->setAge(selectedCustomer->getAge());
-    customerDialog->setName(selectedCustomer->getName());
+    customerDialog->populateFields(*selectedCustomer);
     customerDialog->setModal(true);
 
     // Make the personNr field read-only

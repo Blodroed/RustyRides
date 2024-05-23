@@ -26,3 +26,12 @@ QString CustomerDialog::getPhone() const { return ui->phoneLineEdit->text(); }
 int CustomerDialog::getAge() const { return ui->ageLineEdit->text().toInt(); }
 QString CustomerDialog::getName() const { return ui->nameLineEdit->text(); }
 QLineEdit* CustomerDialog::getPersonNrLineEdit() const { return ui->personalNumberLineEdit; }
+
+// populate fields for the selected customer
+void CustomerDialog::populateFields(Customer &selectedCustomer) {
+    setPersonNr(selectedCustomer.getPersonNr());
+    setEmail(selectedCustomer.getEmail());
+    setPhone(selectedCustomer.getPhone());
+    setAge(selectedCustomer.getAge());
+    setName(selectedCustomer.getName());
+}
