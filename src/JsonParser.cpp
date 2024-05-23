@@ -1,7 +1,3 @@
-//
-// Created by Albert on 26.04.2024.
-//
-
 #include "../include/JsonParser.h"
 #include "../libs/rapidjson/document.h"
 #include "../libs/rapidjson/prettywriter.h"
@@ -452,8 +448,6 @@ void JsonParser::importLeasesFromJson(std::vector<Lease> &leases) {
         leases.emplace_back(std::move(lease));
     }
 }
-
-void JsonParser::exportLeasesToJson(const std::vector<Lease> &leases) {}
 
 void JsonParser::exportSingleLeaseToJson(const Lease &lease) {
     std::ifstream file(filepath); // filepath should be set on construction of class
