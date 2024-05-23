@@ -14,6 +14,7 @@
 
 #include <QMessageBox>
 #include <QTableWidgetItem>
+#include <QDateTime>
 
 MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, std::vector<Car>& cars, std::vector<Lease>& leases, QWidget *parent)
         : QMainWindow(parent)
@@ -540,6 +541,43 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
     // setup changing some values
     editLeaseDialog->setModal(true);
     editLeaseDialog->convertToCloseDialog();
+
+    // get enddatetime of the lease
+    QDateTime startDateTime = QDateTime::fromString(selectedLease->getStartDate(), Qt::ISODate);
+    QDateTime endDateTime = startDateTime.addDays(selectedLease->getDaysOfLease());
+    int daysSinceStart = startDateTime.daysTo(QDateTime::currentDateTime());
+
+    // check if enddatetime is before current datetime
+    if (endDateTime < QDateTime::currentDateTime()) {
+        qDebug() << "The end date of the lease is before the current date";
+
+        // display error message box to client
+        QMessageBox::StandardButton reply;
+        QString message = QString("The end date of the lease is before the current date. The lease has been extended by %1 days. The new total price is %2. Do you want to extend the lease?")
+                .arg(daysSinceStart)
+                .arg(selectedLease->getTotalPrice());
+        reply = QMessageBox::question(this, "Close Lease", message, QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes) {
+            LeaseManager::editDaysOfLease(*selectedLease, daysSinceStart, jsonParser);
+            qDebug() << "Lease extended by " << daysSinceStart << " days";
+        }
+    } else if (endDateTime > QDateTime::currentDateTime()) {
+        qDebug() << "The end date of the lease is after the current date";
+
+        // display error message box to client
+        QMessageBox::StandardButton reply;
+        QString message = QString("The end date of the lease is after the current date. The lease has been shortened by %1 days. The new total price is %2. Do you want to shorten the lease?")
+                .arg(daysSinceStart)
+                .arg(selectedLease->getTotalPrice());
+        reply = QMessageBox::question(this, "Close Lease", message, QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes) {
+            LeaseManager::editDaysOfLease(*selectedLease, daysSinceStart, jsonParser);
+            qDebug() << "Lease shortened by " << daysSinceStart << " days";
+        }
+
+    } else {
+        qDebug() << "The end date of the lease is today";
+    }
 
     if (editLeaseDialog->exec() == QDialog::Accepted) {
         QMessageBox::StandardButton reply;

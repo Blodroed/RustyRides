@@ -119,7 +119,7 @@
             "regNr": "car3",
             "customerId": "123456",
             "startDate": "2024-05-21T15:56:01",
-            "daysOfLease": 2,
+            "daysOfLease": 1,
             "negotiatedPrice": 30000,
             "totalPrice": 60000,
             "open": false
