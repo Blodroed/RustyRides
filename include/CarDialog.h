@@ -21,10 +21,10 @@ public:
     ~CarDialog();
 
     // Setters for UI elements
-    void setRegNr(const QString& regNr);
-    void setMake(const QString& regNr);
-    void setModel(const QString& model);
-    void setColor(const QString& color);
+    void setRegNr(const QString &RegNr);
+    void setMake(const QString &make);
+    void setModel(const QString &model);
+    void setColor(const QString &color);
     void setCarType(const QString& carType);
     void setFuelType(const QString& fuelType);
     void setYear(int year);
@@ -46,12 +46,11 @@ public:
     int getSeats() const;
     bool getAvailable() const;
 
-    // Get the edit field for RegNr
+    // Getter for regNr edit field
     QLineEdit* getRegNrLineEdit() const;
+
 private:
     Ui::CarDialog *ui;
-    QLineEdit* regNrLineEdit;
-signals:
 };
 
 #endif //HELLHUB_CARDIALOG_H

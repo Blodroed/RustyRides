@@ -28,4 +28,4 @@ public:
     static void removeCarFromCustomer(Customer &customer, const Car &car, JsonParser &jsonParser);
 };
 
-#endif // HELLHUB_CUSTOMERMANAGER_H
+#endif //HELLHUB_CUSTOMERMANAGER_H

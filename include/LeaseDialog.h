@@ -1,5 +1,9 @@
-#ifndef LEASEDIALOG_H
-#define LEASEDIALOG_H
+//
+// Created by Marcus on 15.05.2024.
+//
+
+#ifndef HELLHUB_LEASEDIALOG_H
+#define HELLHUB_LEASEDIALOG_H
 
 #include "CarManager.h"
 #include "CustomerManager.h"
@@ -59,4 +63,4 @@ private:
     // extra variables for lease info getters
     int daysOfLease;
 };
-#endif // LEASEDIALOG_H
+#endif // HELLHUB_LEASEDIALOG_H

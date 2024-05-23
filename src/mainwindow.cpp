@@ -32,7 +32,12 @@ MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers,
     ui->CustTable->setColumnCount(6);
     QStringList headers = {"Personal Number", "Email", "Phone", "Age", "Name", "Assigned Cars"};
     ui->CustTable->setHorizontalHeaderLabels(headers);
-    ui->CustTable->horizontalHeader()->setStretchLastSection(true);
+    ui->CustTable->horizontalHeader()->setStretchLastSection(false);
+
+    // This will format the headers to fill the available white space
+    for (int i = 0; i < ui->CustTable->horizontalHeader()->count(); ++i) {
+        ui->CustTable->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+    }
 
     // Table view of the cars
     ui->CarTable->setColumnCount(11);
@@ -241,6 +246,7 @@ void MainWindow::updateCarTable() {
 }
 
 // Register new car (opens a dialog window)
+
 void MainWindow::on_NewCarBtn_clicked() {
     CarDialog* carDialog = new CarDialog(this);
     carDialog->setModal(true);
@@ -286,6 +292,76 @@ void MainWindow::on_NewCarBtn_clicked() {
     }
     delete carDialog;
 }
+// Edit Car (opens a dialog window)
+// Similar to customer, values are pre entered for easy editing
+
+void MainWindow::on_EdtCarBtn_clicked() {
+    int currentRow = ui->CarTable->currentRow();
+    if (currentRow < 0) {
+        qDebug() << "No car selected for editing";
+        return;
+    }
+
+    Car& selectedCar = carsRef[currentRow];
+    CarDialog* carDialog = new CarDialog(this);
+
+    // Populate dialog with car details
+    carDialog->setRegNr(selectedCar.getRegNr());
+    carDialog->setMake(selectedCar.getMake());
+    carDialog->setModel(selectedCar.getModel());
+    carDialog->setColor(selectedCar.getColor());
+    carDialog->setCarType(selectedCar.getCarType());
+    carDialog->setFuelType(selectedCar.getFuelType());
+    carDialog->setYear(selectedCar.getYear());
+    carDialog->setPrice(selectedCar.getPrice());
+    carDialog->setKmDriven(selectedCar.getKmDriven());
+    carDialog->setSeats(selectedCar.getSeats());
+    carDialog->setAvailable(selectedCar.getAvailable());
+
+    carDialog->setModal(true);
+
+    // Make the regNr field read-only
+    carDialog->getRegNrLineEdit()->setReadOnly(true);
+
+    if (carDialog->exec() == QDialog::Accepted) {
+        // Create a new Car object with the updated data
+        Car updatedCar(carDialog->getRegNr(),
+                       carDialog->getMake(),
+                       carDialog->getModel(),
+                       carDialog->getColor(),
+                       carDialog->getCarType(),
+                       carDialog->getFuelType(),
+                       carDialog->getYear(),
+                       carDialog->getPrice(),
+                       carDialog->getKmDriven(),
+                       carDialog->getSeats(),
+                       carDialog->getAvailable());
+
+        // Call the editCar function
+        CarManager::editCarAllInstances(&selectedCar, updatedCar, jsonParser);
+
+        // Update the table to reflect the changes
+        updateCarTable();
+    }
+
+    delete carDialog;
+}
+
+// Delete car (opens "are you sure" dialog window)
+
+void MainWindow::on_DelCarBtn_clicked() {
+    int currentRow = ui->CarTable->currentRow();
+    if (currentRow < 0) {
+        return;
+    }
+
+    AreYouSureDialog confirmDialog(this);
+    if (confirmDialog.exec() == QDialog::Accepted) {
+        CarManager::deleteCar(carsRef, &carsRef[currentRow], jsonParser);
+        updateCarTable();
+    }
+}
+
 
 // Should also check if customer has any leases or cars
 
