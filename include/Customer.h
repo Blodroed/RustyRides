@@ -1,7 +1,3 @@
-//
-// Created by Marcus on 10.05.2024.
-//
-
 #ifndef HELLHUB_CUSTOMER_H
 #define HELLHUB_CUSTOMER_H
 

@@ -608,6 +608,7 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
     editLeaseDialog->setModal(true);
     editLeaseDialog->convertToCloseDialog();
 
+    // here we are actually beginning to close the lease
     if (editLeaseDialog->exec() == QDialog::Accepted) {
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, "Close Lease", "Are you sure you want to close this lease? And has the customer returned the car?",

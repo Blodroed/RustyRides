@@ -1,8 +1,5 @@
-//
-// Created by Albert on 18.05.2024.
-//
-
 #include "../include/LeaseManager.h"
+#include "../include/CustomerManager.h"
 
 void LeaseManager::createLease(std::vector<Lease> &leases, const Lease &newLease, JsonParser &jsonParser) {
     leases.push_back(newLease);
@@ -25,21 +22,22 @@ void LeaseManager::closeLease(Lease &lease, std::vector<Car> &cars, std::vector<
                               JsonParser &jsonParser) {
     lease.setOpenOrClosed(false);
     jsonParser.editSingleLeaseToJson(lease);
-
-    // remove car from customer
-    for (auto &customer : customers) {
-        if (customer.getPersonNr() == lease.getPersonNr()) {
-            customer.removeCar(lease.getRegNr());
-            jsonParser.editSingleCustomerToJson(customer);
-            break;
-        }
-    }
+    Car* tempCar;
 
     // set car to available
     for (auto &car : cars) {
         if (car.getRegNr() == lease.getRegNr()) {
             car.setAvailable(true);
             jsonParser.editSingleCarToJson(car);
+            tempCar = &car;
+            break;
+        }
+    }
+
+    // remove car from customer
+    for (auto &customer : customers) {
+        if (customer.getPersonNr() == lease.getPersonNr()) {
+            CustomerManager::removeCarFromCustomer(customer, *tempCar, jsonParser);
             break;
         }
     }
