@@ -567,3 +567,78 @@ void JsonParser::deleteSingleLeaseFromJson(const Lease &lease) {
 }
 
 /** @} */ // end of LeaseFunctions group
+
+/**
+ * @defgroup ImportExportFunctions
+ * @brief Importing and exporting the entire database
+ *
+ * This group contains all the functions related to importing and exporting the entire database.
+ * @{
+ */
+
+void JsonParser::fullBackup(const std::string &backupPath) {
+    // open the source database
+    std::ifstream srcFile(filepath, std::ios::binary);
+
+    // check if the file opened successfully
+    if (!srcFile.is_open()) {
+        std::cout << "Error: Failed to open the source file" << std::endl;
+        return;
+    }
+
+    // open the destination file
+    std::ofstream destFile(backupPath, std::ios::binary);
+
+    // check if the file opened successfully
+    if (!destFile.is_open()) {
+        std::cout << "Error: Failed to open the destination file" << std::endl;
+        return;
+    }
+
+    // copy the contents of the source file to the destination file
+    destFile << srcFile.rdbuf();
+
+    // close the files
+    srcFile.close();
+    destFile.close();
+}
+
+void JsonParser::fullImport(std::vector<Car> &cars, std::vector<Customer> &customers, std::vector<Lease> &leases,
+                            const std::string &importPath) {
+    // open the new database file
+    std::ifstream importFile(importPath, std::ios::binary);
+
+    // check if the file opened successfully
+    if (!importFile.is_open()) {
+        std::cout << "Error: Failed to open the import file" << std::endl;
+        return;
+    }
+
+    // passing the new file into the database file
+    std::ofstream databaseFile(filepath, std::ios::binary);
+
+    // check if the file opened successfully
+    if (!databaseFile.is_open()) {
+        std::cout << "Error: Failed to open the database file" << std::endl;
+        return;
+    }
+
+    // copy the contents of the import file to the database file
+    databaseFile << importFile.rdbuf();
+
+    // close the files
+    importFile.close();
+    databaseFile.close();
+
+    // clear the original vectors
+    cars.clear();
+    customers.clear();
+    leases.clear();
+
+    // re-import the data
+    importCarsFromJson(cars);
+    importCustomersFromJson(customers);
+    importLeasesFromJson(leases);
+}
+
+/** @} */ // end of ImportExportFunctions group

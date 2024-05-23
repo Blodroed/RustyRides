@@ -13,6 +13,8 @@
 #include <QMessageBox>
 #include <QTableWidgetItem>
 #include <QDateTime>
+#include <QFileDialog>
+#include <QStandardPaths>
 
 MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, std::vector<Car>& cars, std::vector<Lease>& leases, QWidget *parent)
         : QMainWindow(parent)
@@ -54,6 +56,10 @@ MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers,
     ui->LeaseTable->setHorizontalHeaderLabels(leaseHeaders);
     ui->LeaseTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->LeaseTable->horizontalHeader()->setStretchLastSection(false);
+
+    // ---- Slot connections for import and export buttons ----
+    connect(ui->actionImport, &QAction::triggered, this, &MainWindow::importAction);
+    connect(ui->actionExport, &QAction::triggered, this, &MainWindow::exportAction);
 
     // update relevant tables
     updateCustomerTable();
@@ -99,7 +105,7 @@ void MainWindow::updateCustomerTable() {
 
         // hidden personNr for selecting the customer
         QTableWidgetItem* item = new QTableWidgetItem(customer.getPersonNr());
-        item->setData(Qt::UserRole, customer.getPersonNr()); // Store personNummer as hidden data
+        item->setData(Qt::UserRole, customer.getPersonNr());
         ui->CustTable->setItem(row, 0, item);
 
         ui->CustTable->setItem(row, 0, item);
@@ -667,4 +673,46 @@ void MainWindow::on_DelLeaseBtn_clicked() {
         LeaseManager::deleteLease(leasesRef, *selectedLease, jsonParser);
         updateLeaseTable();
     }
+}
+
+void MainWindow::importAction() {
+    // Set the default path to the desktop
+    QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+
+    // Open a file dialog and get the selected file path
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open JSON File"), defaultPath, tr("JSON Files (*.json)"));
+
+    // Check if a file was selected
+    if (!filePath.isEmpty()) {
+        QMessageBox::StandardButtons reply;
+        reply = QMessageBox::question(this, "Import", "Are you sure you want to import data from this file?",
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes) {
+            jsonParser.fullImport(carsRef, customersRef, leasesRef, filePath.toStdString());
+        } else {
+           return;
+        }
+        // update all the tables
+        updateCustomerTable();
+        updateCarTable();
+        updateLeaseTable();
+    }
+}
+
+void MainWindow::exportAction() {
+    // Set the default path to the desktop
+    QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+
+    // Open a file dialog and get the selected file path
+    QString filePath = QFileDialog::getSaveFileName(this, tr("Save JSON File"), defaultPath, tr("JSON Files (*.json)"));
+
+    // Check if a file was selected
+    if (!filePath.isEmpty()) {
+        jsonParser.fullBackup(filePath.toStdString());
+    } else {
+        return;
+    }
+
+    // display message box to client
+    QMessageBox::information(this, "Export", "Exported data to " + filePath);
 }
