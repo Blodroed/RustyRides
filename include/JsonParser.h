@@ -96,7 +96,8 @@ public:
 
     // full backup and import
     void fullBackup(const std::string &backupPath);
-    void fullImport(std::vector<Car> &cars, std::vector<Customer> &customers, std::vector<Lease> &leases);
+    void fullImport(std::vector<Car> &cars, std::vector<Customer> &customers, std::vector<Lease> &leases,
+                    const std::string &importPath);
 
 private:
     std::string filepath;

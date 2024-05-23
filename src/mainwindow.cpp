@@ -680,12 +680,18 @@ void MainWindow::importAction() {
 
     // Check if a file was selected
     if (!filePath.isEmpty()) {
-       QMessageBox::StandardButtons reply;
-         reply = QMessageBox::question(this, "Import", "Are you sure you want to import data from this file?",
-                                         QMessageBox::Yes|QMessageBox::No);
-            if (reply == QMessageBox::Yes) {
-                qDebug() << "Just A test" << filePath;
-            }
+        QMessageBox::StandardButtons reply;
+        reply = QMessageBox::question(this, "Import", "Are you sure you want to import data from this file?",
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes) {
+            jsonParser.fullImport(carsRef, customersRef, leasesRef, filePath.toStdString());
+        } else {
+           return;
+        }
+        // update all the tables
+        updateCustomerTable();
+        updateCarTable();
+        updateLeaseTable();
     }
 }
 
@@ -696,6 +702,8 @@ void MainWindow::exportAction() {
     // Check if a file was selected
     if (!filePath.isEmpty()) {
         jsonParser.fullBackup(filePath.toStdString());
+    } else {
+        return;
     }
 
     // display message box to client
