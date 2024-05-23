@@ -104,7 +104,7 @@ void MainWindow::updateCustomerTable() {
 
         // hidden personNr for selecting the customer
         QTableWidgetItem* item = new QTableWidgetItem(customer.getPersonNr());
-        item->setData(Qt::UserRole, customer.getPersonNr()); // Store personNummer as hidden data
+        item->setData(Qt::UserRole, customer.getPersonNr());
         ui->CustTable->setItem(row, 0, item);
 
         ui->CustTable->setItem(row, 0, item);
