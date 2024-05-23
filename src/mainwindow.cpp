@@ -447,3 +447,27 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
     }
     delete editLeaseDialog;
 }
+
+void MainWindow::on_DelLeaseBtn_clicked() {
+    int currentRow = ui->LeaseTable->currentRow();
+    if (currentRow < 0) {
+        qDebug() << "No lease selected for deletion";
+        return;
+    } else if (ui->LeaseTable->item(currentRow, 7)->text() == "Open") {
+        qDebug() << "Cannot delete an open lease";
+
+        // display error message box to client
+        QMessageBox::warning(this, "Error", "Cannot delete an open lease");
+
+        return;
+    }
+
+    int leaseId = ui->LeaseTable->item(currentRow, 0)->text().toInt();
+    Lease *selectedLease = LeaseManager::searchForLeaseWithID(leasesRef, leaseId);
+
+    AreYouSureDialog confirmDialog(this);
+    if (confirmDialog.exec() == QDialog::Accepted) {
+        LeaseManager::deleteLease(leasesRef, *selectedLease, jsonParser);
+        updateLeaseTable();
+    }
+}

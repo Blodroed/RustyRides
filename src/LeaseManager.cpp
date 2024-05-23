@@ -45,6 +45,16 @@ void LeaseManager::closeLease(Lease &lease, std::vector<Car> &cars, std::vector<
     }
 }
 
+void LeaseManager::deleteLease(std::vector<Lease> &leases, Lease &lease, JsonParser &jsonParser) {
+    for (auto it = leases.begin(); it != leases.end(); ++it) {
+        if (it->getleaseId() == lease.getleaseId()) {
+            leases.erase(it);
+            break;
+        }
+    }
+    jsonParser.deleteSingleLeaseFromJson(lease);
+}
+
 Lease* LeaseManager::searchForLeaseWithID(std::vector<Lease> &leases, const int id) {
     for (auto &lease : leases) {
         if (lease.getleaseId() == id) {

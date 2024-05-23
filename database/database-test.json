@@ -115,26 +115,6 @@
             "open": false
         },
         {
-            "leaseId": 2,
-            "regNr": "DEF456",
-            "customerId": "222",
-            "startDate": "2022-02-01T11:00Z",
-            "daysOfLease": 7,
-            "negotiatedPrice": 15000,
-            "totalPrice": 105000,
-            "open": false
-        },
-        {
-            "leaseId": 3,
-            "regNr": "GHI789",
-            "customerId": "333",
-            "startDate": "2022-03-01T12:00Z",
-            "daysOfLease": 10,
-            "negotiatedPrice": 10000,
-            "totalPrice": 100000,
-            "open": false
-        },
-        {
             "leaseId": 4,
             "regNr": "car3",
             "customerId": "123456",
