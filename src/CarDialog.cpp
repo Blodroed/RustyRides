@@ -4,7 +4,7 @@
 
 #include <QIntValidator>
 #include "../include/CarDialog.h"
-#include "ui_cardialog.h"
+#include "ui-design-files/ui_cardialog.h"
 
 CarDialog::CarDialog(QWidget *parent)
         : QDialog(parent)

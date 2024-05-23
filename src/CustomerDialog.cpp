@@ -1,9 +1,5 @@
-//
-// Created by Albert on 18.05.2024.
-//
-
 #include "../include/CustomerDialog.h"
-#include "ui_customerdialog.h"
+#include "ui-design-files/ui_customerdialog.h"
 
 CustomerDialog::CustomerDialog(QWidget *parent)
     : QDialog{parent}, ui{new Ui::CustomerDialog}

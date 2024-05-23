@@ -1,5 +1,5 @@
 #include "../include/mainwindow.h"
-#include "ui_mainwindow.h"
+#include "ui-design-files/ui_mainwindow.h"
 #include "../include/CustomerManager.h"
 #include "../include/CustomerDialog.h"
 #include "../include/Car.h"

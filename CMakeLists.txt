@@ -16,7 +16,7 @@ set(PROJECT_SOURCES
         main.cpp
         src/mainwindow.cpp
         include/mainwindow.h
-        src/mainwindow.ui
+        src/ui-design-files/mainwindow.ui
         include/Car.h
         src/Car.cpp
         include/CarManager.h
@@ -31,22 +31,22 @@ set(PROJECT_SOURCES
         include/CustomerManager.h
         include/CustomerDialog.h
         src/CustomerDialog.cpp
-        src/customerdialog.ui
+        src/ui-design-files/customerdialog.ui
         src/areyousuredialog.cpp
         include/areyousuredialog.h
-        src/areyousuredialog.ui
+        src/ui-design-files/areyousuredialog.ui
         include/Lease.h
         src/Lease.cpp
         include/LeaseManager.h
         src/LeaseManager.cpp
         include/CarDialog.h
         src/CarDialog.cpp
-        src/cardialog.ui
+        src/ui-design-files/cardialog.ui
         include/LeaseDialog.h
         src/LeaseDialog.cpp
         include/editleasedialog.h
         src/editleasedialog.cpp
-        src/editleasedialog.ui
+        src/ui-design-files/editleasedialog.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

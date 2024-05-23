@@ -1,7 +1,7 @@
 #include "../include/LeaseDialog.h"
 #include "../include/CarManager.h"
 #include "../include/CustomerManager.h"
-#include "ui_LeaseDialog.h"
+#include "ui-design-files/ui_LeaseDialog.h"
 
 #include <vector>
 #include <QString>

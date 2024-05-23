@@ -1,5 +1,5 @@
 #include "../include/editleasedialog.h"
-#include "ui_editleasedialog.h"
+#include "ui-design-files/ui_editleasedialog.h"
 
 #include <QHeaderView>
 #include <QTableWidgetItem>
