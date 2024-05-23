@@ -23,7 +23,10 @@ MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers,
         , carsRef(cars)
         , leasesRef(leases)
 {
+    // window setup
     ui->setupUi(this);
+    this->setFixedSize(this->size());
+    this->setWindowTitle("Car Rental System");
 
     // Table view of the customers
     ui->CustTable->setColumnCount(6);
@@ -359,6 +362,13 @@ void MainWindow::on_EdtLeaseBtn_clicked() {
     if (currentRow < 0) {
         qDebug() << "No lease selected for editing";
         return;
+    } else if (ui->LeaseTable->item(currentRow, 7)->text() == "Closed") {
+        qDebug() << "Cannot edit a closed lease";
+
+        // display error message box to client
+        QMessageBox::warning(this, "Error", "Cannot edit a closed lease");
+
+        return;
     }
 
     // finding the selected lease in the original vector
@@ -371,13 +381,15 @@ void MainWindow::on_EdtLeaseBtn_clicked() {
 
     // creating and excecuting the dialog
     EditLeaseDialog* editLeaseDialog = new EditLeaseDialog(*carFromLease, *customerFromLease, *selectedLease, this);
+    editLeaseDialog->setModal(true);
+    editLeaseDialog->setWindowTitle("Edit Lease");
 
     if (editLeaseDialog->exec() == QDialog::Accepted) {
         int daysOfLease = editLeaseDialog->getNewDaysOfLease();
         int negotiatedPrice = editLeaseDialog->getNewNegotiatedPrice();
         QString newStartDate = editLeaseDialog->getNewStartDate();
 
-        qDebug() << "Updtated Lease:, " << selectedLease->getleaseId()
+        qDebug() << "Updated Lease:, " << selectedLease->getleaseId()
                 << "Days of lease: " << daysOfLease
                 << "Negotiated price: " << negotiatedPrice
                 << "Total price: " << daysOfLease * negotiatedPrice
@@ -387,6 +399,51 @@ void MainWindow::on_EdtLeaseBtn_clicked() {
 
         // Update the tables
         updateLeaseTable();
+        updateCarTable();
+        updateCustomerTable();
+    }
+    delete editLeaseDialog;
+}
+
+void MainWindow::on_ClsLeaseBtn_clicked() {
+    int currentRow = ui->LeaseTable->currentRow();
+    if (currentRow < 0) {
+        qDebug() << "No lease selected for closing";
+        return;
+    } else if (ui->LeaseTable->item(currentRow, 7)->text() == "Closed") {
+        qDebug() << "Cannot close a closed lease";
+
+        // display error message box to client
+        QMessageBox::warning(this, "Error", "Cannot close a closed lease");
+
+        return;
+    }
+
+    int leaseId = ui->LeaseTable->item(currentRow, 0)->text().toInt();
+    Lease *selectedLease = LeaseManager::searchForLeaseWithID(leasesRef, leaseId);
+
+    // finding the car and customer objects related to the selected lease
+    auto carFromLease = CarManager::searchForCarWithRegNr(carsRef, selectedLease->getRegNr());
+    auto customerFromLease = CustomerManager::searchForCustomerWithPersonNr(customersRef, selectedLease->getPersonNr());
+
+    EditLeaseDialog* editLeaseDialog = new EditLeaseDialog(*carFromLease, *customerFromLease, *selectedLease, this);
+
+    // setup changing some values
+    editLeaseDialog->setModal(true);
+    editLeaseDialog->convertToCloseDialog();
+
+    if (editLeaseDialog->exec() == QDialog::Accepted) {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Close Lease", "Are you sure you want to close this lease? And has the customer returned the car?",
+                                      QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::Yes) {
+            LeaseManager::closeLease(*selectedLease, carsRef, customersRef, jsonParser);
+
+            // Update the tables
+            updateLeaseTable();
+            updateCarTable();
+            updateCustomerTable();
+        }
     }
     delete editLeaseDialog;
 }

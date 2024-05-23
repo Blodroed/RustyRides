@@ -15,7 +15,10 @@ EditLeaseDialog::EditLeaseDialog(const Car& carRef, const Customer& customerRef,
     , carRef(carRef)
     , customerRef(customerRef)
 {
+    // setup for ui
     ui->setupUi(this);
+    this->setFixedSize(this->size());
+
     // set old values in new values
     newDaysOfLease = selectedLease.getDaysOfLease();
     newNegotiatedPrice = selectedLease.getNegotiatedPrice();
@@ -115,6 +118,15 @@ void EditLeaseDialog::on_NegotiatedPriceBox_valueChanged(const int newValue) {
     newNegotiatedPrice = newValue;
     newTotalPrice = newValue * newDaysOfLease;
     ui->TotalPriceLineEdit->setText(QString::number(newTotalPrice));
+}
+
+void EditLeaseDialog::convertToCloseDialog() {
+    this->setWindowTitle("Close Lease");
+    ui->TitleLabel->setText("Close Lease");
+    ui->leaseFromDateTimeEdit->setReadOnly(true);
+    ui->leaseUntilDateTimeEdit->setReadOnly(true);
+    ui->NegotiatedPriceBox->setReadOnly(true);
+    ui->TotalPriceLineEdit->setReadOnly(true);
 }
 
 // getters

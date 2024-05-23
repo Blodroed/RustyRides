@@ -291,7 +291,7 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="EdtLeaseBtn_2">
+     <widget class="QPushButton" name="ClsLeaseBtn">
       <property name="geometry">
        <rect>
         <x>770</x>

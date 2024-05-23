@@ -23,7 +23,7 @@ void LeaseManager::editLease(Lease &lease, int daysOfLease, int negotiatedPrice,
 
 void LeaseManager::closeLease(Lease &lease, std::vector<Car> &cars, std::vector<Customer> &customers,
                               JsonParser &jsonParser) {
-    lease.setOpenOrClosed(true);
+    lease.setOpenOrClosed(false);
     jsonParser.editSingleLeaseToJson(lease);
 
     // remove car from customer

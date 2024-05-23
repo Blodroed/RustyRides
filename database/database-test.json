@@ -37,7 +37,7 @@
             "kmDriven": 5000,
             "price": 30000,
             "seats": 4,
-            "availability": false
+            "availability": true
         },
         {
             "regNr": "car4",
@@ -73,9 +73,7 @@
             "phoneNumber": "123456",
             "email": "john@doe.com",
             "age": 23,
-            "cars": [
-                "car3"
-            ]
+            "cars": []
         },
         {
             "personNummer": "654321",
@@ -144,7 +142,7 @@
             "daysOfLease": 2,
             "negotiatedPrice": 30000,
             "totalPrice": 60000,
-            "open": true
+            "open": false
         },
         {
             "leaseId": 5,
