@@ -27,9 +27,10 @@ int main(int argc, char *argv[])
     JsonParser jsonParser("../database/database-test.json");
     jsonParser.importCarsFromJson(cars);
     jsonParser.importCustomersFromJson(customers);
+    jsonParser.importLeasesFromJson(leases);
 
     QApplication a(argc, argv);
-    MainWindow w(jsonParser, customers, cars);
+    MainWindow w(jsonParser, customers, cars, leases);
     w.show();
     return a.exec();
 }

@@ -111,6 +111,15 @@ std::vector<const Customer*> CustomerManager::searchForCustomerWithSeveralParame
     return foundCustomers;
 }
 
+// Function returns the vector of cars assigned to the customer
+void CustomerManager::getCarsFromCustomerAsString(const Customer &customer, QString &carsAsString) {
+    // creating a string of all cars assigned to the customer
+    for (const auto &carRegNr : customer.getAssignedCarsRegNr()) {
+        carsAsString.append(carRegNr);
+        carsAsString.append(", ");
+    }
+}
+
 void CustomerManager::assignCarToCustomer(Customer &customer, const Car &car, JsonParser &jsonParser) {
     customer.assignCar(car.getRegNr());
     jsonParser.editSingleCustomerToJson(customer);

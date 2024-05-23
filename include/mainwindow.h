@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, std::vector<Car>& cars, QWidget *parent = nullptr);
+    MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, std::vector<Car>& cars, std::vector<Lease>& leases, QWidget *parent = nullptr);
     ~MainWindow();
 
 public slots:
@@ -39,15 +39,24 @@ private slots:
         // void on_EdtCarBtn_clicked();
         // void on_DelCarBtn_clicked();
 
+    // Lease related buttons
+        void on_NewLeaseBtn_clicked();
+        void on_DelLeaseBtn_clicked();
+        void on_ClsLeaseBtn_clicked();
+        void on_EdtLeaseBtn_clicked();
+
     // TODO: Buttons for the other two tabs
 
 private:
     Ui::MainWindow *ui;
     void updateCustomerTable();
     void updateCarTable();
+    void updateLeaseTable();
 
+    // refference to the vector in main.cpp
     std::vector<Customer>& customersRef;
     std::vector<Car>& carsRef;
+    std::vector<Lease>& leasesRef;
 
     JsonParser& jsonParser;
 };

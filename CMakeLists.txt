@@ -42,13 +42,17 @@ set(PROJECT_SOURCES
         include/CarDialog.h
         src/CarDialog.cpp
         src/cardialog.ui
+        include/LeaseDialog.h
+        src/LeaseDialog.cpp
+        include/editleasedialog.h
+        src/editleasedialog.cpp
+        src/editleasedialog.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(HellHub
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-            include/CustomerDialog.h src/CustomerDialog.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET HellHub APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

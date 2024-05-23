@@ -36,7 +36,6 @@ public:
 private:
     Ui::CustomerDialog *ui;
     QLineEdit* personalNumberLineEdit;
-signals:
 };
 
 #endif // CUSTOMERDIALOG_H
