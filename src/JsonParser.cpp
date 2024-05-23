@@ -77,17 +77,6 @@ void JsonParser::importCarsFromJson(std::vector<Car> &cars) {
     }
 }
 /**
- * @brief Exports the entire vector of cars to a JSON file.
- *
- * This function takes a reference to the vector of Car objects and exports them to the JSON file.
- * Note that cars already present in the JSON file will be skipped to avoid duplicates.
- *
- * @param cars A reference to a vector of Car objects to be exported to the JSON file.
- */
-void JsonParser::exportCarsToJson(const std::vector<Car> &cars) {
-    //TODO: er denne nødvendig? Med tanke på at vi har exportSingleCarToJson allerede legger til en bil i json fila
-}
-/**
  * @brief Exports a single car to a JSON file.
  *
  * This function exports a single car to the JSON file.
