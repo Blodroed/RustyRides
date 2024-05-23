@@ -327,17 +327,7 @@ void MainWindow::on_EdtCarBtn_clicked() {
     carDialog->setWindowTitle("Edit Car");
 
     // Populate dialog with car details
-    carDialog->setRegNr(selectedCar->getRegNr());
-    carDialog->setMake(selectedCar->getMake());
-    carDialog->setModel(selectedCar->getModel());
-    carDialog->setColor(selectedCar->getColor());
-    carDialog->setCarType(selectedCar->getCarType());
-    carDialog->setFuelType(selectedCar->getFuelType());
-    carDialog->setYear(selectedCar->getYear());
-    carDialog->setPrice(selectedCar->getPrice());
-    carDialog->setKmDriven(selectedCar->getKmDriven());
-    carDialog->setSeats(selectedCar->getSeats());
-    carDialog->setAvailable(selectedCar->getAvailable());
+    carDialog->populateFields(*selectedCar);
 
     carDialog->setModal(true);
 
@@ -532,22 +522,28 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
     int leaseId = ui->LeaseTable->item(currentRow, 0)->text().toInt();
     Lease *selectedLease = LeaseManager::searchForLeaseWithID(leasesRef, leaseId);
 
+    if (selectedLease == nullptr) {
+        qDebug() << "No lease selected for closing";
+        return;
+    } else if (QDateTime::fromString(selectedLease->getStartDate(), Qt::ISODate) > QDateTime::currentDateTime()) {
+        qDebug() << "Cannot close a lease that has not started yet";
+
+        // display error message box to client
+        QMessageBox::warning(this, "Error", "Cannot close a lease that has not started yet");
+
+        return;
+    }
+
     // finding the car and customer objects related to the selected lease
     auto carFromLease = CarManager::searchForCarWithRegNr(carsRef, selectedLease->getRegNr());
     auto customerFromLease = CustomerManager::searchForCustomerWithPersonNr(customersRef, selectedLease->getPersonNr());
-
-    EditLeaseDialog* editLeaseDialog = new EditLeaseDialog(*carFromLease, *customerFromLease, *selectedLease, this);
-
-    // setup changing some values
-    editLeaseDialog->setModal(true);
-    editLeaseDialog->convertToCloseDialog();
 
     // get enddatetime of the lease
     QDateTime startDateTime = QDateTime::fromString(selectedLease->getStartDate(), Qt::ISODate);
     QDateTime endDateTime = startDateTime.addDays(selectedLease->getDaysOfLease());
     int daysSinceStart = startDateTime.daysTo(QDateTime::currentDateTime());
 
-    // check if enddatetime is before current datetime
+    // check if enddatetime is before current datetime or after
     if (endDateTime < QDateTime::currentDateTime()) {
         qDebug() << "The end date of the lease is before the current date";
 
@@ -579,12 +575,40 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
         qDebug() << "The end date of the lease is today";
     }
 
+    // creating the lease dialog and converting to close
+    EditLeaseDialog* editLeaseDialog = new EditLeaseDialog(*carFromLease, *customerFromLease, *selectedLease, this);
+
+    // setup changing some values
+    editLeaseDialog->setModal(true);
+    editLeaseDialog->convertToCloseDialog();
+
     if (editLeaseDialog->exec() == QDialog::Accepted) {
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, "Close Lease", "Are you sure you want to close this lease? And has the customer returned the car?",
                                       QMessageBox::Yes|QMessageBox::No);
         if (reply == QMessageBox::Yes) {
             LeaseManager::closeLease(*selectedLease, carsRef, customersRef, jsonParser);
+
+            QMessageBox::StandardButton replyKmDriven;
+            replyKmDriven = QMessageBox::question(this, "Close Lease", "Do you want to update the km driven for the car?",
+                                      QMessageBox::Yes|QMessageBox::No);
+            if (replyKmDriven == QMessageBox::Yes) {
+                CarDialog* carDialog = new CarDialog(this);
+                carDialog->setModal(true);
+                carDialog->setWindowTitle("Update km driven for car");
+
+                // setup changing some values
+                carDialog->convertToCloseDialog();
+
+                // populate with selectedCar info
+                carDialog->populateFields(*carFromLease);
+
+                if (carDialog->exec() == QDialog::Accepted) {
+                    int newKmDriven = carDialog->getKmDriven();
+                    carFromLease->setKmDriven(newKmDriven);
+                    CarManager::editCarAllInstances(carFromLease, *carFromLease, jsonParser);
+                }
+            }
 
             // Update the tables
             updateLeaseTable();

@@ -8,7 +8,7 @@
             "carType": "hatchback",
             "fuelType": "electric",
             "year": 2020,
-            "kmDriven": 10000,
+            "kmDriven": 11000,
             "price": 20000,
             "seats": 4,
             "availability": true
@@ -63,7 +63,7 @@
             "kmDriven": 1000,
             "price": 40000,
             "seats": 2,
-            "availability": false
+            "availability": true
         }
     ],
     "customers": [
@@ -98,7 +98,6 @@
             "age": 154,
             "name": "frode",
             "cars": [
-                "car5",
                 "car2"
             ]
         }
@@ -129,10 +128,10 @@
             "regNr": "car5",
             "customerId": "234",
             "startDate": "2024-05-24T16:02:17",
-            "daysOfLease": 2,
+            "daysOfLease": 1,
             "negotiatedPrice": 39000,
-            "totalPrice": 78000,
-            "open": true
+            "totalPrice": 39000,
+            "open": false
         },
         {
             "leaseId": 6,
@@ -143,6 +142,16 @@
             "negotiatedPrice": 100000,
             "totalPrice": 400000,
             "open": true
+        },
+        {
+            "leaseId": 7,
+            "regNr": "car1",
+            "customerId": "123",
+            "startDate": "2024-05-23T18:32:03",
+            "daysOfLease": 1,
+            "negotiatedPrice": 40000,
+            "totalPrice": 40000,
+            "open": false
         }
     ]
 }
