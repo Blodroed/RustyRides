@@ -9,6 +9,11 @@
 #include <QString>
 
 using namespace rapidjson;
+
+/**
+ * @brief Constructor for the JsonParser class.
+ * @param filepath The path to the JSON file to be parsed.
+ */
 JsonParser::JsonParser(const std::string &filepath) {
     this->filepath = filepath;
 }
@@ -17,10 +22,6 @@ JsonParser::~JsonParser() = default;
 
 
 void JsonParser::setFilepath(const std::string &newFilepath) {
-    /* Set the filepath for the json file
-     * the filepath is set upon construction of the class,
-     * but with this function you can change it with the filepath in the argument
-     */
     this->filepath = newFilepath;
 }
 
@@ -50,8 +51,8 @@ void JsonParser::importCarsFromJson(std::vector<Car> &cars) {
 
     // converting the ifstream to IStreamWrapper
     // then reads it into memory for JSON document object
-    rapidjson::IStreamWrapper isw(file);
-    rapidjson::Document doc;
+    IStreamWrapper isw(file);
+    Document doc;
     doc.ParseStream(isw);
     file.close();
 
@@ -94,8 +95,8 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
 
     // converting the ifstream to IStreamWrapper
     // then reads it into memory for JSON document object
-    rapidjson::IStreamWrapper isw(file);
-    rapidjson::Document doc;
+    IStreamWrapper isw(file);
+    Document doc;
     doc.ParseStream(isw);
     file.close();
 
@@ -103,15 +104,15 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     auto &carsJson = doc["cars"];
 
     // creating a new JSON object for the car
-    rapidjson::Value carJson(rapidjson::kObjectType);
+    Value carJson(kObjectType);
     auto &allocator = doc.GetAllocator();
 
-    carJson.AddMember("regNr", rapidjson::Value((car.getRegNr().toStdString().c_str()), allocator).Move(), allocator);
-    carJson.AddMember("make", rapidjson::Value(car.getMake().toStdString().c_str(), allocator).Move(), allocator);
-    carJson.AddMember("model", rapidjson::Value(car.getModel().toStdString().c_str(), allocator).Move(), allocator);
-    carJson.AddMember("color", rapidjson::Value(car.getColor().toStdString().c_str(), allocator).Move(), allocator);
-    carJson.AddMember("carType", rapidjson::Value(car.getCarType().toStdString().c_str(), allocator).Move(), allocator);
-    carJson.AddMember("fuelType", rapidjson::Value(car.getFuelType().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("regNr", Value((car.getRegNr().toStdString().c_str()), allocator).Move(), allocator);
+    carJson.AddMember("make", Value(car.getMake().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("model", Value(car.getModel().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("color", Value(car.getColor().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("carType", Value(car.getCarType().toStdString().c_str(), allocator).Move(), allocator);
+    carJson.AddMember("fuelType", Value(car.getFuelType().toStdString().c_str(), allocator).Move(), allocator);
     carJson.AddMember("year", car.getYear(), allocator);
     carJson.AddMember("price", car.getPrice(), allocator);
     carJson.AddMember("kmDriven", car.getKmDriven(), allocator);
@@ -122,8 +123,8 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
 
     // writing the JSON object to the file
     std::ofstream ofstream(filepath);
-    rapidjson::OStreamWrapper osw(ofstream);
-    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    OStreamWrapper osw(ofstream);
+    PrettyWriter<OStreamWrapper> writer(osw);
     doc.Accept(writer);
 }
 
@@ -174,11 +175,19 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
 
     // writing the JSON object to the file
     std::ofstream ofstream(filepath);
-    rapidjson::OStreamWrapper osw(ofstream);
-    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    OStreamWrapper osw(ofstream);
+    PrettyWriter<OStreamWrapper> writer(osw);
     doc.Accept(writer);
  }
 
+ /**
+  * @brief Deletes a single car from the JSON file.
+  *
+  * This function deletes a single car from the JSON file.
+  * The car is identified by the registration number.
+  *
+  * @param car
+  */
  void JsonParser::deleteSingleCarFromJson(const Car &car) {
     // much needed variables
     std::string targetRegNr = car.getRegNr().toStdString();   // need this for some reason to work with comparisons
@@ -195,9 +204,11 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
     doc.ParseStream(isw);
     file.close();
 
-    /*
-     * TODO: we should also check if the car is available before deleting it
-     */
+    // double check if the car is available
+    if (!car.getAvailable()) {
+        std::cout << "Error: Car is not available, cannot delete" << std::endl;
+        return;
+    }
 
      // Iterate over the cars array
      for (Value::ValueIterator itr = doc["cars"].Begin(); itr != doc["cars"].End();) {
@@ -214,8 +225,8 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
 
     // writing to the file
     std::ofstream ofstream(filepath);
-    rapidjson::OStreamWrapper osw(ofstream);
-    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    OStreamWrapper osw(ofstream);
+    PrettyWriter<OStreamWrapper> writer(osw);
     doc.Accept(writer);
  }
 /** @} */ // end of CarFunctions group
@@ -228,6 +239,11 @@ void JsonParser::exportSingleCarToJson(const Car &car) {
  * @{
  */
 
+/**
+ * @brief Imports customers from a JSON file and adds them to the provided vector.
+ *
+ * @param customers
+ */
 void JsonParser::importCustomersFromJson(std::vector<Customer> &customers) {
     std::ifstream file(filepath); // filepath should be set on construction of class
     if (!file.is_open()) {
@@ -237,8 +253,8 @@ void JsonParser::importCustomersFromJson(std::vector<Customer> &customers) {
 
     // converting the ifstream to IStreamWrapper
     // then reads it into memory for JSON document object
-    rapidjson::IStreamWrapper isw(file);
-    rapidjson::Document doc;
+    IStreamWrapper isw(file);
+    Document doc;
     doc.ParseStream(isw);
     file.close();
 
@@ -273,6 +289,14 @@ void JsonParser::importCustomersFromJson(std::vector<Customer> &customers) {
     }
 }
 
+/**
+ * @brief Exports a single customer to a JSON file.
+ *
+ * This function exports a single customer to the JSON file.
+ * The customer is added to the end of the customers array in the JSON file.
+ *
+ * @param customer A reference to a Customer object to be exported to the JSON file.
+ */
 void JsonParser::exportSingleCustomerToJson(const Customer &customer) {
     std::ifstream file(filepath); // filepath should be set on construction of class
     if (!file.is_open()) {
@@ -282,8 +306,8 @@ void JsonParser::exportSingleCustomerToJson(const Customer &customer) {
 
     // converting the ifstream to IStreamWrapper
     // then reads it into memory for JSON document object
-    rapidjson::IStreamWrapper isw(file);
-    rapidjson::Document doc;
+    IStreamWrapper isw(file);
+    Document doc;
     doc.ParseStream(isw);
     file.close();
 
@@ -291,30 +315,39 @@ void JsonParser::exportSingleCustomerToJson(const Customer &customer) {
     auto &customersJson = doc["customers"];
 
     // creating a new JSON object for the car
-    rapidjson::Value customerJson(rapidjson::kObjectType);
+    Value customerJson(kObjectType);
     auto &allocator = doc.GetAllocator();
 
-    customerJson.AddMember("personNummer", rapidjson::Value(customer.getPersonNr().toStdString().c_str(), allocator).Move(), allocator);
-    customerJson.AddMember("email", rapidjson::Value(customer.getEmail().toStdString().c_str(), allocator).Move(), allocator);
-    customerJson.AddMember("phoneNumber", rapidjson::Value(customer.getPhone().toStdString().c_str(), allocator).Move(), allocator);
+    customerJson.AddMember("personNummer", Value(customer.getPersonNr().toStdString().c_str(), allocator).Move(), allocator);
+    customerJson.AddMember("email", Value(customer.getEmail().toStdString().c_str(), allocator).Move(), allocator);
+    customerJson.AddMember("phoneNumber", Value(customer.getPhone().toStdString().c_str(), allocator).Move(), allocator);
     customerJson.AddMember("age", customer.getAge(), allocator);
-    customerJson.AddMember("name", rapidjson::Value(customer.getName().toStdString().c_str(), allocator).Move(), allocator);
+    customerJson.AddMember("name", Value(customer.getName().toStdString().c_str(), allocator).Move(), allocator);
 
     // adding the cars array to the customer object
-    customerJson.AddMember("cars", rapidjson::Value(rapidjson::kArrayType), allocator);
+    customerJson.AddMember("cars", Value(rapidjson::kArrayType), allocator);
     for (const auto &car : customer.getAssignedCarsRegNr()) {
-        customerJson["cars"].PushBack(rapidjson::Value(car.toStdString().c_str(), allocator).Move(), allocator);
+        customerJson["cars"].PushBack(Value(car.toStdString().c_str(), allocator).Move(), allocator);
     }
 
     doc["customers"].PushBack(customerJson, allocator);
 
     // writing the JSON object to the file
     std::ofstream ofstream(filepath);
-    rapidjson::OStreamWrapper osw(ofstream);
-    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    OStreamWrapper osw(ofstream);
+    PrettyWriter<OStreamWrapper> writer(osw);
     doc.Accept(writer);
 }
 
+/**
+ * @brief Edits a single customer in the JSON file.
+ *
+ * This function edits a single customer in the JSON file.
+ * The customer is identified by the personnummer.
+ *
+ *
+ * @param customer
+ */
 void JsonParser::editSingleCustomerToJson(const Customer &customer) {
     // much needed variables
     std::string targetPersonNr = customer.getPersonNr().toStdString();   // need this for some reason to work with comparisons
@@ -344,7 +377,7 @@ void JsonParser::editSingleCustomerToJson(const Customer &customer) {
             // update the cars array
             customerJson["cars"].Clear();
             for (const auto &car: customer.getAssignedCarsRegNr()) {
-                customerJson["cars"].PushBack(rapidjson::Value(car.toStdString().c_str(), allocator).Move(), allocator);
+                customerJson["cars"].PushBack(Value(car.toStdString().c_str(), allocator).Move(), allocator);
             }
             break; // Once found and updated, exit the loop
         }
@@ -352,11 +385,19 @@ void JsonParser::editSingleCustomerToJson(const Customer &customer) {
 
     // writing the JSON object to the file
     std::ofstream ofstream(filepath);
-    rapidjson::OStreamWrapper osw(ofstream);
-    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    OStreamWrapper osw(ofstream);
+    PrettyWriter<OStreamWrapper> writer(osw);
     doc.Accept(writer);
 }
 
+/**
+ * @brief Deletes a single customer from the JSON file.
+ *
+ * This function deletes a single customer from the JSON file.
+ * The customer is identified by the personnummer.
+ *
+ * @param customer
+ */
 void JsonParser::deleteSingleCustomerFromJson(const Customer &customer) {
     // target personnummer
     std::string targetPersonNr = customer.getPersonNr().toStdString();
@@ -387,8 +428,8 @@ void JsonParser::deleteSingleCustomerFromJson(const Customer &customer) {
 
     // writing to the file
     std::ofstream ofstream(filepath);
-    rapidjson::OStreamWrapper osw(ofstream);
-    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    OStreamWrapper osw(ofstream);
+    PrettyWriter<OStreamWrapper> writer(osw);
     doc.Accept(writer);
 }
 /** @} */ // end of CustomerFunctions group
@@ -401,6 +442,10 @@ void JsonParser::deleteSingleCustomerFromJson(const Customer &customer) {
  * @{
  */
 
+/**
+ * @brief Imports leases from a JSON file and adds them to the provided vector.
+ * @param leases
+ */
 void JsonParser::importLeasesFromJson(std::vector<Lease> &leases) {
     std::ifstream file(filepath); // filepath should be set on construction of class
     if (!file.is_open()) {
@@ -438,6 +483,14 @@ void JsonParser::importLeasesFromJson(std::vector<Lease> &leases) {
     }
 }
 
+/**
+ * @brief Exports a single lease to a JSON file.
+ *
+ * This function exports a single lease to the JSON file.
+ * The lease is added to the end of the leases array in the JSON file.
+ *
+ * @param lease A reference to a Lease object to be exported to the JSON file.
+ */
 void JsonParser::exportSingleLeaseToJson(const Lease &lease) {
     std::ifstream file(filepath); // filepath should be set on construction of class
     if (!file.is_open()) {
@@ -454,13 +507,13 @@ void JsonParser::exportSingleLeaseToJson(const Lease &lease) {
     // accessing the leases array directly
     auto &leasesJson = doc["leases"];
 
-    rapidjson::Value leaseJson(rapidjson::kObjectType);
+    Value leaseJson(kObjectType);
     auto &allocator = doc.GetAllocator();
 
     leaseJson.AddMember("leaseId", lease.getleaseId(), allocator);
-    leaseJson.AddMember("regNr", rapidjson::Value(lease.getRegNr().toStdString().c_str(), allocator).Move(), allocator);
-    leaseJson.AddMember("customerId", rapidjson::Value(lease.getPersonNr().toStdString().c_str(), allocator).Move(), allocator);
-    leaseJson.AddMember("startDate", rapidjson::Value(lease.getStartDate().toStdString().c_str(), allocator).Move(), allocator);
+    leaseJson.AddMember("regNr", Value(lease.getRegNr().toStdString().c_str(), allocator).Move(), allocator);
+    leaseJson.AddMember("customerId", Value(lease.getPersonNr().toStdString().c_str(), allocator).Move(), allocator);
+    leaseJson.AddMember("startDate", Value(lease.getStartDate().toStdString().c_str(), allocator).Move(), allocator);
     leaseJson.AddMember("daysOfLease", lease.getDaysOfLease(), allocator);
     leaseJson.AddMember("negotiatedPrice", lease.getNegotiatedPrice(), allocator);
     leaseJson.AddMember("totalPrice", lease.getTotalPrice(), allocator);
@@ -470,11 +523,19 @@ void JsonParser::exportSingleLeaseToJson(const Lease &lease) {
 
     // writing the JSON object to the file
     std::ofstream ofstream(filepath);
-    rapidjson::OStreamWrapper osw(ofstream);
-    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    OStreamWrapper osw(ofstream);
+    PrettyWriter<OStreamWrapper> writer(osw);
     doc.Accept(writer);
 }
 
+/**
+ * @brief Edits a single lease in the JSON file.
+ *
+ * This function edits a single lease in the JSON file.
+ * The lease is identified by the leaseId.
+ *
+ * @param lease A reference to a Lease object to be edited in the JSON file.
+ */
 void JsonParser::editSingleLeaseToJson(const Lease &lease) {
     // much needed variables
     int targetLeaseId = lease.getleaseId();   // need this for some reason to work with comparisons
@@ -510,11 +571,19 @@ void JsonParser::editSingleLeaseToJson(const Lease &lease) {
 
     // writing the JSON object to the file
     std::ofstream ofstream(filepath);
-    rapidjson::OStreamWrapper osw(ofstream);
-    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    OStreamWrapper osw(ofstream);
+    PrettyWriter<OStreamWrapper> writer(osw);
     doc.Accept(writer);
 }
 
+/**
+ * @brief Deletes a single lease from the JSON file.
+ *
+ * This function deletes a single lease from the JSON file.
+ * The lease is identified by the leaseId.
+ *
+ * @param lease A reference to a Lease object to be deleted from the JSON file.
+ */
 void JsonParser::deleteSingleLeaseFromJson(const Lease &lease) {
     // target leaseId
     int targetLeaseId = lease.getleaseId();
@@ -544,8 +613,8 @@ void JsonParser::deleteSingleLeaseFromJson(const Lease &lease) {
 
     // writing to the file
     std::ofstream ofstream(filepath);
-    rapidjson::OStreamWrapper osw(ofstream);
-    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    OStreamWrapper osw(ofstream);
+    PrettyWriter<OStreamWrapper> writer(osw);
     doc.Accept(writer);
 }
 
@@ -559,6 +628,10 @@ void JsonParser::deleteSingleLeaseFromJson(const Lease &lease) {
  * @{
  */
 
+/**
+ * @brief Exports the entire database to a JSON file.
+ * @param backupPath
+ */
 void JsonParser::fullBackup(const std::string &backupPath) {
     // open the source database
     std::ifstream srcFile(filepath, std::ios::binary);
@@ -586,6 +659,17 @@ void JsonParser::fullBackup(const std::string &backupPath) {
     destFile.close();
 }
 
+/**
+ * @brief Imports the entire database from a JSON file.
+ *
+ * This function imports the entire database from a JSON file.
+ * The existing database is overwritten.
+ *
+ * @param cars A reference to a vector of Car objects.
+ * @param customers A reference to a vector of Customer objects.
+ * @param leases A reference to a vector of Lease objects.
+ * @param importPath The path to the JSON file to import.
+ */
 void JsonParser::fullImport(std::vector<Car> &cars, std::vector<Customer> &customers, std::vector<Lease> &leases,
                             const std::string &importPath) {
     // open the new database file
