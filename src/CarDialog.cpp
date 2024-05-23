@@ -48,4 +48,4 @@ bool CarDialog::getAvailable() const {
 }
 
 // Get the edit field for RegNr
-QLineEdit* CarDialog::getRegNrLineEdit() const { return ui->MakeLineEdit; }
+QLineEdit* CarDialog::getRegNrLineEdit() const { return ui->RegNrLineEdit; }

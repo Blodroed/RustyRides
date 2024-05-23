@@ -28,24 +28,28 @@ MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers,
     this->setFixedSize(this->size());
     this->setWindowTitle("Car Rental System");
 
-    // Table view of the customers
+    // ---- Table view of the customers ----
     ui->CustTable->setColumnCount(6);
     QStringList headers = {"Personal Number", "Email", "Phone", "Age", "Name", "Assigned Cars"};
     ui->CustTable->setHorizontalHeaderLabels(headers);
     ui->CustTable->horizontalHeader()->setStretchLastSection(false);
-
     // This will format the headers to fill the available white space
     for (int i = 0; i < ui->CustTable->horizontalHeader()->count(); ++i) {
         ui->CustTable->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
     }
 
-    // Table view of the cars
+    // ---- Table view of the cars ----
     ui->CarTable->setColumnCount(11);
     QStringList carHeaders = {"Reg Nr", "Make", "Model", "Color", "Car Type", "Fuel Type", "Year", "Price", "Km Driven", "Seats", "Available"};
     ui->CarTable->setHorizontalHeaderLabels(carHeaders);
+    ui->CarTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->CarTable->horizontalHeader()->setStretchLastSection(false);
+    // format the headers to fill the available white space
+    for (int i = 0; i < ui->CarTable->horizontalHeader()->count(); ++i) {
+        ui->CarTable->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Stretch);
+    }
 
-    // Table view of the leases
+    // ---- Table view of the leases ----
     ui->LeaseTable->setColumnCount(8);
     QStringList leaseHeaders = {"LeaseID", "Reg Nr", "Person Nr", "Days of Lease", "Negotiated Price", "Total Price", "StartDate", "Open or Closed"};
     ui->LeaseTable->setHorizontalHeaderLabels(leaseHeaders);
@@ -300,23 +304,33 @@ void MainWindow::on_EdtCarBtn_clicked() {
     if (currentRow < 0) {
         qDebug() << "No car selected for editing";
         return;
+    } else if (ui->CarTable->item(currentRow, 10)->text() == "No") {
+        qDebug() << "Cannot edit a car that is not available";
+
+        // display error message box to client
+        QMessageBox::warning(this, "Error", "Cannot edit a car that is not available");
+
+        return;
     }
 
-    Car& selectedCar = carsRef[currentRow];
+    // select car with regNr
+    QString regNr = ui->CarTable->item(currentRow, 0)->text();
+    Car* selectedCar = CarManager::searchForCarWithRegNr(carsRef, regNr);
+
     CarDialog* carDialog = new CarDialog(this);
 
     // Populate dialog with car details
-    carDialog->setRegNr(selectedCar.getRegNr());
-    carDialog->setMake(selectedCar.getMake());
-    carDialog->setModel(selectedCar.getModel());
-    carDialog->setColor(selectedCar.getColor());
-    carDialog->setCarType(selectedCar.getCarType());
-    carDialog->setFuelType(selectedCar.getFuelType());
-    carDialog->setYear(selectedCar.getYear());
-    carDialog->setPrice(selectedCar.getPrice());
-    carDialog->setKmDriven(selectedCar.getKmDriven());
-    carDialog->setSeats(selectedCar.getSeats());
-    carDialog->setAvailable(selectedCar.getAvailable());
+    carDialog->setRegNr(selectedCar->getRegNr());
+    carDialog->setMake(selectedCar->getMake());
+    carDialog->setModel(selectedCar->getModel());
+    carDialog->setColor(selectedCar->getColor());
+    carDialog->setCarType(selectedCar->getCarType());
+    carDialog->setFuelType(selectedCar->getFuelType());
+    carDialog->setYear(selectedCar->getYear());
+    carDialog->setPrice(selectedCar->getPrice());
+    carDialog->setKmDriven(selectedCar->getKmDriven());
+    carDialog->setSeats(selectedCar->getSeats());
+    carDialog->setAvailable(selectedCar->getAvailable());
 
     carDialog->setModal(true);
 
@@ -338,7 +352,7 @@ void MainWindow::on_EdtCarBtn_clicked() {
                        carDialog->getAvailable());
 
         // Call the editCar function
-        CarManager::editCarAllInstances(&selectedCar, updatedCar, jsonParser);
+        CarManager::editCarAllInstances(selectedCar, updatedCar, jsonParser);
 
         // Update the table to reflect the changes
         updateCarTable();
@@ -353,11 +367,22 @@ void MainWindow::on_DelCarBtn_clicked() {
     int currentRow = ui->CarTable->currentRow();
     if (currentRow < 0) {
         return;
+    } else if (ui->CarTable->item(currentRow, 10)->text() == "No") {
+        qDebug() << "Cannot delete a car that is not available";
+
+        // display error message box to client
+        QMessageBox::warning(this, "Error", "Cannot delete a car that is not available");
+
+        return;
     }
+
+    // select car with regNr
+    QString regNr = ui->CarTable->item(currentRow, 0)->text();
+    Car* selectedCar = CarManager::searchForCarWithRegNr(carsRef, regNr);
 
     AreYouSureDialog confirmDialog(this);
     if (confirmDialog.exec() == QDialog::Accepted) {
-        CarManager::deleteCar(carsRef, &carsRef[currentRow], jsonParser);
+        CarManager::deleteCar(carsRef, selectedCar, jsonParser);
         updateCarTable();
     }
 }
