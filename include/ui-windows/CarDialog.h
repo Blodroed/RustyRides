@@ -1,7 +1,3 @@
-//
-// Created by Marcus on 18.05.2024.
-//
-
 #ifndef HELLHUB_CARDIALOG_H
 #define HELLHUB_CARDIALOG_H
 

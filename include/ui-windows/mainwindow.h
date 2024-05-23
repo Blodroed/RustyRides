@@ -51,6 +51,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    
+    // update tables
     void updateCustomerTable();
     void updateCarTable();
     void updateLeaseTable();
@@ -60,6 +62,7 @@ private:
     std::vector<Car>& carsRef;
     std::vector<Lease>& leasesRef;
 
+    // refference to the json parserq
     JsonParser& jsonParser;
 };
 

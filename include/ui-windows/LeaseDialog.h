@@ -57,9 +57,6 @@ private:
     Car selectedCar;
     Customer selectedCustomer;
 
-    // lease class values
-    //Lease newLease;
-
     // extra variables for lease info getters
     int daysOfLease;
 };

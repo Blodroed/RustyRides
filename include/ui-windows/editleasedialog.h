@@ -34,6 +34,7 @@ private slots:
     void on_leaseFromDateTimeEdit_dateChanged(const QDateTime &date);
     void on_leaseUntilDateTimeEdit_dateChanged(const QDateTime &date);
     void on_NegotiatedPriceBox_valueChanged(const int newValue);
+    
 private:
     // update tables
     void updateCustomerInfoTable();
