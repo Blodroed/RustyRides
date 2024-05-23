@@ -7,7 +7,17 @@
 
 #include "../include/Customer.h"
 
+// default constructor
+Customer::Customer() {
+    this->personNr = "";
+    this->email = "";
+    this->phone = "";
+    this->age = 0;
+    this->name = "";
+    this->assignedCarsRegNr = {};
+}
 
+// constructor
 Customer::Customer(const QString &personNr, const QString &email, const QString &phone, int age, const QString &name, const std::vector<QString> &assignedCarsRegNr)
 {
     this->personNr = personNr;
@@ -52,3 +62,5 @@ QString Customer::getPhone() const { return phone; }
 int Customer::getAge() const { return age; }
 QString Customer::getName() const { return name; }
 std::vector<QString> Customer::getAssignedCarsRegNr() const { return assignedCarsRegNr; }
+
+

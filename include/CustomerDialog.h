@@ -40,7 +40,6 @@ public:
 private:
     Ui::CustomerDialog *ui;
     QLineEdit* personalNumberLineEdit;
-signals:
 };
 
 #endif //HELLHUB_CUSTOMERDIALOG_H

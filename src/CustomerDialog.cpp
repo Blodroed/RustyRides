@@ -16,7 +16,7 @@ CustomerDialog::~CustomerDialog()
     delete ui;
 }
 
-// In CustomerDialog.cpp
+// Setters for ui elements
 void CustomerDialog::setPersonNr(const QString& personNr) { ui->personalNumberLineEdit->setText(personNr); }
 void CustomerDialog::setEmail(const QString& email) { ui->emailLineEdit->setText(email); }
 void CustomerDialog::setPhone(const QString& phone) { ui->phoneLineEdit->setText(phone); }
