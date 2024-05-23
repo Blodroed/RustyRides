@@ -1,16 +1,10 @@
 #include "include/ui-windows/mainwindow.h"
 #include "include/Car.h"
-#include "include/CarManager.h"
 #include "include/Customer.h"
-#include "include/CustomerManager.h"
 #include "include/Lease.h"
-#include "include/LeaseManager.h"
 #include "include/JsonParser.h"
-// tests
 
 #include <vector>
-#include <iostream>
-
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -20,9 +14,6 @@ int main(int argc, char *argv[])
     std::vector<Customer> customers;
     std::vector<Lease> leases;
 
-    // init customer manager
-
-    std::cout << "C++ version: " << __cplusplus << std::endl;
     // init json parser with database path
     JsonParser jsonParser("../database/database-test.json");
     jsonParser.importCarsFromJson(cars);
