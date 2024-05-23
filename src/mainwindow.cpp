@@ -14,6 +14,7 @@
 #include <QTableWidgetItem>
 #include <QDateTime>
 #include <QFileDialog>
+#include <QStandardPaths>
 
 MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, std::vector<Car>& cars, std::vector<Lease>& leases, QWidget *parent)
         : QMainWindow(parent)
@@ -675,8 +676,11 @@ void MainWindow::on_DelLeaseBtn_clicked() {
 }
 
 void MainWindow::importAction() {
+    // Set the default path to the desktop
+    QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+
     // Open a file dialog and get the selected file path
-    QString filePath = QFileDialog::getOpenFileName(this, tr("Open JSON File"), "", tr("JSON Files (*.json)"));
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open JSON File"), defaultPath, tr("JSON Files (*.json)"));
 
     // Check if a file was selected
     if (!filePath.isEmpty()) {
@@ -696,8 +700,11 @@ void MainWindow::importAction() {
 }
 
 void MainWindow::exportAction() {
+    // Set the default path to the desktop
+    QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+
     // Open a file dialog and get the selected file path
-    QString filePath = QFileDialog::getSaveFileName(this, tr("Save JSON File"), "", tr("JSON Files (*.json)"));
+    QString filePath = QFileDialog::getSaveFileName(this, tr("Save JSON File"), defaultPath, tr("JSON Files (*.json)"));
 
     // Check if a file was selected
     if (!filePath.isEmpty()) {
