@@ -1,9 +1,5 @@
-//
-// Created by Marcus on 14.05.2024.
-//
-
-#include "../include/areyousuredialog.h"
-#include "ui_areyousuredialog.h"
+#include "../../include/ui-windows/areyousuredialog.h"
+#include "../ui-design-files/ui_areyousuredialog.h"
 
 AreYouSureDialog::AreYouSureDialog(QWidget *parent)
     : QDialog(parent)

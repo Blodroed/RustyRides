@@ -1,11 +1,9 @@
-//
-// Created by Marcus on 10.05.2024.
-//
-
 #include "../include/customermanager.h"
 #include <QDebug>
 #include <iostream>
 
+// ==== Customer manager functions ====
+// creating a new customer
 void CustomerManager::createCustomer(std::vector<Customer> &customers, const Customer &newCustomer, JsonParser &jsonParser) {
     // export the newly created customer to the json file
     jsonParser.exportSingleCustomerToJson(newCustomer);
@@ -14,37 +12,8 @@ void CustomerManager::createCustomer(std::vector<Customer> &customers, const Cus
     customers.push_back(newCustomer);
 }
 
-void CustomerManager::displayCustomer(const Customer &customer) {
-    // displaying the customer
-    std::cout << "----------------------------------------------------" << std::endl;
-    std::cout << "PersonNr: " << customer.getPersonNr().toStdString()
-    << ", Email: " << customer.getEmail().toStdString()
-    << ", Phone: " << customer.getPhone().toStdString()
-    << ", Age: " << customer.getAge()
-    << ", Name: " << customer.getName().toStdString() << std::endl;
-    std::cout << "Assigned cars: ";
-    for (const auto &car : customer.getAssignedCarsRegNr()) {
-        std::cout << car.toStdString() << ", ";
-    }
-    std::cout << std::endl;
-    std::cout << "----------------------------------------------------" << std::endl;
-}
-
-void CustomerManager::displayAllCustomers(const std::vector<Customer> &customers) {
-    // displaying all customers
-    std::cout << "============ All customers ===========" << std::endl;
-    for (const auto &customer : customers) {
-        displayCustomer(customer);
-    }
-    std::cout << "======================================" << std::endl;
-}
-
+// deleting a customer
 void CustomerManager::deleteCustomer(std::vector<Customer> &customers, Customer *customer, JsonParser &jsonParser) {
-    if (customer == nullptr) {
-        std::cout << "Customer not found";
-        return;
-    }
-
     if (!customer->getAssignedCarsRegNr().empty()) {
         // this can be changed to execute a dialog in the future
         std::cout << "Customer has assigned cars. Please close lease agreements before deleting the customer";
@@ -63,6 +32,7 @@ void CustomerManager::deleteCustomer(std::vector<Customer> &customers, Customer 
     }
 }
 
+// editing a customer
 void CustomerManager::editCustomerObject(Customer &customer, Customer &editedCustomer) {
     // editing the customer object
     if (customer.getPersonNr() == editedCustomer.getPersonNr()) {
@@ -72,6 +42,7 @@ void CustomerManager::editCustomerObject(Customer &customer, Customer &editedCus
     }
 }
 
+// this function makes sure it edits in both the program and the database
 void CustomerManager::editCustomerAllInstances(Customer &customer, Customer &editedCustomer, JsonParser &jsonParser) {
     // editing the customer object
     editCustomerObject(customer, editedCustomer);
@@ -80,6 +51,7 @@ void CustomerManager::editCustomerAllInstances(Customer &customer, Customer &edi
     jsonParser.editSingleCustomerToJson(editedCustomer);
 }
 
+// Function searches for a customer with a personNr and returns a pointer to the customer
 Customer* CustomerManager::searchForCustomerWithPersonNr(std::vector<Customer> &customers, const QString &personNr) {
     // returns nullpointer if the customer is not found
     for (auto &customer : customers) {
@@ -91,6 +63,7 @@ Customer* CustomerManager::searchForCustomerWithPersonNr(std::vector<Customer> &
     return nullptr;
 }
 
+// Function searches for a customer with several parameters and returns a vector of pointers to the found customers
 std::vector<const Customer*> CustomerManager::searchForCustomerWithSeveralParameters(const std::vector<Customer> &customers,
                                                                            Customer &searchCustomer) {
     // creating a pointer vector to found customers
@@ -120,6 +93,7 @@ void CustomerManager::getCarsFromCustomerAsString(const Customer &customer, QStr
     }
 }
 
+// === Car assignment functions ===
 void CustomerManager::assignCarToCustomer(Customer &customer, const Car &car, JsonParser &jsonParser) {
     customer.assignCar(car.getRegNr());
     jsonParser.editSingleCustomerToJson(customer);
@@ -128,4 +102,30 @@ void CustomerManager::assignCarToCustomer(Customer &customer, const Car &car, Js
 void CustomerManager::removeCarFromCustomer(Customer &customer, const Car &car, JsonParser &jsonParser) {
     customer.removeCar(car.getRegNr());
     jsonParser.editSingleCustomerToJson(customer);
+}
+
+// ==== CLI related output functions ====
+void CustomerManager::displayCustomer(const Customer &customer) {
+    // displaying the customer
+    std::cout << "----------------------------------------------------" << std::endl;
+    std::cout << "PersonNr: " << customer.getPersonNr().toStdString()
+              << ", Email: " << customer.getEmail().toStdString()
+              << ", Phone: " << customer.getPhone().toStdString()
+              << ", Age: " << customer.getAge()
+              << ", Name: " << customer.getName().toStdString() << std::endl;
+    std::cout << "Assigned cars: ";
+    for (const auto &car : customer.getAssignedCarsRegNr()) {
+        std::cout << car.toStdString() << ", ";
+    }
+    std::cout << std::endl;
+    std::cout << "----------------------------------------------------" << std::endl;
+}
+
+void CustomerManager::displayAllCustomers(const std::vector<Customer> &customers) {
+    // displaying all customers
+    std::cout << "============ All customers ===========" << std::endl;
+    for (const auto &customer : customers) {
+        displayCustomer(customer);
+    }
+    std::cout << "======================================" << std::endl;
 }

@@ -5,9 +5,9 @@
 #ifndef HELLHUB_LEASEDIALOG_H
 #define HELLHUB_LEASEDIALOG_H
 
-#include "CarManager.h"
-#include "CustomerManager.h"
-#include "LeaseManager.h"
+#include "../CarManager.h"
+#include "../CustomerManager.h"
+#include "../LeaseManager.h"
 
 #include <vector>
 
@@ -56,9 +56,6 @@ private:
     // Selected car and customer
     Car selectedCar;
     Customer selectedCustomer;
-
-    // lease class values
-    //Lease newLease;
 
     // extra variables for lease info getters
     int daysOfLease;

@@ -1,10 +1,10 @@
 #ifndef EDITLEASEDIALOG_H
 #define EDITLEASEDIALOG_H
 
-#include "LeaseManager.h"
-#include "JsonParser.h"
-#include "CarManager.h"
-#include "CustomerManager.h"
+#include "../LeaseManager.h"
+#include "../JsonParser.h"
+#include "../CarManager.h"
+#include "../CustomerManager.h"
 
 #include <QDialog>
 #include <vector>
@@ -34,6 +34,7 @@ private slots:
     void on_leaseFromDateTimeEdit_dateChanged(const QDateTime &date);
     void on_leaseUntilDateTimeEdit_dateChanged(const QDateTime &date);
     void on_NegotiatedPriceBox_valueChanged(const int newValue);
+    
 private:
     // update tables
     void updateCustomerInfoTable();

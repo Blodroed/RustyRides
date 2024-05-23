@@ -44,6 +44,7 @@ public:
     int getKmDriven() const;
     int getSeats() const;
     bool getAvailable() const;
+    
 private:
     QString RegNr;
     QString color;

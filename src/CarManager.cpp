@@ -1,7 +1,3 @@
-//
-// Created by Albert on 22.04.2024.
-//
-
 #include "../include/CarManager.h"
 #include "../include/Car.h"
 #include "../include/JsonParser.h"
@@ -9,36 +5,13 @@
 #include <vector>
 #include <QDebug>
 
+// === CarManager functions ===
 void CarManager::createCar(std::vector<Car> &cars, const Car &newCar, JsonParser &jsonParser) {
     jsonParser.exportSingleCarToJson(newCar);
     cars.push_back(newCar);
 }
 
-void CarManager::displayCar(const Car &car) {
-    std::cout << "----------------------------" << std::endl;
-    std::cout << "RegNr: " << car.getRegNr().toStdString() << std::endl;
-    std::cout << "Make: " << car.getMake().toStdString() << std::endl;
-    std::cout << "Model: " << car.getModel().toStdString() << std::endl;
-    std::cout << "Color: " << car.getColor().toStdString() << std::endl;
-
-    std::cout << "Car type: " << car.getCarType().toStdString() << std::endl;
-    std::cout << "Fuel type: " << car.getFuelType().toStdString() << std::endl;
-    std::cout << "Year: " << car.getYear() << std::endl;
-    std::cout << "Price: " << car.getPrice() << std::endl;
-    std::cout << "Km driven: " << car.getKmDriven() << std::endl;
-    std::cout << "Seats: " << car.getSeats() << std::endl;
-    std::cout << "Available: " << (car.getAvailable() ? "Yes" : "No") << std::endl;
-    std::cout << "----------------------------" << std::endl;
-}
-
-void CarManager::displayAllCars(const std::vector<Car> &cars) {
-    std::cout << "============ All cars ===========" << std::endl;
-    for (const auto &car : cars) {
-        displayCar(car);
-    }
-    std::cout << "======================================" << std::endl;
-}
-
+// searching for a car object with the registration number
 Car* CarManager::searchForCarWithRegNr(std::vector<Car> &cars, const QString RegNr) {
     for (auto &car : cars) {
         if (car.getRegNr() == RegNr) {
@@ -49,6 +22,7 @@ Car* CarManager::searchForCarWithRegNr(std::vector<Car> &cars, const QString Reg
     return nullptr;
 }
 
+// editing a car object
 void CarManager::editCarObject(Car *car, Car &editedCar) {
     if (car == nullptr) {
         std::cout << "Car pointer is not pointing to anything" << std::endl;
@@ -62,11 +36,13 @@ void CarManager::editCarObject(Car *car, Car &editedCar) {
     }
 }
 
+// editing a car object from the vector and updating the json file
 void CarManager::editCarAllInstances(Car *car, Car &editedCar, JsonParser &jsonParser) {
     editCarObject(car, editedCar);
     jsonParser.editSingleCarToJson(editedCar);
 }
 
+// deleting a car object from the vector and updating the json file
 void CarManager::deleteCar(std::vector<Car> &cars, Car *car, JsonParser &jsonParser) {
     if (car == nullptr) {
         std::cout << "Car not found" << std::endl;
@@ -109,11 +85,28 @@ std::vector<const Car*> CarManager::searchForCarWithSeveralParameters(const std:
     return foundCars;
 }
 
-void CarManager::availabilitySwitch(Car *car) {
-    if (car == nullptr) {
-        std::cout << "Car pointer is not pointing to anything" << std::endl;
-        return;
+// === CLI related functions ===
+void CarManager::displayCar(const Car &car) {
+    std::cout << "----------------------------" << std::endl;
+    std::cout << "RegNr: " << car.getRegNr().toStdString() << std::endl;
+    std::cout << "Make: " << car.getMake().toStdString() << std::endl;
+    std::cout << "Model: " << car.getModel().toStdString() << std::endl;
+    std::cout << "Color: " << car.getColor().toStdString() << std::endl;
+    std::cout << "Car type: " << car.getCarType().toStdString() << std::endl;
+    std::cout << "Fuel type: " << car.getFuelType().toStdString() << std::endl;
+    std::cout << "Year: " << car.getYear() << std::endl;
+    std::cout << "Price: " << car.getPrice() << std::endl;
+    std::cout << "Km driven: " << car.getKmDriven() << std::endl;
+    std::cout << "Seats: " << car.getSeats() << std::endl;
+    std::cout << "Available: " << (car.getAvailable() ? "Yes" : "No") << std::endl;
+    std::cout << "----------------------------" << std::endl;
+}
+
+void CarManager::displayAllCars(const std::vector<Car> &cars) {
+    std::cout << "============ All cars ===========" << std::endl;
+    for (const auto &car : cars) {
+        displayCar(car);
     }
-    car->setAvailable(!car->getAvailable());
+    std::cout << "======================================" << std::endl;
 }
 

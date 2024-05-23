@@ -1,5 +1,5 @@
-#include "../include/editleasedialog.h"
-#include "ui_editleasedialog.h"
+#include "../../include/ui-windows/editleasedialog.h"
+#include "../ui-design-files/ui_editleasedialog.h"
 
 #include <QHeaderView>
 #include <QTableWidgetItem>
@@ -70,6 +70,7 @@ EditLeaseDialog::~EditLeaseDialog()
     delete ui;
 }
 
+// ==== Update helper functions ================
 void EditLeaseDialog::updateCustomerInfoTable() {
     ui->CustomerInfoTable->setRowCount(1);
     ui->CustomerInfoTable->setItem(0, 0, new QTableWidgetItem(customerRef.getName()));
@@ -96,7 +97,7 @@ void EditLeaseDialog::updateCarInfoTable() {
     ui->CarInfoTable->setItem(0, 9, new QTableWidgetItem(QString::number(carRef.getSeats())));
 }
 
-// slots
+// ===== Slots =================================
 void EditLeaseDialog::on_leaseFromDateTimeEdit_dateChanged(const QDateTime &date) {
     newStartDate = date.toString(Qt::ISODate);
     newDaysOfLease = date.daysTo(ui->leaseUntilDateTimeEdit->dateTime());

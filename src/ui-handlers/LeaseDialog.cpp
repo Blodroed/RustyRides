@@ -1,7 +1,7 @@
-#include "../include/LeaseDialog.h"
-#include "../include/CarManager.h"
-#include "../include/CustomerManager.h"
-#include "ui_LeaseDialog.h"
+#include "../../include/ui-windows/LeaseDialog.h"
+#include "../../include/CarManager.h"
+#include "../../include/CustomerManager.h"
+#include "../ui-design-files/ui_LeaseDialog.h"
 
 #include <vector>
 #include <QString>
@@ -74,7 +74,7 @@ void LeaseDialog::on_CustomerPhone_textChanged(const QString& text) {
         }
     }
 
-// the table is then updated with the matching customers
+    // the table is then updated with the matching customers
     ui->FilteredCustomerTable->setRowCount(0);
     for (const auto& customer : filteredCustomers) {
         int row = ui->FilteredCustomerTable->rowCount();

@@ -1,9 +1,7 @@
-//
-// Created by Albert on ??.05.2024.
-//
-
 #ifndef HELLHUB_CUSTOMERDIALOG_H
 #define HELLHUB_CUSTOMERDIALOG_H
+
+#include "../CustomerManager.h"
 
 #include <QDialog>
 #include <QLineEdit>
@@ -34,8 +32,11 @@ public:
     int getAge() const;
     QString getName() const;
 
-    // Get the edit fields
+    // Get the edit field
     QLineEdit* getPersonNrLineEdit() const;
+
+    // populate fields
+    void populateFields(Customer &selectedCustomer);
 
 private:
     Ui::CustomerDialog *ui;

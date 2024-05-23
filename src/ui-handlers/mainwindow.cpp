@@ -1,14 +1,13 @@
-#include "../include/mainwindow.h"
-#include "ui_mainwindow.h"
-#include "../include/CustomerManager.h"
-#include "../include/CustomerDialog.h"
-#include "../include/Car.h"
-#include "../include/CarManager.h"
-#include "../include/CarDialog.h"
-#include "../include/LeaseManager.h"
-#include "../include/LeaseDialog.h"
-#include "../include/editleasedialog.h"
-#include "../include/areyousuredialog.h"
+#include "../../include/ui-windows/mainwindow.h"
+#include "../ui-design-files/ui_mainwindow.h"
+#include "../../include/CustomerManager.h"
+#include "../../include/ui-windows/CustomerDialog.h"
+#include "../../include/CarManager.h"
+#include "../../include/ui-windows/CarDialog.h"
+#include "../../include/LeaseManager.h"
+#include "../../include/ui-windows/LeaseDialog.h"
+#include "../../include/ui-windows/editleasedialog.h"
+#include "../../include/ui-windows/areyousuredialog.h"
 
 #include <QMessageBox>
 #include <QTableWidgetItem>
@@ -118,7 +117,6 @@ void MainWindow::updateCustomerTable() {
 }
 
 // Register new Customer (opens a dialog window)
-
 void MainWindow::on_NewCustBtn_clicked() {
     CustomerDialog* customerDialog = new CustomerDialog(this);
     customerDialog->setModal(true);
@@ -160,7 +158,6 @@ void MainWindow::on_NewCustBtn_clicked() {
 }
 
 // Edit customer (opens a dialog window)
-
 void MainWindow::on_EdtCustBtn_clicked() {
     int currentRow = ui->CustTable->currentRow();
     if (currentRow < 0) {
@@ -176,11 +173,7 @@ void MainWindow::on_EdtCustBtn_clicked() {
 
     CustomerDialog* customerDialog = new CustomerDialog(this);
     customerDialog->setWindowTitle("Edit Customer");
-    customerDialog->setPersonNr(selectedCustomer->getPersonNr());
-    customerDialog->setEmail(selectedCustomer->getEmail());
-    customerDialog->setPhone(selectedCustomer->getPhone());
-    customerDialog->setAge(selectedCustomer->getAge());
-    customerDialog->setName(selectedCustomer->getName());
+    customerDialog->populateFields(*selectedCustomer);
     customerDialog->setModal(true);
 
     // Make the personNr field read-only
@@ -202,10 +195,15 @@ void MainWindow::on_EdtCustBtn_clicked() {
 }
 
 // Delete customer (opens "are you sure" dialog window)
-
 void MainWindow::on_DelCustBtn_clicked() {
     int currentRow = ui->CustTable->currentRow();
     if (currentRow < 0) {
+        return;
+    } else if (!ui->CustTable->item(currentRow, 5)->text().isEmpty()) {
+        // error message if customer has assigned cars
+        qDebug() << "Cannot delete a customer with assigned cars";
+        // display error message box to client
+        QMessageBox::warning(this, "Error", "Cannot delete a customer with assigned cars");
         return;
     }
 
@@ -222,7 +220,6 @@ void MainWindow::on_DelCustBtn_clicked() {
 }
 
 // ==================== Car window ====================
-
 void MainWindow::updateCarTable() {
     ui->CarTable->setRowCount(0);
     qDebug() << "Updating table with car count: " << carsRef.size();
@@ -259,7 +256,6 @@ void MainWindow::updateCarTable() {
 }
 
 // Register new car (opens a dialog window)
-
 void MainWindow::on_NewCarBtn_clicked() {
     CarDialog* carDialog = new CarDialog(this);
     carDialog->setModal(true);
@@ -363,7 +359,6 @@ void MainWindow::on_EdtCarBtn_clicked() {
 }
 
 // Delete car (opens "are you sure" dialog window)
-
 void MainWindow::on_DelCarBtn_clicked() {
     int currentRow = ui->CarTable->currentRow();
     if (currentRow < 0) {
@@ -451,6 +446,7 @@ void MainWindow::updateLeaseTable() {
     }
 }
 
+// Creating a new lease (opens a Leasedialog window)
 void MainWindow::on_NewLeaseBtn_clicked() {
     LeaseDialog* leaseDialog = new LeaseDialog(carsRef, customersRef, this);
     leaseDialog->setModal(true);
@@ -487,6 +483,7 @@ void MainWindow::on_NewLeaseBtn_clicked() {
     delete leaseDialog;
 }
 
+// Edit Lease (opens a editLeaseDialog window)
 void MainWindow::on_EdtLeaseBtn_clicked() {
     int currentRow = ui->LeaseTable->currentRow();
     if (currentRow < 0) {
@@ -535,7 +532,9 @@ void MainWindow::on_EdtLeaseBtn_clicked() {
     delete editLeaseDialog;
 }
 
+// Close Lease (opens a converted editLeasedialog window), this one is a three-parter
 void MainWindow::on_ClsLeaseBtn_clicked() {
+    // === Part 1: Check if the lease can be closed ===
     int currentRow = ui->LeaseTable->currentRow();
     if (currentRow < 0) {
         qDebug() << "No lease selected for closing";
@@ -545,25 +544,21 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
 
         // display error message box to client
         QMessageBox::warning(this, "Error", "Cannot close a closed lease");
-
         return;
     }
 
     int leaseId = ui->LeaseTable->item(currentRow, 0)->text().toInt();
     Lease *selectedLease = LeaseManager::searchForLeaseWithID(leasesRef, leaseId);
 
-    if (selectedLease == nullptr) {
-        qDebug() << "No lease selected for closing";
-        return;
-    } else if (QDateTime::fromString(selectedLease->getStartDate(), Qt::ISODate) > QDateTime::currentDateTime()) {
+    if (QDateTime::fromString(selectedLease->getStartDate(), Qt::ISODate) > QDateTime::currentDateTime()) {
         qDebug() << "Cannot close a lease that has not started yet";
 
         // display error message box to client
         QMessageBox::warning(this, "Error", "Cannot close a lease that has not started yet");
-
         return;
     }
 
+    // === Part 2: Check if the lease time needs to be edited ===
     // finding the car and customer objects related to the selected lease
     auto carFromLease = CarManager::searchForCarWithRegNr(carsRef, selectedLease->getRegNr());
     auto customerFromLease = CustomerManager::searchForCustomerWithPersonNr(customersRef, selectedLease->getPersonNr());
@@ -575,11 +570,12 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
 
     // check if enddatetime is before current datetime or after
     if (endDateTime < QDateTime::currentDateTime()) {
+        // In this state we ask the client if they want to extend the lease
         qDebug() << "The end date of the lease is before the current date";
 
         // display error message box to client
         QMessageBox::StandardButton reply;
-        QString message = QString("The end date of the lease is before the current date. The lease has been extended by %1 days. The new total price is %2. Do you want to extend the lease?")
+        QString message = QString("The end date of the lease is before the current date. The lease can be extended by %1 days. The new total price will be %2. Do you want to extend the lease?")
                 .arg(daysSinceStart)
                 .arg(selectedLease->getTotalPrice());
         reply = QMessageBox::question(this, "Close Lease", message, QMessageBox::Yes|QMessageBox::No);
@@ -588,11 +584,12 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
             qDebug() << "Lease extended by " << daysSinceStart << " days";
         }
     } else if (endDateTime > QDateTime::currentDateTime()) {
+        // In this statement we ask the client if they want to shorten the lease
         qDebug() << "The end date of the lease is after the current date";
 
         // display error message box to client
         QMessageBox::StandardButton reply;
-        QString message = QString("The end date of the lease is after the current date. The lease has been shortened by %1 days. The new total price is %2. Do you want to shorten the lease?")
+        QString message = QString("The end date of the lease is after the current date. The lease can be shortened by %1 days. The new total price will be %2. Do you want to shorten the lease?")
                 .arg(daysSinceStart)
                 .arg(selectedLease->getTotalPrice());
         reply = QMessageBox::question(this, "Close Lease", message, QMessageBox::Yes|QMessageBox::No);
@@ -600,11 +597,9 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
             LeaseManager::editDaysOfLease(*selectedLease, daysSinceStart, jsonParser);
             qDebug() << "Lease shortened by " << daysSinceStart << " days";
         }
-
-    } else {
-        qDebug() << "The end date of the lease is today";
     }
 
+    // === Part 3: Closing the lease ===
     // creating the lease dialog and converting to close
     EditLeaseDialog* editLeaseDialog = new EditLeaseDialog(*carFromLease, *customerFromLease, *selectedLease, this);
 
@@ -612,6 +607,7 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
     editLeaseDialog->setModal(true);
     editLeaseDialog->convertToCloseDialog();
 
+    // here we are actually beginning to close the lease
     if (editLeaseDialog->exec() == QDialog::Accepted) {
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, "Close Lease", "Are you sure you want to close this lease? And has the customer returned the car?",
@@ -639,16 +635,14 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
                     CarManager::editCarAllInstances(carFromLease, *carFromLease, jsonParser);
                 }
             }
-
             // Update the tables
-            updateLeaseTable();
-            updateCarTable();
-            updateCustomerTable();
+            updateLeaseTable(); updateCarTable(); updateCustomerTable();
         }
     }
     delete editLeaseDialog;
 }
 
+// Delete Lease (opens "are you sure" dialog window)
 void MainWindow::on_DelLeaseBtn_clicked() {
     int currentRow = ui->LeaseTable->currentRow();
     if (currentRow < 0) {
@@ -675,6 +669,7 @@ void MainWindow::on_DelLeaseBtn_clicked() {
     }
 }
 
+// ==================== Import and Export ====================
 void MainWindow::importAction() {
     // Set the default path to the desktop
     QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);

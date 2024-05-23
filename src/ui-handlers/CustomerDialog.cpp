@@ -1,9 +1,5 @@
-//
-// Created by Albert on 18.05.2024.
-//
-
-#include "../include/CustomerDialog.h"
-#include "ui_customerdialog.h"
+#include "../../include/ui-windows/CustomerDialog.h"
+#include "../ui-design-files/ui_customerdialog.h"
 
 CustomerDialog::CustomerDialog(QWidget *parent)
     : QDialog{parent}, ui{new Ui::CustomerDialog}
@@ -30,3 +26,12 @@ QString CustomerDialog::getPhone() const { return ui->phoneLineEdit->text(); }
 int CustomerDialog::getAge() const { return ui->ageLineEdit->text().toInt(); }
 QString CustomerDialog::getName() const { return ui->nameLineEdit->text(); }
 QLineEdit* CustomerDialog::getPersonNrLineEdit() const { return ui->personalNumberLineEdit; }
+
+// populate fields for the selected customer
+void CustomerDialog::populateFields(Customer &selectedCustomer) {
+    setPersonNr(selectedCustomer.getPersonNr());
+    setEmail(selectedCustomer.getEmail());
+    setPhone(selectedCustomer.getPhone());
+    setAge(selectedCustomer.getAge());
+    setName(selectedCustomer.getName());
+}

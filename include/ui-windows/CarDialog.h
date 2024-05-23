@@ -1,11 +1,7 @@
-//
-// Created by Marcus on 18.05.2024.
-//
-
 #ifndef HELLHUB_CARDIALOG_H
 #define HELLHUB_CARDIALOG_H
 
-#include "CarManager.h"
+#include "../CarManager.h"
 
 #include <QDialog>
 #include <QLineEdit>
@@ -55,7 +51,7 @@ public:
     void convertToCloseDialog();
 
     // populate fields with car data
-    void populateFields(Car &selectedCar);
+    void populateFields(const Car &selectedCar);
 
 private:
     Ui::CarDialog *ui;

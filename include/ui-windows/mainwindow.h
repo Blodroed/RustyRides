@@ -5,8 +5,8 @@
 #ifndef HELLHUB_MAINWINDOW_H
 #define HELLHUB_MAINWINDOW_H
 
-#include "../include/customerManager.h"
-#include "../include/JsonParser.h"
+#include "../CustomerManager.h"
+#include "../JsonParser.h"
 #include <QMainWindow>
 #include <vector>
 
@@ -51,6 +51,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    
+    // update tables
     void updateCustomerTable();
     void updateCarTable();
     void updateLeaseTable();
@@ -60,6 +62,7 @@ private:
     std::vector<Car>& carsRef;
     std::vector<Lease>& leasesRef;
 
+    // refference to the json parserq
     JsonParser& jsonParser;
 };
 
