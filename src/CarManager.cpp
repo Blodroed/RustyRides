@@ -7,6 +7,7 @@
 #include "../include/JsonParser.h"
 #include <iostream>
 #include <vector>
+#include <QDebug>
 
 void CarManager::createCar(std::vector<Car> &cars, const Car &newCar, JsonParser &jsonParser) {
     jsonParser.exportSingleCarToJson(newCar);
@@ -44,7 +45,7 @@ Car* CarManager::searchForCarWithRegNr(std::vector<Car> &cars, const QString Reg
             return &car;
         }
     }
-    std::cerr << "Car not found" << std::endl;
+    qDebug() << "Car not found with: " << RegNr;
     return nullptr;
 }
 

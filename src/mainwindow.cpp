@@ -1,12 +1,10 @@
 #include "../include/mainwindow.h"
 #include "ui_mainwindow.h"
-#include "../include/Customer.h"
 #include "../include/CustomerManager.h"
 #include "../include/CustomerDialog.h"
 #include "../include/Car.h"
 #include "../include/CarManager.h"
 #include "../include/CarDialog.h"
-#include "../include/lease.h"
 #include "../include/LeaseManager.h"
 #include "../include/LeaseDialog.h"
 #include "../include/editleasedialog.h"
@@ -51,11 +49,11 @@ MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers,
     }
 
     // ---- Table view of the leases ----
-    ui->LeaseTable->setColumnCount(8);
-    QStringList leaseHeaders = {"LeaseID", "Reg Nr", "Person Nr", "Days of Lease", "Negotiated Price", "Total Price", "StartDate", "Open or Closed"};
+    ui->LeaseTable->setColumnCount(9);
+    QStringList leaseHeaders = {"LeaseID", "Reg Nr", "Customer Name", "Customer Tlf", "Days of Lease", "Negotiated Price", "Total Price", "StartDate", "State"};
     ui->LeaseTable->setHorizontalHeaderLabels(leaseHeaders);
     ui->LeaseTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    ui->LeaseTable->horizontalHeader()->setStretchLastSection(true);
+    ui->LeaseTable->horizontalHeader()->setStretchLastSection(false);
 
     // update relevant tables
     updateCustomerTable();
@@ -386,38 +384,64 @@ void MainWindow::on_DelCarBtn_clicked() {
     }
 }
 
-
-// Should also check if customer has any leases or cars
-
-// TODO: similar stuff for cars and leases
-
 // ==================== Leases Tab ====================
 void MainWindow::updateLeaseTable() {
     ui->LeaseTable->setRowCount(0);
-    qDebug() << "Updating table with lease count: " << leasesRef.size();
 
-    for (size_t row = 0; row < leasesRef.size(); ++row) {
+    for (size_t row = 0; row < leasesRef.size(); row++) {
         const auto& lease = leasesRef[row];
-        ui->LeaseTable->insertRow(row);
+        Car* car = CarManager::searchForCarWithRegNr(carsRef, lease.getRegNr());
+        Customer* customer = CustomerManager::searchForCustomerWithPersonNr(customersRef, lease.getPersonNr());
 
-        qDebug() << "Setting row:" << row
-                 << "LeaseId:" << lease.getleaseId()
-                 << "RegNr:" << lease.getRegNr()
-                 << "PersonNr:" << lease.getPersonNr()
-                 << "Days of lease:" << lease.getDaysOfLease()
-                 << "Negotiated price:" << lease.getNegotiatedPrice()
-                 << "Total price:" << lease.getTotalPrice()
-                 << "StartDate:" << lease.getStartDate()
-                 << "Open or closed:" << lease.isOpenOrClosed();
+        // car and customer var
+        QString carRegNr = "Not found";
+        QString customerName = "Not found";
+        QString customerPhone = "Not found";
+
+        if (car != nullptr) {
+            carRegNr = car->getRegNr();
+        }
+        if (customer != nullptr) {
+            customerName = customer->getName();
+            customerPhone = customer->getPhone();
+        }
+
+        ui->LeaseTable->insertRow(row); // Insert a new row at the end of the table
 
         ui->LeaseTable->setItem(row, 0, new QTableWidgetItem(QString::number(lease.getleaseId())));
-        ui->LeaseTable->setItem(row, 1, new QTableWidgetItem(lease.getRegNr()));
-        ui->LeaseTable->setItem(row, 2, new QTableWidgetItem(lease.getPersonNr()));
-        ui->LeaseTable->setItem(row, 3, new QTableWidgetItem(QString::number(lease.getDaysOfLease())));
-        ui->LeaseTable->setItem(row, 4, new QTableWidgetItem(QString::number(lease.getNegotiatedPrice())));
-        ui->LeaseTable->setItem(row, 5, new QTableWidgetItem(QString::number(lease.getTotalPrice())));
-        ui->LeaseTable->setItem(row, 6, new QTableWidgetItem(lease.getStartDate()));
-        ui->LeaseTable->setItem(row, 7, new QTableWidgetItem(lease.isOpenOrClosed() ? "Open" : "Closed"));
+        ui->LeaseTable->setItem(row, 1, new QTableWidgetItem(carRegNr));
+        ui->LeaseTable->setItem(row, 2, new QTableWidgetItem(customerName));
+        ui->LeaseTable->setItem(row, 3, new QTableWidgetItem(customerPhone));
+        ui->LeaseTable->setItem(row, 4, new QTableWidgetItem(QString::number(lease.getDaysOfLease())));
+        ui->LeaseTable->setItem(row, 5, new QTableWidgetItem(QString::number(lease.getNegotiatedPrice())));
+        ui->LeaseTable->setItem(row, 6, new QTableWidgetItem(QString::number(lease.getTotalPrice())));
+        ui->LeaseTable->setItem(row, 7, new QTableWidgetItem(lease.getStartDate()));
+        ui->LeaseTable->setItem(row, 8, new QTableWidgetItem(lease.isOpenOrClosed() ? "Open" : "Closed"));
+
+        // Set the background color of the row to red if the lease is closed
+        if (!lease.isOpenOrClosed()) {
+            for (int i = 0; i < ui->LeaseTable->columnCount(); i++) {
+                ui->LeaseTable->item(row, i)->setBackground(QBrush(QColor(255, 0, 0, 127)));
+            }
+        }
+
+        // Set the background color of the row to green if the lease is open
+        if (lease.isOpenOrClosed()) {
+            for (int i = 0; i < ui->LeaseTable->columnCount(); i++) {
+                ui->LeaseTable->item(row, i)->setBackground(QBrush(QColor(0, 255, 0, 127)));
+            }
+        }
+
+        qDebug() << "Setting row:" << row
+                 << "LeaseID:" << lease.getleaseId()
+                 << "RegNr:" << lease.getRegNr()
+                 << "Customer Name:" << customerName
+                 << "Customer Tlf:" << customerPhone
+                 << "Days of Lease:" << lease.getDaysOfLease()
+                 << "Negotiated Price:" << lease.getNegotiatedPrice()
+                 << "Total Price:" << lease.getTotalPrice()
+                 << "StartDate:" << lease.getStartDate()
+                 << "Open or Closed:" << (lease.isOpenOrClosed() ? "Open" : "Closed");
     }
 }
 
