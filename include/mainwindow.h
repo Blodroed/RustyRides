@@ -40,12 +40,14 @@ private slots:
     void on_DelCarBtn_clicked();
 
     // Lease related buttons
-        void on_NewLeaseBtn_clicked();
-        void on_DelLeaseBtn_clicked();
-        void on_ClsLeaseBtn_clicked();
-        void on_EdtLeaseBtn_clicked();
+    void on_NewLeaseBtn_clicked();
+    void on_DelLeaseBtn_clicked();
+    void on_ClsLeaseBtn_clicked();
+    void on_EdtLeaseBtn_clicked();
 
-    // TODO: Buttons for the other two tabs
+    // Import and export buttons
+    void importAction();
+    void exportAction();
 
 private:
     Ui::MainWindow *ui;

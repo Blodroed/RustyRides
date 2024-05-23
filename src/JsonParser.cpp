@@ -567,3 +567,36 @@ void JsonParser::deleteSingleLeaseFromJson(const Lease &lease) {
 }
 
 /** @} */ // end of LeaseFunctions group
+
+/**
+ * @defgroup ImportExportFunctions
+ * @brief Importing and exporting the entire database
+ *
+ * This group contains all the functions related to importing and exporting the entire database.
+ * @{
+ */
+
+void JsonParser::fullBackup(const std::string &backupPath) {
+    // open the source database
+    std::ifstream srcFile(filepath, std::ios::binary);
+
+    // check if the file opened successfully
+    if (!srcFile.is_open()) {
+        std::cout << "Error: Failed to open the source file" << std::endl;
+        return;
+    }
+
+    // open the destination file
+    std::ofstream destFile(backupPath, std::ios::binary);
+
+    // check if the file opened successfully
+    if (!destFile.is_open()) {
+        std::cout << "Error: Failed to open the destination file" << std::endl;
+        return;
+    }
+
+    // copy the contents of the source file to the destination file
+    destFile << srcFile.rdbuf();
+}
+
+/** @} */ // end of ImportExportFunctions group

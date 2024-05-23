@@ -13,6 +13,7 @@
 #include <QMessageBox>
 #include <QTableWidgetItem>
 #include <QDateTime>
+#include <QFileDialog>
 
 MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers, std::vector<Car>& cars, std::vector<Lease>& leases, QWidget *parent)
         : QMainWindow(parent)
@@ -54,6 +55,10 @@ MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers,
     ui->LeaseTable->setHorizontalHeaderLabels(leaseHeaders);
     ui->LeaseTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->LeaseTable->horizontalHeader()->setStretchLastSection(false);
+
+    // ---- Slot connections for import and export buttons ----
+    connect(ui->actionImport, &QAction::triggered, this, &MainWindow::importAction);
+    connect(ui->actionExport, &QAction::triggered, this, &MainWindow::exportAction);
 
     // update relevant tables
     updateCustomerTable();
@@ -667,4 +672,32 @@ void MainWindow::on_DelLeaseBtn_clicked() {
         LeaseManager::deleteLease(leasesRef, *selectedLease, jsonParser);
         updateLeaseTable();
     }
+}
+
+void MainWindow::importAction() {
+    // Open a file dialog and get the selected file path
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open JSON File"), "", tr("JSON Files (*.json)"));
+
+    // Check if a file was selected
+    if (!filePath.isEmpty()) {
+       QMessageBox::StandardButtons reply;
+         reply = QMessageBox::question(this, "Import", "Are you sure you want to import data from this file?",
+                                         QMessageBox::Yes|QMessageBox::No);
+            if (reply == QMessageBox::Yes) {
+                qDebug() << "Just A test" << filePath;
+            }
+    }
+}
+
+void MainWindow::exportAction() {
+    // Open a file dialog and get the selected file path
+    QString filePath = QFileDialog::getSaveFileName(this, tr("Save JSON File"), "", tr("JSON Files (*.json)"));
+
+    // Check if a file was selected
+    if (!filePath.isEmpty()) {
+        jsonParser.fullBackup(filePath.toStdString());
+    }
+
+    // display message box to client
+    QMessageBox::information(this, "Export", "Exported data to " + filePath);
 }
