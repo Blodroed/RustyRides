@@ -1,7 +1,3 @@
-//
-// Created by Albert on 18.05.2024.
-//
-
 #include "../include/Lease.h"
 
 // init static variable
@@ -40,5 +36,4 @@ void Lease::setNegotiatedPrice(int newNegotiatedPrice) {
     totalPrice = daysOfLease * negotiatedPrice;
 }
 void Lease::setStartDate(const QString &newStartDate) { startDate = newStartDate; }
-
 void Lease::setOpenOrClosed(bool newOpenOrClosed) { openOrClosed = newOpenOrClosed; }

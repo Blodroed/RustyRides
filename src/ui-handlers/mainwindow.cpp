@@ -199,6 +199,12 @@ void MainWindow::on_DelCustBtn_clicked() {
     int currentRow = ui->CustTable->currentRow();
     if (currentRow < 0) {
         return;
+    } else if (!ui->CustTable->item(currentRow, 5)->text().isEmpty()) {
+        // error message if customer has assigned cars
+        qDebug() << "Cannot delete a customer with assigned cars";
+        // display error message box to client
+        QMessageBox::warning(this, "Error", "Cannot delete a customer with assigned cars");
+        return;
     }
 
     QString personNummer = ui->CustTable->item(currentRow, 0)->data(Qt::UserRole).toString();
