@@ -51,7 +51,7 @@ public:
     void convertToCloseDialog();
 
     // populate fields with car data
-    void populateFields(Car &selectedCar);
+    void populateFields(const Car &selectedCar);
 
 private:
     Ui::CarDialog *ui;

@@ -1,7 +1,3 @@
-//
-// Created by Marcus on 18.05.2024.
-//
-
 #include <QIntValidator>
 #include "../../include/ui-windows/CarDialog.h"
 #include "../ui-design-files/ui_cardialog.h"
@@ -63,7 +59,7 @@ bool CarDialog::getAvailable() const {
 // Get the edit field for RegNr
 QLineEdit* CarDialog::getRegNrLineEdit() const { return ui->RegNrLineEdit; }
 
-// Convert to close dialog for editing km
+// Convert to close dialog for editing km, setting all editable fields except km to read only
 void CarDialog::convertToCloseDialog() {
     ui->RegNrLineEdit->setReadOnly(true);
     ui->MakeLineEdit->setReadOnly(true);
@@ -78,7 +74,7 @@ void CarDialog::convertToCloseDialog() {
 }
 
 // Populate the dialog with car data
-void CarDialog::populateFields(Car &selectedCar) {
+void CarDialog::populateFields(const Car &selectedCar) {
     ui->RegNrLineEdit->setText(selectedCar.getRegNr());
     ui->MakeLineEdit->setText(selectedCar.getMake());
     ui->ModelEdit->setText(selectedCar.getModel());
