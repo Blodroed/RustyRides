@@ -1,4 +1,4 @@
-#include "../include/areyousuredialog.h"
+#include "../include/ui-windows/areyousuredialog.h"
 #include "ui-design-files/ui_areyousuredialog.h"
 
 AreYouSureDialog::AreYouSureDialog(QWidget *parent)

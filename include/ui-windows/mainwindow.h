@@ -5,8 +5,8 @@
 #ifndef HELLHUB_MAINWINDOW_H
 #define HELLHUB_MAINWINDOW_H
 
-#include "../include/customerManager.h"
-#include "../include/JsonParser.h"
+#include "../CustomerManager.h"
+#include "../JsonParser.h"
 #include <QMainWindow>
 #include <vector>
 

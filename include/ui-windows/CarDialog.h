@@ -5,7 +5,7 @@
 #ifndef HELLHUB_CARDIALOG_H
 #define HELLHUB_CARDIALOG_H
 
-#include "CarManager.h"
+#include "../CarManager.h"
 
 #include <QDialog>
 #include <QLineEdit>

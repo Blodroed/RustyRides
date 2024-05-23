@@ -1,14 +1,14 @@
-#include "../include/mainwindow.h"
+#include "../include/ui-windows/mainwindow.h"
 #include "ui-design-files/ui_mainwindow.h"
 #include "../include/CustomerManager.h"
-#include "../include/CustomerDialog.h"
+#include "../include/ui-windows/CustomerDialog.h"
 #include "../include/Car.h"
 #include "../include/CarManager.h"
-#include "../include/CarDialog.h"
+#include "../include/ui-windows/CarDialog.h"
 #include "../include/LeaseManager.h"
-#include "../include/LeaseDialog.h"
-#include "../include/editleasedialog.h"
-#include "../include/areyousuredialog.h"
+#include "../include/ui-windows/LeaseDialog.h"
+#include "../include/ui-windows/editleasedialog.h"
+#include "../include/ui-windows/areyousuredialog.h"
 
 #include <QMessageBox>
 #include <QTableWidgetItem>

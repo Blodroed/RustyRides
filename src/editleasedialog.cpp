@@ -1,4 +1,4 @@
-#include "../include/editleasedialog.h"
+#include "../include/ui-windows/editleasedialog.h"
 #include "ui-design-files/ui_editleasedialog.h"
 
 #include <QHeaderView>

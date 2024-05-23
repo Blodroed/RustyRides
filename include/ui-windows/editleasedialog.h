@@ -1,10 +1,10 @@
 #ifndef EDITLEASEDIALOG_H
 #define EDITLEASEDIALOG_H
 
-#include "LeaseManager.h"
-#include "JsonParser.h"
-#include "CarManager.h"
-#include "CustomerManager.h"
+#include "../LeaseManager.h"
+#include "../JsonParser.h"
+#include "../CarManager.h"
+#include "../CustomerManager.h"
 
 #include <QDialog>
 #include <vector>

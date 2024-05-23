@@ -1,4 +1,4 @@
-#include "../include/CustomerDialog.h"
+#include "../include/ui-windows/CustomerDialog.h"
 #include "ui-design-files/ui_customerdialog.h"
 
 CustomerDialog::CustomerDialog(QWidget *parent)
