@@ -5,6 +5,8 @@
 #ifndef HELLHUB_CARDIALOG_H
 #define HELLHUB_CARDIALOG_H
 
+#include "CarManager.h"
+
 #include <QDialog>
 #include <QLineEdit>
 
@@ -48,6 +50,12 @@ public:
 
     // Getter for regNr edit field
     QLineEdit* getRegNrLineEdit() const;
+
+    // convert to close edit dialog
+    void convertToCloseDialog();
+
+    // populate fields with car data
+    void populateFields(Car &selectedCar);
 
 private:
     Ui::CarDialog *ui;

@@ -87,7 +87,7 @@ Customer* CustomerManager::searchForCustomerWithPersonNr(std::vector<Customer> &
             return &customer;
         }
     }
-    std::cerr << "Customer not found" << std::endl;
+    qDebug() << "Customer not found with: " << personNr;
     return nullptr;
 }
 

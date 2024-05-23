@@ -9,7 +9,7 @@ void LeaseManager::createLease(std::vector<Lease> &leases, const Lease &newLease
     jsonParser.exportSingleLeaseToJson(newLease);
 }
 
-void LeaseManager::extendLease(Lease &lease, int daysOfLease, JsonParser &jsonParser) {
+void LeaseManager::editDaysOfLease(Lease &lease, int daysOfLease, JsonParser &jsonParser) {
     lease.setDaysOfLease(daysOfLease);
     jsonParser.editSingleLeaseToJson(lease);
 }

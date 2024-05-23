@@ -170,6 +170,7 @@ void LeaseDialog::on_leaseFromDateTimeEdit_dateChanged(const QDate& date) {
         ui->leaseUntilDateTimeEdit->setDate(date.addDays(+1));
         ui->leaseUntilDateTimeEdit->setMinimumDate(date.addDays(+1));
     }
+    ui->leaseUntilDateTimeEdit->setMinimumDate(date.addDays(+1));
     QDate untilDate = ui->leaseUntilDateTimeEdit->date();
     daysOfLease = date.daysTo(untilDate);
 

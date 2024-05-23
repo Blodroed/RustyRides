@@ -25,11 +25,6 @@ EditLeaseDialog::EditLeaseDialog(const Car& carRef, const Customer& customerRef,
     newTotalPrice = selectedLease.getTotalPrice();
     newStartDate = selectedLease.getStartDate();
 
-    // connect signals and slots for datetime and price
-    connect(ui->leaseFromDateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &EditLeaseDialog::on_leaseFromDateTimeEdit_dateChanged);
-    connect(ui->leaseUntilDateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &EditLeaseDialog::on_leaseUntilDateTimeEdit_dateChanged);
-    connect(ui->NegotiatedPriceBox, &QSpinBox::valueChanged, this, &EditLeaseDialog::on_NegotiatedPriceBox_valueChanged);
-
     // Init CustomerInfo table
     ui->CustomerInfoTable->setColumnCount(6);
     QStringList customerHeaders = {"Name", "Phone", "Email", "Age", "PersonNr", "Leases"};
@@ -56,14 +51,18 @@ EditLeaseDialog::EditLeaseDialog(const Car& carRef, const Customer& customerRef,
     }
 
     // set enddate values
-    ui->leaseUntilDateTimeEdit->setMinimumDateTime(QDateTime::currentDateTime());
     QDateTime leaseUntil = QDateTime::fromString(selectedLease.getStartDate(), Qt::ISODate).addDays(selectedLease.getDaysOfLease());
+    ui->leaseUntilDateTimeEdit->setMinimumDateTime(QDateTime::fromString(selectedLease.getStartDate(), Qt::ISODate).addDays(1));
     ui->leaseUntilDateTimeEdit->setDateTime(leaseUntil);
 
     // Set price fields
     ui->NegotiatedPriceBox->setValue(selectedLease.getNegotiatedPrice());
     ui->TotalPriceLineEdit->setText(QString::number(selectedLease.getTotalPrice()));
 
+    // connect signals and slots for datetime and price
+    connect(ui->leaseFromDateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &EditLeaseDialog::on_leaseFromDateTimeEdit_dateChanged);
+    connect(ui->leaseUntilDateTimeEdit, &QDateTimeEdit::dateTimeChanged, this, &EditLeaseDialog::on_leaseUntilDateTimeEdit_dateChanged);
+    connect(ui->NegotiatedPriceBox, &QSpinBox::valueChanged, this, &EditLeaseDialog::on_NegotiatedPriceBox_valueChanged);
 }
 
 EditLeaseDialog::~EditLeaseDialog()

@@ -49,3 +49,32 @@ bool CarDialog::getAvailable() const {
 
 // Get the edit field for RegNr
 QLineEdit* CarDialog::getRegNrLineEdit() const { return ui->RegNrLineEdit; }
+
+// Convert to close dialog for editing km
+void CarDialog::convertToCloseDialog() {
+    ui->RegNrLineEdit->setReadOnly(true);
+    ui->MakeLineEdit->setReadOnly(true);
+    ui->ModelEdit->setReadOnly(true);
+    ui->ColorLineEdit->setReadOnly(true);
+    ui->CarTypeEdit->setReadOnly(true);
+    ui->FuelTypeEdit->setReadOnly(true);
+    ui->YearEdit->setReadOnly(true);
+    ui->PricePerDayLineEdit->setReadOnly(true);
+    ui->SeatsLineEdit->setReadOnly(true);
+    ui->availabilityCheckBox->setDisabled(true);
+}
+
+// Populate the dialog with car data
+void CarDialog::populateFields(Car &selectedCar) {
+    ui->RegNrLineEdit->setText(selectedCar.getRegNr());
+    ui->MakeLineEdit->setText(selectedCar.getMake());
+    ui->ModelEdit->setText(selectedCar.getModel());
+    ui->ColorLineEdit->setText(selectedCar.getColor());
+    ui->CarTypeEdit->setText(selectedCar.getCarType());
+    ui->FuelTypeEdit->setText(selectedCar.getFuelType());
+    ui->YearEdit->setText(QString::number(selectedCar.getYear()));
+    ui->PricePerDayLineEdit->setText(QString::number(selectedCar.getPrice()));
+    ui->KmLineEdit->setText(QString::number(selectedCar.getKmDriven()));
+    ui->SeatsLineEdit->setText(QString::number(selectedCar.getSeats()));
+    ui->availabilityCheckBox->setChecked(selectedCar.getAvailable());
+}
