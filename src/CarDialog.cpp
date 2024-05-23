@@ -2,6 +2,7 @@
 // Created by Marcus on 18.05.2024.
 //
 
+#include <QIntValidator>
 #include "../include/CarDialog.h"
 #include "ui_cardialog.h"
 
@@ -10,6 +11,18 @@ CarDialog::CarDialog(QWidget *parent)
         , ui(new Ui::CarDialog)
 {
     ui->setupUi(this);
+
+    // set creation of car to be available by default
+    ui->availabilityCheckBox->setChecked(true);
+
+    // Create a new QIntValidator
+    QIntValidator *intValidator = new QIntValidator(this);
+
+    // Set the validator for the QLineEdit fields
+    ui->YearEdit->setValidator(intValidator);
+    ui->PricePerDayLineEdit->setValidator(intValidator);
+    ui->KmLineEdit->setValidator(intValidator);
+    ui->SeatsLineEdit->setValidator(intValidator);
 }
 
 CarDialog::~CarDialog()
