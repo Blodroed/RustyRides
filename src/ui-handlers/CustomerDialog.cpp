@@ -1,5 +1,5 @@
-#include "../include/ui-windows/CustomerDialog.h"
-#include "ui-design-files/ui_customerdialog.h"
+#include "../../include/ui-windows/CustomerDialog.h"
+#include "../ui-design-files/ui_customerdialog.h"
 
 CustomerDialog::CustomerDialog(QWidget *parent)
     : QDialog{parent}, ui{new Ui::CustomerDialog}

@@ -14,7 +14,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
-        src/mainwindow.cpp
+        src/ui-handlers/mainwindow.cpp
         include/ui-windows/mainwindow.h
         src/ui-design-files/mainwindow.ui
         include/Car.h
@@ -30,9 +30,9 @@ set(PROJECT_SOURCES
         src/CustomerManager.cpp
         include/CustomerManager.h
         include/ui-windows/CustomerDialog.h
-        src/CustomerDialog.cpp
+        src/ui-handlers/CustomerDialog.cpp
         src/ui-design-files/customerdialog.ui
-        src/areyousuredialog.cpp
+        src/ui-handlers/areyousuredialog.cpp
         include/ui-windows/areyousuredialog.h
         src/ui-design-files/areyousuredialog.ui
         include/Lease.h
@@ -40,12 +40,12 @@ set(PROJECT_SOURCES
         include/LeaseManager.h
         src/LeaseManager.cpp
         include/ui-windows/CarDialog.h
-        src/CarDialog.cpp
+        src/ui-handlers/CarDialog.cpp
         src/ui-design-files/cardialog.ui
         include/ui-windows/LeaseDialog.h
-        src/LeaseDialog.cpp
+        src/ui-handlers/LeaseDialog.cpp
         include/ui-windows/editleasedialog.h
-        src/editleasedialog.cpp
+        src/ui-handlers/editleasedialog.cpp
         src/ui-design-files/editleasedialog.ui
 )
 
