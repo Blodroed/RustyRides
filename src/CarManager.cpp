@@ -109,11 +109,3 @@ std::vector<const Car*> CarManager::searchForCarWithSeveralParameters(const std:
     return foundCars;
 }
 
-void CarManager::availabilitySwitch(Car *car) {
-    if (car == nullptr) {
-        std::cout << "Car pointer is not pointing to anything" << std::endl;
-        return;
-    }
-    car->setAvailable(!car->getAvailable());
-}
-
