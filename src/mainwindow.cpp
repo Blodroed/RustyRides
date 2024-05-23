@@ -117,6 +117,7 @@ void MainWindow::updateCustomerTable() {
 void MainWindow::on_NewCustBtn_clicked() {
     CustomerDialog* customerDialog = new CustomerDialog(this);
     customerDialog->setModal(true);
+    customerDialog->setWindowTitle("Register new customer");
     if (customerDialog->exec() == QDialog::Accepted) {
 
         QString personNr = customerDialog->getPersonNr();
@@ -169,6 +170,7 @@ void MainWindow::on_EdtCustBtn_clicked() {
     // Values are pre-entered to easily know what you're changing
 
     CustomerDialog* customerDialog = new CustomerDialog(this);
+    customerDialog->setWindowTitle("Edit Customer");
     customerDialog->setPersonNr(selectedCustomer->getPersonNr());
     customerDialog->setEmail(selectedCustomer->getEmail());
     customerDialog->setPhone(selectedCustomer->getPhone());
@@ -206,6 +208,8 @@ void MainWindow::on_DelCustBtn_clicked() {
     Customer *selectedCustomer = CustomerManager::searchForCustomerWithPersonNr(customersRef, personNummer);
 
     AreYouSureDialog confirmDialog(this);
+    confirmDialog.setModal(true);
+    confirmDialog.setWindowTitle("Delete Customer");
     if (confirmDialog.exec() == QDialog::Accepted) {
         CustomerManager::deleteCustomer(customersRef, selectedCustomer, jsonParser);
         updateCustomerTable();
@@ -254,6 +258,7 @@ void MainWindow::updateCarTable() {
 void MainWindow::on_NewCarBtn_clicked() {
     CarDialog* carDialog = new CarDialog(this);
     carDialog->setModal(true);
+    carDialog->setWindowTitle("Register new car");
     if (carDialog->exec() == QDialog::Accepted) {
 
         QString regNr = carDialog->getRegNr();
@@ -296,9 +301,9 @@ void MainWindow::on_NewCarBtn_clicked() {
     }
     delete carDialog;
 }
+
 // Edit Car (opens a dialog window)
 // Similar to customer, values are pre entered for easy editing
-
 void MainWindow::on_EdtCarBtn_clicked() {
     int currentRow = ui->CarTable->currentRow();
     if (currentRow < 0) {
@@ -318,6 +323,7 @@ void MainWindow::on_EdtCarBtn_clicked() {
     Car* selectedCar = CarManager::searchForCarWithRegNr(carsRef, regNr);
 
     CarDialog* carDialog = new CarDialog(this);
+    carDialog->setWindowTitle("Edit Car");
 
     // Populate dialog with car details
     carDialog->setRegNr(selectedCar->getRegNr());
@@ -381,6 +387,8 @@ void MainWindow::on_DelCarBtn_clicked() {
     Car* selectedCar = CarManager::searchForCarWithRegNr(carsRef, regNr);
 
     AreYouSureDialog confirmDialog(this);
+    confirmDialog.setModal(true);
+    confirmDialog.setWindowTitle("Delete Car");
     if (confirmDialog.exec() == QDialog::Accepted) {
         CarManager::deleteCar(carsRef, selectedCar, jsonParser);
         updateCarTable();
@@ -567,6 +575,8 @@ void MainWindow::on_DelLeaseBtn_clicked() {
     Lease *selectedLease = LeaseManager::searchForLeaseWithID(leasesRef, leaseId);
 
     AreYouSureDialog confirmDialog(this);
+    confirmDialog.setModal(true);
+    confirmDialog.setWindowTitle("Delete Lease");
     if (confirmDialog.exec() == QDialog::Accepted) {
         LeaseManager::deleteLease(leasesRef, *selectedLease, jsonParser);
         updateLeaseTable();
