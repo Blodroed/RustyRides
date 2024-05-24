@@ -1,10 +1,17 @@
 #include "../../include/ui-windows/CustomerDialog.h"
 #include "../ui-design-files/ui_customerdialog.h"
 
+#include <QIntValidator>
+
 CustomerDialog::CustomerDialog(QWidget *parent)
     : QDialog{parent}, ui{new Ui::CustomerDialog}
 {
     ui->setupUi(this);
+
+    // Create a new QIntValidator and set
+    QIntValidator *intValidator = new QIntValidator(this);
+    ui->ageLineEdit->setValidator(intValidator);
+
 }
 
 CustomerDialog::~CustomerDialog()

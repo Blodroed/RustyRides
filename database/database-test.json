@@ -8,7 +8,7 @@
             "carType": "hatchback",
             "fuelType": "electric",
             "year": 2020,
-            "kmDriven": 11000,
+            "kmDriven": 12000,
             "price": 20000,
             "seats": 4,
             "availability": true
@@ -34,7 +34,7 @@
             "carType": "sedan",
             "fuelType": "hybrid",
             "year": 2021,
-            "kmDriven": 5000,
+            "kmDriven": 6000,
             "price": 30000,
             "seats": 4,
             "availability": true
@@ -47,7 +47,7 @@
             "carType": "sedan",
             "fuelType": "diesel",
             "year": 2018,
-            "kmDriven": 20000,
+            "kmDriven": 22300,
             "price": 35000,
             "seats": 2,
             "availability": true
@@ -60,7 +60,7 @@
             "carType": "hatchback",
             "fuelType": "gas",
             "year": 2022,
-            "kmDriven": 1000,
+            "kmDriven": 10000,
             "price": 40000,
             "seats": 2,
             "availability": true
@@ -76,14 +76,6 @@
             "cars": []
         },
         {
-            "personNummer": "654321",
-            "name": "Jane Doe",
-            "phoneNumber": "654321",
-            "email": "jane@doe",
-            "age": 25,
-            "cars": []
-        },
-        {
             "personNummer": "123",
             "email": "email",
             "phoneNumber": "991",
@@ -93,13 +85,21 @@
         },
         {
             "personNummer": "234",
-            "email": "234",
+            "email": "email@email",
             "phoneNumber": "234",
             "age": 154,
             "name": "frode",
             "cars": [
                 "car2"
             ]
+        },
+        {
+            "personNummer": "2324",
+            "email": "email",
+            "phoneNumber": "991991991",
+            "age": 24,
+            "name": "kjell tore",
+            "cars": []
         }
     ],
     "leases": [
@@ -111,16 +111,6 @@
             "daysOfLease": 5,
             "negotiatedPrice": 20000,
             "totalPrice": 100000,
-            "open": false
-        },
-        {
-            "leaseId": 4,
-            "regNr": "car3",
-            "customerId": "123456",
-            "startDate": "2024-05-21T15:56:01",
-            "daysOfLease": 1,
-            "negotiatedPrice": 30000,
-            "totalPrice": 60000,
             "open": false
         },
         {
@@ -137,10 +127,10 @@
             "leaseId": 6,
             "regNr": "car2",
             "customerId": "234",
-            "startDate": "2024-05-24T16:18:15",
-            "daysOfLease": 4,
+            "startDate": "2024-05-28T16:18:15",
+            "daysOfLease": 1,
             "negotiatedPrice": 100000,
-            "totalPrice": 400000,
+            "totalPrice": 100000,
             "open": true
         },
         {
@@ -151,6 +141,46 @@
             "daysOfLease": 1,
             "negotiatedPrice": 40000,
             "totalPrice": 40000,
+            "open": false
+        },
+        {
+            "leaseId": 9,
+            "regNr": "car4",
+            "customerId": "2324",
+            "startDate": "2024-05-24T06:17:13",
+            "daysOfLease": 1,
+            "negotiatedPrice": 105000,
+            "totalPrice": 105000,
+            "open": false
+        },
+        {
+            "leaseId": 10,
+            "regNr": "car5",
+            "customerId": "123",
+            "startDate": "2024-05-24T06:44:03",
+            "daysOfLease": 2,
+            "negotiatedPrice": 80000,
+            "totalPrice": 160000,
+            "open": false
+        },
+        {
+            "leaseId": 11,
+            "regNr": "car4",
+            "customerId": "2324",
+            "startDate": "2024-05-24T07:04:55",
+            "daysOfLease": 3,
+            "negotiatedPrice": 70000,
+            "totalPrice": 210000,
+            "open": false
+        },
+        {
+            "leaseId": 13,
+            "regNr": "car4",
+            "customerId": "2324",
+            "startDate": "2024-05-24T07:06:05",
+            "daysOfLease": 4,
+            "negotiatedPrice": 35000,
+            "totalPrice": 140000,
             "open": false
         }
     ]

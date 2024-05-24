@@ -63,6 +63,12 @@ void JsonParser::importCarsFromJson(std::vector<Car> &cars) {
     // this is to avoid duplicates. Database is considered to be the truth
     cars.clear();
 
+    // check if the cars array is empty
+    if (carsJson.Empty()) {
+        std::cout << "Error: No cars found in the database" << std::endl;
+        return;
+    }
+
     // iterating through the cars array and adding it to the vector
     for (const auto &carJson : carsJson.GetArray()) {
         Car car(QString::fromStdString(carJson["regNr"].GetString()),
@@ -265,6 +271,12 @@ void JsonParser::importCustomersFromJson(std::vector<Customer> &customers) {
     // this is to avoid duplicates. Database is considered to be the truth
     customers.clear();
 
+    // check if the customers array is empty
+    if (customersJson.Empty()) {
+        std::cout << "Error: No customers found in the database" << std::endl;
+        return;
+    }
+
     // iterating through the cars array and adding it to the vector
     for (const auto &customerJson : customersJson.GetArray()) {
         if (!customerJson.IsObject()) {
@@ -460,7 +472,14 @@ void JsonParser::importLeasesFromJson(std::vector<Lease> &leases) {
     // accessing the leases array directly
     const auto &leasesJson = doc["leases"];
 
+    // clear the vector before adding new leases
     leases.clear();
+
+    // check if the leases array is empty
+    if (leasesJson.Empty()) {
+        std::cout << "Error: No cars found in the database" << std::endl;
+        return;
+    }
 
     for (const auto &leaseJson : leasesJson.GetArray()) {
         if (!leaseJson.IsObject()) {

@@ -545,7 +545,7 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
     if (currentRow < 0) {
         qDebug() << "No lease selected for closing";
         return;
-    } else if (ui->LeaseTable->item(currentRow, 7)->text() == "Closed") {
+    } else if (ui->LeaseTable->item(currentRow, 8)->text() == "Closed") {
         qDebug() << "Cannot close a closed lease";
 
         // display error message box to client
@@ -641,9 +641,9 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
                     CarManager::editCarAllInstances(carFromLease, *carFromLease, jsonParser);
                 }
             }
-            // Update the tables
-            updateLeaseTable(); updateCarTable(); updateCustomerTable();
         }
+        // Update the tables
+        updateLeaseTable(); updateCarTable(); updateCustomerTable();
     }
     delete editLeaseDialog;
 }
@@ -671,8 +671,8 @@ void MainWindow::on_DelLeaseBtn_clicked() {
     confirmDialog.setWindowTitle("Delete Lease");
     if (confirmDialog.exec() == QDialog::Accepted) {
         LeaseManager::deleteLease(leasesRef, *selectedLease, jsonParser);
-        updateLeaseTable();
     }
+    updateLeaseTable();
 }
 
 // ==================== Import and Export ====================
