@@ -30,7 +30,7 @@ MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers,
 
     // ---- Table view of the customers ----
     ui->CustTable->setColumnCount(6);
-    QStringList headers = {"Personal Number", "Email", "Phone", "Age", "Name", "Assigned Cars"};
+    QStringList headers = {"Personal Number", "Name", "Email", "Phone", "Age", "Assigned Cars"};
     ui->CustTable->setHorizontalHeaderLabels(headers);
     ui->CustTable->horizontalHeader()->setStretchLastSection(false);
     // This will format the headers to fill the available white space
@@ -108,10 +108,10 @@ void MainWindow::updateCustomerTable() {
         ui->CustTable->setItem(row, 0, item);
 
         ui->CustTable->setItem(row, 0, item);
-        ui->CustTable->setItem(row, 1, new QTableWidgetItem(customer.getEmail()));
-        ui->CustTable->setItem(row, 2, new QTableWidgetItem(customer.getPhone()));
-        ui->CustTable->setItem(row, 3, new QTableWidgetItem(QString::number(customer.getAge())));
-        ui->CustTable->setItem(row, 4, new QTableWidgetItem(customer.getName()));
+        ui->CustTable->setItem(row, 1, new QTableWidgetItem(customer.getName()));
+        ui->CustTable->setItem(row, 2, new QTableWidgetItem(customer.getEmail()));
+        ui->CustTable->setItem(row, 3, new QTableWidgetItem(customer.getPhone()));
+        ui->CustTable->setItem(row, 4, new QTableWidgetItem(QString::number(customer.getAge())));
         ui->CustTable->setItem(row, 5, new QTableWidgetItem(carsAsString));
     }
 }
