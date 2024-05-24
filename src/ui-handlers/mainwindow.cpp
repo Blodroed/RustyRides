@@ -489,14 +489,20 @@ void MainWindow::on_EdtLeaseBtn_clicked() {
     if (currentRow < 0) {
         qDebug() << "No lease selected for editing";
         return;
-    } else if (ui->LeaseTable->item(currentRow, 7)->text() == "Closed") {
+    } else if (ui->LeaseTable->item(currentRow, 1)->text() == "Not found" || ui->LeaseTable->item(currentRow, 2)->text() == "Not found" ||
+               ui->LeaseTable->item(currentRow, 3)->text() == "Not found") { // check for missing car or customer
+        qDebug() << "cannot edit a lease with missing car or customer";
+
+        // display error message box to client
+        QMessageBox::warning(this, "Error", "Cannot edit a lease with missing car or customer");
+        return;
+    } else if (ui->LeaseTable->item(currentRow, 8)->text() == "Closed") { // Check if the lease is closed
         qDebug() << "Cannot edit a closed lease";
 
         // display error message box to client
         QMessageBox::warning(this, "Error", "Cannot edit a closed lease");
-
         return;
-    }
+    } 
 
     // finding the selected lease in the original vector
     int leaseId = ui->LeaseTable->item(currentRow, 0)->text().toInt();
@@ -539,7 +545,7 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
     if (currentRow < 0) {
         qDebug() << "No lease selected for closing";
         return;
-    } else if (ui->LeaseTable->item(currentRow, 7)->text() == "Closed") {
+    } else if (ui->LeaseTable->item(currentRow, 8)->text() == "Closed") {
         qDebug() << "Cannot close a closed lease";
 
         // display error message box to client
@@ -635,9 +641,9 @@ void MainWindow::on_ClsLeaseBtn_clicked() {
                     CarManager::editCarAllInstances(carFromLease, *carFromLease, jsonParser);
                 }
             }
-            // Update the tables
-            updateLeaseTable(); updateCarTable(); updateCustomerTable();
         }
+        // Update the tables
+        updateLeaseTable(); updateCarTable(); updateCustomerTable();
     }
     delete editLeaseDialog;
 }
@@ -665,8 +671,8 @@ void MainWindow::on_DelLeaseBtn_clicked() {
     confirmDialog.setWindowTitle("Delete Lease");
     if (confirmDialog.exec() == QDialog::Accepted) {
         LeaseManager::deleteLease(leasesRef, *selectedLease, jsonParser);
-        updateLeaseTable();
     }
+    updateLeaseTable();
 }
 
 // ==================== Import and Export ====================
