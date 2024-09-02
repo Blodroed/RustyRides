@@ -56,6 +56,9 @@ MainWindow::MainWindow(JsonParser& jsonParser, std::vector<Customer>& customers,
     ui->LeaseTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->LeaseTable->horizontalHeader()->setStretchLastSection(false);
 
+    // --- Slot connection for tab switching ---
+    connect(ui->NavTabs, &QTabWidget::currentChanged, this, &MainWindow::on_NavTabs_currentChanged);
+
     // ---- Slot connections for import and export buttons ----
     connect(ui->actionImport, &QAction::triggered, this, &MainWindow::importAction);
     connect(ui->actionExport, &QAction::triggered, this, &MainWindow::exportAction);
@@ -72,7 +75,7 @@ MainWindow::~MainWindow()
 }
 
 // ==================== Tab switching ====================
-void MainWindow::on_tabWidget_currentChanged(int index) {
+void MainWindow::on_NavTabs_currentChanged(int index) {
     // Update the tables
     updateCustomerTable();
     updateCarTable();

@@ -25,7 +25,7 @@ public:
     ~MainWindow();
 
 public slots:
-            void on_tabWidget_currentChanged(int index);
+    void on_NavTabs_currentChanged(int index);
 
     // Worth noting: These autogenerate upon assigning a button to a slot in the UI designer
 private slots:
